@@ -60,6 +60,16 @@
 
     <string name="numberWrapper">%1$d</string>
     <string name="combinedWrapper">Gesamt %1$d</string>
+    <string name="nameWrapper">" %1$s"</string>
+    <string name="victoryError">Fehler</string>
+    <string name="victoryWhiteWolf">Der Weiße Werwolf hat das Spiel alleine gewonnen.</string>
+    <string name="VictoryLovers">Das Liebespaar hat sich gegen alle Anderen durchgesetzt! Sie sind wirklich wie füreinander geschaffen.</string>
+    <string name="VictoryWolfes">Die Werwölfe sind in Überzahl. Das Dorf liegt in ihrer Herrschaft, damit haben sie gewonnen!</string>
+    <string name="VictoryCiticens">Alle Werwölfe sind tot. Die Bürger haben gewonnen! Ab jetzt können sie wieder ruhig schlafen.</string>
+    <string name="VictoryFlute">Der Flötenspieler hat alle anderen Spieler verzaubert! Er hat gewonnen!</string>
+    <string name="pressBackAgain">Um die App zu schließen Taste erneut drücken.</string>
+    <string name="village">Dorf</string>
+
 
     <color name="grey">#696969</color>
     <color name="hellgrau">#808080</color>

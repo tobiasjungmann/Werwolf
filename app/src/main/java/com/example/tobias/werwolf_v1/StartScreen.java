@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import maes.tech.intentanim.CustomIntent;
 
 
-public class Startbildschirm extends AppCompatActivity implements View.OnClickListener {
+public class StartScreen extends AppCompatActivity implements View.OnClickListener {
 
 
     private boolean zweiMalzurueck;
@@ -21,17 +21,17 @@ public class Startbildschirm extends AppCompatActivity implements View.OnClickLi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_startbildschirm);
+        setContentView(R.layout.activity_startscreen);
 
 
         Button mitKarten = findViewById(R.id.spielleiterEinzeln);
-        mitKarten.setOnClickListener(Startbildschirm.this);
+        mitKarten.setOnClickListener(StartScreen.this);
         Button ohneKarten = findViewById(R.id.spieler);
-        ohneKarten.setOnClickListener(Startbildschirm.this);
+        ohneKarten.setOnClickListener(StartScreen.this);
         Button handbuch_knopf = findViewById(R.id.handbuch_knopf);
-        handbuch_knopf.setOnClickListener(Startbildschirm.this);
+        handbuch_knopf.setOnClickListener(StartScreen.this);
         Button einzelspieler = findViewById(R.id.spielleiterServer);
-        einzelspieler.setOnClickListener(Startbildschirm.this);
+        einzelspieler.setOnClickListener(StartScreen.this);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Startbildschirm extends AppCompatActivity implements View.OnClickLi
             System.exit(0);
         }
 
-        Toast.makeText(Startbildschirm.this, "Um die App zu schließen Taste erneut drücken.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(StartScreen.this, "Um die App zu schließen Taste erneut drücken.", Toast.LENGTH_SHORT).show();
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -79,7 +79,7 @@ public class Startbildschirm extends AppCompatActivity implements View.OnClickLi
 
 
     private void spielerAuswahlOeffnen() {
-        Intent intent = new Intent(Startbildschirm.this, Spieler_Auswahl.class);
+        Intent intent = new Intent(StartScreen.this, Spieler_Auswahl.class);
         intent.putExtra("Karten", "nein");
         startActivity(intent);
         CustomIntent.customType(this, "left-to-right");
@@ -87,21 +87,21 @@ public class Startbildschirm extends AppCompatActivity implements View.OnClickLi
 
 
     private void charakterauswahlOeffnenEinGeraet() {
-        Intent intent = new Intent(this, charakterauswahl.class);
+        Intent intent = new Intent(this, CharacterSelection.class);
         intent.putExtra("EinGeraet", true);
         startActivity(intent);
         CustomIntent.customType(this, "left-to-right");
     }
 
     private void charakterauswahlOeffnen() {
-        Intent intent = new Intent(this, charakterauswahl.class);
+        Intent intent = new Intent(this, CharacterSelection.class);
         intent.putExtra("EinGeraet", false);
         startActivity(intent);
         CustomIntent.customType(this, "left-to-right");
     }
 
     private void handbuchOeffnen() {
-        Intent intent = new Intent(this, handbuch.class);
+        Intent intent = new Intent(this, Manual.class);
         startActivity(intent);
         CustomIntent.customType(this, "bottom-to-up");
     }

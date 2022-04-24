@@ -19,32 +19,32 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name=".ladebildschirm"
+            android:name=".LoadingScreen"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:exported="true"/>
         <activity
-            android:name=".charakterauswahl"
+            android:name=".CharacterSelection"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:exported="true"/>
         <activity
-            android:name=".personenauswahl"
+            android:name=".PlayerManagement"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:exported="true"/>
         <activity
-            android:name=".Zuordnen"
+            android:name=".CardsToPlayerMatching"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:exported="true"/>
         <activity
-            android:name=".Nacht_Liste"
+            android:name=".ListNight"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:exported="true"/>
         <activity
-            android:name=".Startbildschirm"
+            android:name=".StartScreen"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:exported="true">
@@ -55,15 +55,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".handbuch"
+            android:name=".Manual"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".sieg_activity"
+            android:name=".VictoryActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Spielleiter_Verbinden"
+            android:name=".multipleDevices.HostConnectWithPlayers"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity

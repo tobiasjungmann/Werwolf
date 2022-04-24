@@ -1,4 +1,4 @@
-package com.example.tobias.werwolf_v1;
+package com.example.tobias.werwolf_v1.multipleDevices;
 
 import android.Manifest;
 import android.app.AlertDialog;
@@ -28,6 +28,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
+import com.example.tobias.werwolf_v1.R;
+import com.example.tobias.werwolf_v1.SquareLayout;
+import com.example.tobias.werwolf_v1.StartScreen;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
@@ -42,24 +45,20 @@ import java.net.Socket;
 
 import maes.tech.intentanim.CustomIntent;
 
-public class Spieler_Auswahl extends AppCompatActivity implements View.OnClickListener {
+public class PlayerConnectToHost extends AppCompatActivity implements View.OnClickListener {
 
 
-    private SurfaceView surfaceView;
     private SquareLayout square;
     private TextView infoText;
     private CameraSource cameraSource;
-    private BarcodeDetector barcodeDetector;
     private String ipAdresseHost;
     private Button bereit;
     private EditText nameEingeben;
     private TextView statusVerbindung;
-    private TextView textWartenAnimation;
-    private Thread threadWarten;
+
     private LinearLayout wartenLayout;
     private LinearLayout nameLayout;
     private String meineIp;
-    private String rolle;
     private int statusBereit = 0;
     private boolean einmalGedrueckt;
     private Socket socket;
@@ -74,7 +73,7 @@ public class Spieler_Auswahl extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_spieler__auswahl);
+        setContentView(R.layout.activity_playerconnecttohost);
 
         einmalGedrueckt = false;
 
@@ -88,13 +87,13 @@ public class Spieler_Auswahl extends AppCompatActivity implements View.OnClickLi
         bereit.setOnClickListener(this);
         nameEingeben = findViewById(R.id.nameEingeben);
         statusVerbindung = findViewById(R.id.statusVerbindung);
-        textWartenAnimation = findViewById(R.id.textWartenAnimation);
+       // textWartenAnimation = findViewById(R.id.textWartenAnimation);
         wartenLayout = findViewById(R.id.wartenLayout);
         nameLayout = findViewById(R.id.nameLayout);
-        surfaceView = findViewById(R.id.cameraview);
+        SurfaceView surfaceView = findViewById(R.id.cameraview);
 
 
-        barcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE).build();
+        BarcodeDetector barcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE).build();
 
         cameraSource = new CameraSource.Builder(this, barcodeDetector).setRequestedPreviewSize(640, 480).build();
 
@@ -191,7 +190,7 @@ public class Spieler_Auswahl extends AppCompatActivity implements View.OnClickLi
                                     public void run() {
 
                                         Log.e("D", "else: runonUI " + ipAdresseHost);
-                                        Toast.makeText(Spieler_Auswahl.this, "QR-Code enthält keine gültige IP-Adresse.", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(PlayerConnectToHost.this, "QR-Code enthält keine gültige IP-Adresse.", Toast.LENGTH_SHORT).show();
                                     }
                                 });
                             }
@@ -255,9 +254,9 @@ public class Spieler_Auswahl extends AppCompatActivity implements View.OnClickLi
     private void dialogInternetConnection() {
         AlertDialog.Builder[] builder = new AlertDialog.Builder[1];
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder[0] = new AlertDialog.Builder(Spieler_Auswahl.this, android.R.style.Theme_Material_Dialog_Alert);
+            builder[0] = new AlertDialog.Builder(PlayerConnectToHost.this, android.R.style.Theme_Material_Dialog_Alert);
         } else {
-            builder[0] = new AlertDialog.Builder(Spieler_Auswahl.this);
+            builder[0] = new AlertDialog.Builder(PlayerConnectToHost.this);
         }
         builder[0].setTitle("Hinweis")
                 .setMessage("W-lan aktivieren um mit anderen Spielern zu verbinden.")
@@ -273,24 +272,22 @@ public class Spieler_Auswahl extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
 
-        switch (v.getId()) {
-            case R.id.bereit:
-                Log.e("D", "bereit gedrückt" + ipAdresseHost);
+        if (v.getId() == R.id.bereit) {
+            Log.e("D", "bereit gedrückt" + ipAdresseHost);
 
 
-                if (nameEingeben.getText().toString().compareTo("") == 0 || nameEingeben.getText().toString() == null) {
-                    statusVerbindung.setText("Du musst erst einen Namen eingeben.");
-                    nameLayout.setBackgroundResource(R.drawable.knopf_orange);
-                    statusVerbindung.setVisibility(View.VISIBLE);
-                } else {
-                    statusVerbindung.setText("Daten werden gesendet...");
+            if (nameEingeben.getText().toString().compareTo("") == 0) {
+                statusVerbindung.setText("Du musst erst einen Namen eingeben.");
+                nameLayout.setBackgroundResource(R.drawable.knopf_orange);
+                statusVerbindung.setVisibility(View.VISIBLE);
+            } else {
+                nameEingeben.getText().toString();
+                statusVerbindung.setText("Daten werden gesendet...");
 
-                    nameSenden();
+                nameSenden();
 
 
-                }
-
-                break;
+            }
         }
     }
 
@@ -306,7 +303,7 @@ public class Spieler_Auswahl extends AppCompatActivity implements View.OnClickLi
                         Log.d("Verbindung", "empfangenThread empfangen: " + st);
 
                         if (st.startsWith("spielbereit")) {//tod -> in die Karte übergehen
-                            karteOeffenen(st.substring(11));
+                            openCard(st.substring(11));
                         } else {
                             if (st.compareTo("frei") == 0) {
                                 statusBereit = 1;
@@ -422,8 +419,8 @@ public class Spieler_Auswahl extends AppCompatActivity implements View.OnClickLi
     }
 
 
-    public void karteOeffenen(String rolle) {
-        Intent intent = new Intent(this, Spieler_Karte.class);
+    public void openCard(String rolle) {
+        Intent intent = new Intent(this, PlayerCard.class);
 
         intent.putExtra("rolle", rolle);
         startActivity(intent);
@@ -433,7 +430,7 @@ public class Spieler_Auswahl extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(this, Startbildschirm.class);
+        Intent intent = new Intent(this, StartScreen.class);
         startActivity(intent);
     }
 

@@ -9,8 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -18,12 +16,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import java.util.ArrayList;
-
 import maes.tech.intentanim.CustomIntent;
 
-public class Zuordnen extends AppCompatActivity {
-
+public class CardsToPlayerMatching extends AppCompatActivity {
 
     private int anzahlAmor;
     private int anzahlWerwolf;
@@ -57,13 +52,7 @@ public class Zuordnen extends AppCompatActivity {
     private int RitterId;
     private int FreundeId;
 
-    private int bildPos;
-
     private String nameAkt;
-
-    private ListView rollen;
-    private ArrayList<String> arrayList;
-    private ArrayAdapter<String> adapter;
     private DatabaseHelper mDatabaseHelper;
     private Cursor data;
     private TextView persTxt;
@@ -71,14 +60,12 @@ public class Zuordnen extends AppCompatActivity {
     private Intent intent;
 
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_zuordnen);
+        setContentView(R.layout.activity_cardstoplayermatching);
 
         anzahlAmor = getIntent().getExtras().getInt("anzahlAmor");
         anzahlBuerger = getIntent().getExtras().getInt("anzahlBuerger");
@@ -96,7 +83,7 @@ public class Zuordnen extends AppCompatActivity {
         anzahlMaedchen = getIntent().getExtras().getInt("anzahlMaedchen");
         anzahlUrwolf = getIntent().getExtras().getInt("anzahlUrwolf");
 
-        intent = new Intent(this, Nacht_Liste.class);
+        intent = new Intent(this, ListNight.class);
         intent.putExtra("anzahlAmor", anzahlAmor);
         intent.putExtra("anzahlBuerger", anzahlBuerger);
         intent.putExtra("anzahlWaechter", anzahlWaechter);
@@ -129,50 +116,43 @@ public class Zuordnen extends AppCompatActivity {
         RitterId = -1;
         FreundeId = -1;
 
-        bildPos = 0;
         mDatabaseHelper = new DatabaseHelper(this);
         data = mDatabaseHelper.getData();
 
-        persTxt = (TextView) findViewById(R.id.persTxt);
+        persTxt = findViewById(R.id.persTxt);
         persTxt.setTextColor(Color.WHITE);
         namenSchreiben();
 
         bilderFeldErstellen();
 
-        rollen = (ListView) findViewById(R.id.rollen);
+        ListView rollen = findViewById(R.id.rollen);
         customAdapter = new CustomAdapter();
 
         rollen.setAdapter(customAdapter);
-        rollen.setOnItemClickListener(new AdapterView.OnItemClickListener() {            //Hier kmmt eine Möglichkeit zum Löschen eine s Eintrages
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        rollen.setOnItemClickListener((parent, view, position, id) -> {
 
 
-                String charakterHilfe = charakterErmitteln(position);
-                Log.e("D", "Name:    " + nameAkt);
-                mDatabaseHelper.deleteOnlyName(nameAkt);
-                mDatabaseHelper.addCharakter(nameAkt, charakterHilfe);
-                // Toast.makeText(Zuordnen.this, ""+nameAkt+"  |  "+charakterHilfe, Toast.LENGTH_SHORT).show();
-                namenSchreiben();
-            }
+            String charakterHilfe = determineCharacter(position);
+            Log.e("D", "Name:    " + nameAkt);
+            mDatabaseHelper.deleteOnlyName(nameAkt);
+            mDatabaseHelper.addCharakter(nameAkt, charakterHilfe);
+            namenSchreiben();
         });
     }
 
     public void namenSchreiben() {
         if (data.moveToNext()) {
             nameAkt = data.getString(1);
-            persTxt.setText(" " + nameAkt);
+            persTxt.setText(getString(R.string.nameWrapper, nameAkt));
         } else {
-
             startActivity(intent);
             CustomIntent.customType(this, "left-to-right");
         }
 
     }
 
-    public String charakterErmitteln(int position) {
+    public String determineCharacter(int position) {
         String retValue = "";
-        int menge = 0;
 
         if (position == WaechterId) {
             retValue = "waechter";
@@ -389,8 +369,8 @@ public class Zuordnen extends AppCompatActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = getLayoutInflater().inflate(R.layout.mein_list_item, null);
-            TextView charakter = (TextView) convertView.findViewById(R.id.charakter);
+            convertView = getLayoutInflater().inflate(R.layout.mylistitem, null);
+            TextView charakter = convertView.findViewById(R.id.charakter);
             LinearLayout layoutcharakterRolle = convertView.findViewById(R.id.layoutcharakterRolle);
 
             if (position == WaechterId) {

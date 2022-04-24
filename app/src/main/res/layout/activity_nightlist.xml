@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/grey"
-    tools:context="com.example.tobias.werwolf_v1.Nacht_Liste">
+    tools:context="com.example.tobias.werwolf_v1.ListNight">
 
     <LinearLayout
         android:id="@+id/layoutSpielstand"
@@ -45,7 +45,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/knopf_blau"
+            android:background="@drawable/buttonblue"
             android:gravity="center"
             android:text="@string/weiter"
             android:textSize="20sp" />
@@ -134,7 +134,6 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
-                    android:buttonTint="@color/blau"
                     android:text="" />
 
 
@@ -173,7 +172,8 @@
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
                     android:buttonTint="@color/blau"
-                    android:text="" />
+                    android:text=""
+                    tools:ignore="UnusedAttribute" />
 
 
                 <TextView

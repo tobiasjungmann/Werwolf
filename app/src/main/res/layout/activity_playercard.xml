@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.tobias.werwolf_v1.Spieler_Karte"
+    tools:context="com.example.tobias.werwolf_v1.multipleDevices.PlayerCard"
     android:background="@color/grey">
 
     <LinearLayout
@@ -75,18 +75,18 @@
         android:text="@string/charakterkarte_dr_cken_und_halten_um_eigene_rolle_zu_sehen"
         android:textColor="@color/weiss"
         android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/statbildschirmbutton"
+        app:layout_constraintBottom_toTopOf="@+id/victoryStartScreenButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
-        android:id="@+id/statbildschirmbutton"
+        android:id="@+id/victoryStartScreenButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/knopf_blau"
+        android:background="@drawable/buttonblue"
         android:gravity="center"
         android:text="@string/startbildschirm"
         android:textSize="20sp"

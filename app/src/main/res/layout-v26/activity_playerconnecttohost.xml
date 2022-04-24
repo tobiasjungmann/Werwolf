@@ -64,10 +64,10 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/knopf_blau"
+            android:background="@drawable/buttonblue"
             android:gravity="center"
-            android:text="Bereit"
-            android:textSize="20dp"
+            android:text="@string/bereit"
+            android:textSize="20sp"
             android:visibility="visible" />
 
     </LinearLayout>
@@ -83,9 +83,9 @@
         android:layout_marginRight="16dp"
         android:layout_marginTop="16dp"
         android:layout_below="@id/nameLayout"
-        android:text="Verbunden\nWähle deinen Spielernamen und bestätige mit BEREIT."
+        android:text="@string/verbunden_nw_hle_deinen_spielernamen_und_best_tige_mit_bereit"
         android:textColor="@color/weiss"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:visibility="gone" />
 
     <LinearLayout
@@ -104,8 +104,8 @@
             android:id="@+id/textView9"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Bereit"
-            android:textSize="35dp"
+            android:text="@string/bereit"
+            android:textSize="35sp"
             android:gravity="center"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"/>
@@ -115,7 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:background="@drawable/knopf_blau"
+            android:background="@drawable/buttonblue"
             android:orientation="vertical"
             android:layout_marginBottom="16dp">
 
@@ -127,8 +127,8 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="8dp"
                 android:gravity="center"
-                android:text="warten auf andere Spieler"
-                android:textSize="30dp" />
+                android:text="@string/warten_auf_andere_spieler"
+                android:textSize="30sp" />
 
             <TextView
                 android:id="@+id/textWartenAnimation"
@@ -136,8 +136,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
-                android:text="..."
-                android:textSize="30dp" />
+                android:text="@string/dreiPunkte"
+                android:textSize="30sp" />
 
         </LinearLayout>
     </LinearLayout>
@@ -168,9 +168,9 @@
     android:id="@+id/infoText"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:text="Scanne den QR-Code des Spielleiters um dich zu Verbinden."
+    android:text="@string/scanne_den_qr_code_des_spielleiters_um_dich_zu_verbinden"
     android:gravity="center"
-    android:textSize="25dp"
+    android:textSize="25sp"
     android:textColor="@color/weiss"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="24dp"

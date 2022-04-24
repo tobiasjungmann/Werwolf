@@ -1,4 +1,4 @@
-package com.example.tobias.werwolf_v1;
+package com.example.tobias.werwolf_v1.multipleDevices;
 
 import static java.lang.Thread.sleep;
 
@@ -29,6 +29,9 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tobias.werwolf_v1.DatabaseHelper;
+import com.example.tobias.werwolf_v1.ListNight;
+import com.example.tobias.werwolf_v1.R;
 import com.google.zxing.WriterException;
 
 import java.io.IOException;
@@ -42,7 +45,7 @@ import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
 import maes.tech.intentanim.CustomIntent;
 
-public class Spielleiter_Verbinden extends AppCompatActivity {
+public class HostConnectWithPlayers extends AppCompatActivity {
 
     private ImageView qrImage;
     private QRGEncoder qrgEncoder;
@@ -50,7 +53,7 @@ public class Spielleiter_Verbinden extends AppCompatActivity {
     final Handler handler = new Handler();
     private static Map<String, String> ipToName;
     private ArrayList<String> ipAdressen;
-    private ArrayList<Spielleiter_Verbindung> clients;
+    private ArrayList<HostToPlayerConnectionThread> clients;
     private ListView listViewPersonen;
     private CustomAdapter adapter;
     private DatabaseHelper mDatabaseHelper;
@@ -93,7 +96,7 @@ public class Spielleiter_Verbinden extends AppCompatActivity {
 
     private TextView anzahlMitspielerText;
     private ServerSocket ss;
-    private Spielleiter_Verbinden ichselbst;
+    private HostConnectWithPlayers ichselbst;
     private Thread pruefenThread;
     private boolean alleSpielbereit = false;
     private Intent intent;
@@ -103,7 +106,7 @@ public class Spielleiter_Verbinden extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_spielleiter__verbinden);
+        setContentView(R.layout.activity_hostconnectwithplayers);
 
         if (!isNetworkAvailable()) {
             dialogInternetConnection();
@@ -160,7 +163,7 @@ public class Spielleiter_Verbinden extends AppCompatActivity {
 
 //todo:Datenbank leeren
         verbindungAuswerten();
-         intent = new Intent(this, Nacht_Liste.class);
+         intent = new Intent(this, ListNight.class);
         intent.putExtra("anzahlAmor", anzahlAmor);
         intent.putExtra("anzahlBuerger", anzahlBuerger);
         intent.putExtra("anzahlWaechter", anzahlWaechter);
@@ -188,9 +191,9 @@ public class Spielleiter_Verbinden extends AppCompatActivity {
     private void dialogInternetConnection() {
         AlertDialog.Builder[] builder = new AlertDialog.Builder[1];
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder[0] = new AlertDialog.Builder(Spielleiter_Verbinden.this, android.R.style.Theme_Material_Dialog_Alert);
+            builder[0] = new AlertDialog.Builder(HostConnectWithPlayers.this, android.R.style.Theme_Material_Dialog_Alert);
         } else {
-            builder[0] = new AlertDialog.Builder(Spielleiter_Verbinden.this);
+            builder[0] = new AlertDialog.Builder(HostConnectWithPlayers.this);
         }
         builder[0].setTitle("Hinweis")
                 .setMessage("Stelle sicher, dass das Gerät it dem W-lan verbunden ist. Eine Verbindung mit den Spielern ist sonst nicht möglich")
@@ -227,7 +230,7 @@ public class Spielleiter_Verbinden extends AppCompatActivity {
                 while (!end) {
                     try {
                         Socket client = ss.accept();
-                        Spielleiter_Verbindung sv = new Spielleiter_Verbindung(client, ichselbst);
+                        HostToPlayerConnectionThread sv = new HostToPlayerConnectionThread(client, ichselbst);
                         sv.start();
                         clients.add(sv);
                     } catch (IOException e) {
@@ -322,7 +325,7 @@ public class Spielleiter_Verbinden extends AppCompatActivity {
     }
 
 
-    private String charakterZuweisen(Spielleiter_Verbindung verbindung) {
+    private String charakterZuweisen(HostToPlayerConnectionThread verbindung) {
         String retValue = "";
         if (gesamtPerZuweisung > 0) {
             int position = ((int) Math.random() * gesamtPerZuweisung - 1);
@@ -425,7 +428,7 @@ public class Spielleiter_Verbinden extends AppCompatActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
 
             //charakter.setImageResource(R.drawable.amor_v3);
-            convertView = getLayoutInflater().inflate(R.layout.mein_list_item_text_weis, null);
+            convertView = getLayoutInflater().inflate(R.layout.mylistitemwhitetext, null);
             pers = (TextView) convertView.findViewById(R.id.textPer);
 
             pers.setText(ipAdressen.get(position) + "   " + ipToName.get(ipAdressen.get(position)));

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.tobias.werwolf_v1.handbuch"
+    tools:context="com.example.tobias.werwolf_v1.Manual"
     android:background="@color/grey">
 
     <LinearLayout
@@ -15,7 +15,7 @@
 
 
         <Button
-            android:id="@+id/zurueck"
+            android:id="@+id/backmanual"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -24,13 +24,13 @@
             android:textSize="20dp"
             android:text="Zurück"
             android:gravity="center"
-            android:background="@drawable/knopf_blau"
+            android:background="@drawable/buttonblue"
             android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"/>
 
         <androidx.core.widget.NestedScrollView
-            android:id="@+id/anleitungScroll"
+            android:id="@+id/manualScrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="16dp"
@@ -56,7 +56,7 @@
                     android:textSize="25dp" />
 
                 <TextView
-                    android:id="@+id/charaktereText"
+                    android:id="@+id/characterText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -66,7 +66,7 @@
                     android:clickable="true"/>
 
                 <TextView
-                    android:id="@+id/mitKartenText"
+                    android:id="@+id/withCardsText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -76,7 +76,7 @@
                     android:clickable="true"/>
 
                 <TextView
-                    android:id="@+id/ohneKartenText"
+                    android:id="@+id/withoutCardsText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -96,7 +96,7 @@
                     android:clickable="true"/>
 
                 <TextView
-                    android:id="@+id/charakterUeberschrift"
+                    android:id="@+id/characterHeadline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
@@ -407,7 +407,7 @@
                     android:textSize="17dp" />
 
                 <TextView
-                    android:id="@+id/ohneKartenUeberschrift"
+                    android:id="@+id/withoutCardsHeadline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"

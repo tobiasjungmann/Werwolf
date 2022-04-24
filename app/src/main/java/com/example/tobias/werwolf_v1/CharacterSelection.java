@@ -19,9 +19,11 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tobias.werwolf_v1.multipleDevices.HostConnectWithPlayers;
+
 import maes.tech.intentanim.CustomIntent;
 
-public class charakterauswahl extends AppCompatActivity implements View.OnClickListener {
+public class CharacterSelection extends AppCompatActivity implements View.OnClickListener {
 
     private TextView nummerAmor;
     private TextView nummerHexe;
@@ -85,7 +87,7 @@ public class charakterauswahl extends AppCompatActivity implements View.OnClickL
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_charakterauswahl);
+        setContentView(R.layout.activity_charakterselection);
 
         einGeraet = getIntent().getExtras().getBoolean("EinGeraet", true);
         anzahlAmor = 0;
@@ -125,141 +127,141 @@ public class charakterauswahl extends AppCompatActivity implements View.OnClickL
         gesamtTxt.setTextColor(Color.WHITE);
 
         Button spiel_starten = findViewById(R.id.spiel_starten);
-        spiel_starten.setOnClickListener(charakterauswahl.this);
+        spiel_starten.setOnClickListener(CharacterSelection.this);
 
         TextView iconAmor = findViewById(R.id.iconAmor);
-        iconAmor.setOnClickListener(charakterauswahl.this);
+        iconAmor.setOnClickListener(CharacterSelection.this);
         TextView iconHexe = findViewById(R.id.iconHexe);
-        iconHexe.setOnClickListener(charakterauswahl.this);
+        iconHexe.setOnClickListener(CharacterSelection.this);
         TextView iconWaechter = findViewById(R.id.iconWaechter);
-        iconWaechter.setOnClickListener(charakterauswahl.this);
+        iconWaechter.setOnClickListener(CharacterSelection.this);
         TextView iconDieb = findViewById(R.id.iconDieb);
-        iconDieb.setOnClickListener(charakterauswahl.this);
+        iconDieb.setOnClickListener(CharacterSelection.this);
         TextView iconSeher = findViewById(R.id.iconSeher);
-        iconSeher.setOnClickListener(charakterauswahl.this);
+        iconSeher.setOnClickListener(CharacterSelection.this);
         TextView iconBuerger = findViewById(R.id.iconBuerger);
-        iconBuerger.setOnClickListener(charakterauswahl.this);
+        iconBuerger.setOnClickListener(CharacterSelection.this);
         TextView iconWerwolf = findViewById(R.id.iconWerwolf);
-        iconWerwolf.setOnClickListener(charakterauswahl.this);
+        iconWerwolf.setOnClickListener(CharacterSelection.this);
         TextView iconJunges = findViewById(R.id.iconJunges);
-        iconJunges.setOnClickListener(charakterauswahl.this);
+        iconJunges.setOnClickListener(CharacterSelection.this);
         TextView iconJaeger = findViewById(R.id.iconJaeger);
-        iconJaeger.setOnClickListener(charakterauswahl.this);
+        iconJaeger.setOnClickListener(CharacterSelection.this);
         TextView iconWeisserWerwolf = findViewById(R.id.iconWeisserWerwolf);
-        iconWeisserWerwolf.setOnClickListener(charakterauswahl.this);
+        iconWeisserWerwolf.setOnClickListener(CharacterSelection.this);
         TextView iconMaedchen = findViewById(R.id.iconMaedchen);
-        iconMaedchen.setOnClickListener(charakterauswahl.this);
+        iconMaedchen.setOnClickListener(CharacterSelection.this);
         TextView iconFloetenspieler = findViewById(R.id.iconFloetenspieler);
-        iconFloetenspieler.setOnClickListener(charakterauswahl.this);
+        iconFloetenspieler.setOnClickListener(CharacterSelection.this);
         TextView iconUrwolf = findViewById(R.id.iconUrwolf);
-        iconUrwolf.setOnClickListener(charakterauswahl.this);
+        iconUrwolf.setOnClickListener(CharacterSelection.this);
         TextView iconRitter = findViewById(R.id.iconRitter);
-        iconRitter.setOnClickListener(charakterauswahl.this);
+        iconRitter.setOnClickListener(CharacterSelection.this);
         TextView iconFreunde = findViewById(R.id.iconFreunde);
-        iconFreunde.setOnClickListener(charakterauswahl.this);
+        iconFreunde.setOnClickListener(CharacterSelection.this);
 
         ImageView minusAmor = findViewById(R.id.minusAmor);
-        minusAmor.setOnClickListener(charakterauswahl.this);
+        minusAmor.setOnClickListener(CharacterSelection.this);
         ImageView plusAmor = findViewById(R.id.plusAmor);
-        plusAmor.setOnClickListener(charakterauswahl.this);
+        plusAmor.setOnClickListener(CharacterSelection.this);
         nummerAmor = findViewById(R.id.nummerAmor);
         nummerAmor.setTextColor(Color.WHITE);
 
         ImageView minusHexe = findViewById(R.id.minusHexe);
-        minusHexe.setOnClickListener(charakterauswahl.this);
+        minusHexe.setOnClickListener(CharacterSelection.this);
         ImageView plusHexe = findViewById(R.id.plusHexe);
-        plusHexe.setOnClickListener(charakterauswahl.this);
+        plusHexe.setOnClickListener(CharacterSelection.this);
         nummerHexe = findViewById(R.id.nummerHexe);
         nummerHexe.setTextColor(Color.WHITE);
 
         ImageView minusWaechter = findViewById(R.id.minusWaechter);
-        minusWaechter.setOnClickListener(charakterauswahl.this);
+        minusWaechter.setOnClickListener(CharacterSelection.this);
         ImageView plusWaechter = findViewById(R.id.plusWaechter);
-        plusWaechter.setOnClickListener(charakterauswahl.this);
+        plusWaechter.setOnClickListener(CharacterSelection.this);
         nummerWaechter = findViewById(R.id.nummerWaechter);
         nummerWaechter.setTextColor(Color.WHITE);
 
         ImageView minusDieb = findViewById(R.id.minusDieb);
-        minusDieb.setOnClickListener(charakterauswahl.this);
+        minusDieb.setOnClickListener(CharacterSelection.this);
         ImageView plusDieb = findViewById(R.id.plusDieb);
-        plusDieb.setOnClickListener(charakterauswahl.this);
+        plusDieb.setOnClickListener(CharacterSelection.this);
         nummerDieb = findViewById(R.id.nummerDieb);
         nummerDieb.setTextColor(Color.WHITE);
 
         ImageView minusSeher = findViewById(R.id.minusSeher);
-        minusSeher.setOnClickListener(charakterauswahl.this);
+        minusSeher.setOnClickListener(CharacterSelection.this);
         ImageView plusSeher = findViewById(R.id.plusSeher);
-        plusSeher.setOnClickListener(charakterauswahl.this);
+        plusSeher.setOnClickListener(CharacterSelection.this);
         nummerSeher = findViewById(R.id.nummerSeher);
         nummerSeher.setTextColor(Color.WHITE);
 
         ImageView minusBuerger = findViewById(R.id.minusBuerger);
-        minusBuerger.setOnClickListener(charakterauswahl.this);
+        minusBuerger.setOnClickListener(CharacterSelection.this);
         ImageView plusBuerger = findViewById(R.id.plusBuerger);
-        plusBuerger.setOnClickListener(charakterauswahl.this);
+        plusBuerger.setOnClickListener(CharacterSelection.this);
         nummerBuerger = findViewById(R.id.nummerBuerger);
         nummerBuerger.setTextColor(Color.WHITE);
 
         ImageView minusWerwolf = findViewById(R.id.minusWerwolf);
-        minusWerwolf.setOnClickListener(charakterauswahl.this);
+        minusWerwolf.setOnClickListener(CharacterSelection.this);
         ImageView plusWerwolf = findViewById(R.id.plusWerwolf);
-        plusWerwolf.setOnClickListener(charakterauswahl.this);
+        plusWerwolf.setOnClickListener(CharacterSelection.this);
         nummerWerwolf = findViewById(R.id.nummerWerwolf);
         nummerWerwolf.setTextColor(Color.WHITE);
 
         ImageView minusJunges = findViewById(R.id.minusJunges);
-        minusJunges.setOnClickListener(charakterauswahl.this);
+        minusJunges.setOnClickListener(CharacterSelection.this);
         ImageView plusJunges = findViewById(R.id.plusJunges);
-        plusJunges.setOnClickListener(charakterauswahl.this);
+        plusJunges.setOnClickListener(CharacterSelection.this);
         nummerJunges = findViewById(R.id.nummerJunges);
         nummerJunges.setTextColor(Color.WHITE);
 
         ImageView minusJaeger = findViewById(R.id.minusJaeger);
-        minusJaeger.setOnClickListener(charakterauswahl.this);
+        minusJaeger.setOnClickListener(CharacterSelection.this);
         ImageView plusJaeger = findViewById(R.id.plusJaeger);
-        plusJaeger.setOnClickListener(charakterauswahl.this);
+        plusJaeger.setOnClickListener(CharacterSelection.this);
         nummerJaeger = findViewById(R.id.nummerJaeger);
         nummerJaeger.setTextColor(Color.WHITE);
 
         ImageView minusMaedchen = findViewById(R.id.minusMaedchen);
-        minusMaedchen.setOnClickListener(charakterauswahl.this);
+        minusMaedchen.setOnClickListener(CharacterSelection.this);
         ImageView plusMaedchen = findViewById(R.id.plusMaedchen);
-        plusMaedchen.setOnClickListener(charakterauswahl.this);
+        plusMaedchen.setOnClickListener(CharacterSelection.this);
         nummerMaedchen = findViewById(R.id.nummerMaedchen);
         nummerMaedchen.setTextColor(Color.WHITE);
 
         ImageView minusRitter = findViewById(R.id.minusRitter);
-        minusRitter.setOnClickListener(charakterauswahl.this);
+        minusRitter.setOnClickListener(CharacterSelection.this);
         ImageView plusRitter = findViewById(R.id.plusRitter);
-        plusRitter.setOnClickListener(charakterauswahl.this);
+        plusRitter.setOnClickListener(CharacterSelection.this);
         nummerRitter = findViewById(R.id.nummerRitter);
         nummerRitter.setTextColor(Color.WHITE);
 
         ImageView minusUrwolf = findViewById(R.id.minusUrwolf);
-        minusUrwolf.setOnClickListener(charakterauswahl.this);
+        minusUrwolf.setOnClickListener(CharacterSelection.this);
         ImageView plusUrwolf = findViewById(R.id.plusUrwolf);
-        plusUrwolf.setOnClickListener(charakterauswahl.this);
+        plusUrwolf.setOnClickListener(CharacterSelection.this);
         nummerUrwolf = findViewById(R.id.nummerUrwolf);
         nummerUrwolf.setTextColor(Color.WHITE);
 
         ImageView minusWeisserWerwolf = findViewById(R.id.minusWeisserWerwolf);
-        minusWeisserWerwolf.setOnClickListener(charakterauswahl.this);
+        minusWeisserWerwolf.setOnClickListener(CharacterSelection.this);
         ImageView plusWeisserWerwolf = findViewById(R.id.plusWeisserWerwolf);
-        plusWeisserWerwolf.setOnClickListener(charakterauswahl.this);
+        plusWeisserWerwolf.setOnClickListener(CharacterSelection.this);
         nummerWeisserWerwolf = findViewById(R.id.nummerWeisserWerwolf);
         nummerWeisserWerwolf.setTextColor(Color.WHITE);
 
         ImageView minusFloetenspieler = findViewById(R.id.minusFloetenspieler);
-        minusFloetenspieler.setOnClickListener(charakterauswahl.this);
+        minusFloetenspieler.setOnClickListener(CharacterSelection.this);
         ImageView plusFloetenspieler = findViewById(R.id.plusFloetenspieler);
-        plusFloetenspieler.setOnClickListener(charakterauswahl.this);
+        plusFloetenspieler.setOnClickListener(CharacterSelection.this);
         nummerFloetenspieler = findViewById(R.id.nummerFloetenspieler);
         nummerFloetenspieler.setTextColor(Color.WHITE);
 
         ImageView minusFreunde = findViewById(R.id.minusFreunde);
-        minusFreunde.setOnClickListener(charakterauswahl.this);
+        minusFreunde.setOnClickListener(CharacterSelection.this);
         ImageView plusFreunde = findViewById(R.id.plusFreunde);
-        plusFreunde.setOnClickListener(charakterauswahl.this);
+        plusFreunde.setOnClickListener(CharacterSelection.this);
         nummerFreunde = findViewById(R.id.nummerFreunde);
         nummerFreunde.setTextColor(Color.WHITE);
 
@@ -445,36 +447,28 @@ public class charakterauswahl extends AppCompatActivity implements View.OnClickL
                 anzahlRitter = 1;
                 vibrator.vibrate(vibrationsdauer);
             }
-            nummerRitter.setText(
-
-                    getString(R.string.numberWrapper, anzahlRitter));
+            nummerRitter.setText(getString(R.string.numberWrapper, anzahlRitter));
         } else if (v.getId() == R.id.minusUrwolf) {
             anzahlUrwolf--;
             if (anzahlUrwolf == -1) {
                 anzahlUrwolf = 0;
                 vibrator.vibrate(vibrationsdauer);
             }
-            nummerUrwolf.setText(
-
-                    getString(R.string.numberWrapper, anzahlUrwolf));
+            nummerUrwolf.setText(getString(R.string.numberWrapper, anzahlUrwolf));
         } else if (v.getId() == R.id.plusUrwolf) {
             anzahlUrwolf++;
             if (anzahlUrwolf == 2) {
                 anzahlUrwolf = 1;
                 vibrator.vibrate(vibrationsdauer);
             }
-            nummerUrwolf.setText(
-
-                    getString(R.string.numberWrapper, anzahlUrwolf));
+            nummerUrwolf.setText(getString(R.string.numberWrapper, anzahlUrwolf));
         } else if (v.getId() == R.id.minusWeisserWerwolf) {
             anzahlWeisserWerwolf--;
             if (anzahlWeisserWerwolf == -1) {
                 anzahlWeisserWerwolf = 0;
                 vibrator.vibrate(vibrationsdauer);
             }
-            nummerWeisserWerwolf.setText(
-
-                    getString(R.string.numberWrapper, anzahlWeisserWerwolf));
+            nummerWeisserWerwolf.setText(getString(R.string.numberWrapper, anzahlWeisserWerwolf));
         } else if (v.getId() == R.id.plusWeisserWerwolf) {
 
             anzahlWeisserWerwolf++;
@@ -482,9 +476,7 @@ public class charakterauswahl extends AppCompatActivity implements View.OnClickL
                 anzahlWeisserWerwolf = 1;
                 vibrator.vibrate(vibrationsdauer);
             }
-            nummerWeisserWerwolf.setText(
-
-                    getString(R.string.numberWrapper, anzahlWeisserWerwolf));
+            nummerWeisserWerwolf.setText(getString(R.string.numberWrapper, anzahlWeisserWerwolf));
         } else if (v.getId() == R.id.spiel_starten) {
 
             weiter();
@@ -573,14 +565,14 @@ public class charakterauswahl extends AppCompatActivity implements View.OnClickL
 
     private void weiter() {
         if (anzahlWerwolf + anzahlWeisserWerwolf + anzahlUrwolf == 0 || anzahlWerwolf + anzahlWeisserWerwolf + anzahlUrwolf == gesamtPer) {
-            Toast.makeText(charakterauswahl.this, "ungültige Eingabe", Toast.LENGTH_LONG).show();
+            Toast.makeText(CharacterSelection.this, "ungültige Eingabe", Toast.LENGTH_LONG).show();
             vibrator.vibrate(vibrationsdauer);
         } else {
             Intent intent;
             if (einGeraet) {
-                intent = new Intent(this, personenauswahl.class);
+                intent = new Intent(this, PlayerManagement.class);
             } else {
-                intent = new Intent(this, Spielleiter_Verbinden.class);
+                intent = new Intent(this, HostConnectWithPlayers.class);
             }
             intent.putExtra("anzahlAmor", anzahlAmor);
             intent.putExtra("anzahlBuerger", anzahlBuerger);

@@ -1,8 +1,6 @@
-package com.example.tobias.werwolf_v1;
+package com.example.tobias.werwolf_v1.multipleDevices;
 
 import android.util.Log;
-
-import com.google.android.gms.common.api.Api;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -10,19 +8,17 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-public class Spielleiter_Verbindung extends Thread {
+public class HostToPlayerConnectionThread extends Thread {
 
-    private Socket client;
+    private final Socket client;
     private PrintWriter output;
-    private BufferedReader input;
-    private Spielleiter_Verbinden spielleiter;
-    private boolean alleVerbunden = false;
+    private final HostConnectWithPlayers spielleiter;
     private boolean spielbereit=false;
     private String name="";
     private String charakter="";
 
 
-    public Spielleiter_Verbindung(Socket client, Spielleiter_Verbinden spielleiter) {
+    public HostToPlayerConnectionThread(Socket client, HostConnectWithPlayers spielleiter) {
         this.client = client;
         this.spielleiter = spielleiter;
     }
@@ -34,8 +30,9 @@ public class Spielleiter_Verbindung extends Thread {
         String stringData;
         try {
             output = new PrintWriter(client.getOutputStream());
-            input = new BufferedReader(new InputStreamReader(client.getInputStream()));
+            BufferedReader input = new BufferedReader(new InputStreamReader(client.getInputStream()));
 
+            boolean alleVerbunden = false;
             while (!alleVerbunden) {
                 stringData = input.readLine();
                 if(stringData!=null) {
@@ -71,7 +68,7 @@ public class Spielleiter_Verbindung extends Thread {
                     output.flush();
                 }
             }
-        } catch (IOException e) {
+        } catch (IOException ignored) {
         } finally {
             try {
                 client.close();

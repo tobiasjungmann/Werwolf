@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.tobias.werwolf_v1.Startbildschirm"
+    tools:context="com.example.tobias.werwolf_v1.StartScreen"
     android:background="@color/grey"
     >
 
@@ -128,7 +128,7 @@
         android:text="@string/anleitung"
         android:gravity="center"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/knopf_blau"
+        android:background="@drawable/buttonblue"
         android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginBottom="16dp"/>

@@ -26,9 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);
-        Log.e("D", "DatabseHelper vor 1. Datenbank");
         SQLiteDatabase db = this.getWritableDatabase();
-        Log.e("D", "DatabseHelper nach 1. Datenbank");
     }
 
     @Override

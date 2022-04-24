@@ -24,11 +24,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Nacht_Liste extends AppCompatActivity implements View.OnClickListener {
+public class ListNight extends AppCompatActivity implements View.OnClickListener {
 
     private TextView beschreibung;
     private ListView personen;
-  //  private ArrayList<String> arrayList;
+    //  private ArrayList<String> arrayList;
     private CustomAdapter customAdapter;
     private DatabaseHelper mDatabaseHelper;
     private Cursor data;
@@ -71,10 +71,9 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
     private int verzaubertAktuell;
     private String verzaubertCharakter;
     private String verzaubertName;
-   // private String totErweiterungWW;
+
 
     private int charakterPosition;
-    private int listePos;
     private boolean wwletzteRundeAktiv;
     private boolean langerText;
 
@@ -94,7 +93,6 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
 
     //Urwolf
     private LinearLayout layoutUrwolf;
-    private TextView textViewUrwolfVeto;
     private CheckBox checkboxUrwolfVeto;
     private int werwolfDurchUrwolfID;
 
@@ -115,7 +113,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_nacht__liste);
+        setContentView(R.layout.activity_nightlist);
 
         anzahlAmor = getIntent().getExtras().getInt("anzahlAmor");
         anzahlBuerger = getIntent().getExtras().getInt("anzahlBuerger");
@@ -144,7 +142,6 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
         weisserWerwolfOpferID = -1;
         hexeOpferID = -1;
         buergerOpfer = -1;
-        listePos = 0;
         liebespaarEntdeckt = false;
         ritterletzteRundeGetoetet = false;
         listeAuswahlGenuegend = 0;
@@ -153,10 +150,10 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
         verzaubertCharakter = "";
         verzaubertName = "";
         wwletzteRundeAktiv = true;
-       // totErweiterungWW = "";
+
         langerText = false;
         charakterPosition = 0;
-        tot="";
+        tot = "";
 
 
         //Leiste oben
@@ -166,10 +163,10 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
 
         //UI Allgemein
         weiterNacht = findViewById(R.id.weiterNacht);
-        weiterNacht.setOnClickListener(Nacht_Liste.this);
-        beschreibung = (TextView) findViewById(R.id.beschreibung);
-        beschreibung.setOnClickListener(Nacht_Liste.this);
-        personen = (ListView) findViewById(R.id.personen);
+        weiterNacht.setOnClickListener(ListNight.this);
+        beschreibung = findViewById(R.id.beschreibung);
+        beschreibung.setOnClickListener(ListNight.this);
+        personen = findViewById(R.id.personen);
         personen.setVisibility(View.INVISIBLE);
 
 
@@ -189,7 +186,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
 
         //Urwolf
         layoutUrwolf = findViewById(R.id.layoutUrwolf);
-        textViewUrwolfVeto = findViewById(R.id.textViewUrwolfVeto);
+        TextView textViewUrwolfVeto = findViewById(R.id.textViewUrwolfVeto);
         checkboxUrwolfVeto = findViewById(R.id.checkboxUrwolfVeto);
         textViewUrwolfVeto.setOnClickListener(this);
         checkboxUrwolfVeto.setOnClickListener(this);
@@ -212,7 +209,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
         mDatabaseHelper = new DatabaseHelper(this);
         data = mDatabaseHelper.getData();
 
-       // arrayList = new ArrayList<String>();
+        // arrayList = new ArrayList<String>();
 
         customAdapter = new CustomAdapter();
         personen.setAdapter(customAdapter);
@@ -240,7 +237,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
                                     liebenderZweiID = itemID;
                                     CharakterpositionErstInkementieren = true;
                                     weiterNacht.setClickable(true);
-                                    weiterNacht.setBackground(getResources().getDrawable(R.drawable.knopf_blau));
+                                    weiterNacht.setBackground(getResources().getDrawable(R.drawable.buttonblue));
                                     listeAuswahlGenuegend = 1;
                                 }
                             } else {
@@ -264,21 +261,21 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
                             schlafplatzDiebID = itemID;
                             CharakterpositionErstInkementieren = true;
                             weiterNacht.setClickable(true);
-                            weiterNacht.setBackground(getResources().getDrawable(R.drawable.knopf_blau));
+                            weiterNacht.setBackground(getResources().getDrawable(R.drawable.buttonblue));
                             break;
 
                         case 3:                         //Wächter
                             schlafplatzWaechterID = itemID;
                             CharakterpositionErstInkementieren = true;
                             weiterNacht.setClickable(true);
-                            weiterNacht.setBackground(getResources().getDrawable(R.drawable.knopf_blau));
+                            weiterNacht.setBackground(getResources().getDrawable(R.drawable.buttonblue));
                             break;
 
                         case 4:                         //Junges
                             vorbildID = itemID;
                             CharakterpositionErstInkementieren = true;
                             weiterNacht.setClickable(true);
-                            weiterNacht.setBackground(getResources().getDrawable(R.drawable.knopf_blau));
+                            weiterNacht.setBackground(getResources().getDrawable(R.drawable.buttonblue));
                             break;
 
 
@@ -288,7 +285,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
                             verzaubertName = name;
                             CharakterpositionErstInkementieren = true;
                             weiterNacht.setClickable(true);
-                            weiterNacht.setBackground(getResources().getDrawable(R.drawable.knopf_blau));
+                            weiterNacht.setBackground(getResources().getDrawable(R.drawable.buttonblue));
                             break;
 
 
@@ -296,14 +293,14 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
                             werwolfOpferID = itemID;
                             CharakterpositionErstInkementieren = true;
                             weiterNacht.setClickable(true);
-                            weiterNacht.setBackground(getResources().getDrawable(R.drawable.knopf_blau));
+                            weiterNacht.setBackground(getResources().getDrawable(R.drawable.buttonblue));
                             break;
 
                         case 8:                         //Weisser Werwolf
                             weisserWerwolfOpferID = itemID;
                             CharakterpositionErstInkementieren = true;
                             weiterNacht.setClickable(true);
-                            weiterNacht.setBackground(getResources().getDrawable(R.drawable.knopf_blau));
+                            weiterNacht.setBackground(getResources().getDrawable(R.drawable.buttonblue));
                             break;
 
 
@@ -311,7 +308,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
                             hexeOpferID = itemID;
                             CharakterpositionErstInkementieren = true;
                             weiterNacht.setClickable(true);
-                            weiterNacht.setBackground(getResources().getDrawable(R.drawable.knopf_blau));
+                            weiterNacht.setBackground(getResources().getDrawable(R.drawable.buttonblue));
                             break;
 
 
@@ -319,13 +316,13 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
                             buergerOpfer = itemID;
                             CharakterpositionErstInkementieren = true;
                             weiterNacht.setClickable(true);
-                            weiterNacht.setBackground(getResources().getDrawable(R.drawable.knopf_blau));
+                            weiterNacht.setBackground(getResources().getDrawable(R.drawable.buttonblue));
                             break;
 
                         case 20:
                             jaegerOpfer = itemID;
                             weiterNacht.setClickable(true);
-                            weiterNacht.setBackground(getResources().getDrawable(R.drawable.knopf_blau));
+                            weiterNacht.setBackground(getResources().getDrawable(R.drawable.buttonblue));
                             break;
 
                         case 21:            //Ritter
@@ -334,7 +331,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
                             charakterRitterOpfer = charakter;
                             //ritterDialogToeten();
                             weiterNacht.setClickable(true);
-                            weiterNacht.setBackground(getResources().getDrawable(R.drawable.knopf_blau));
+                            weiterNacht.setBackground(getResources().getDrawable(R.drawable.buttonblue));
                             break;
 
                     }
@@ -348,9 +345,9 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
     public void onBackPressed() {
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder = new AlertDialog.Builder(Nacht_Liste.this, android.R.style.Theme_Material_Dialog_Alert);
+            builder = new AlertDialog.Builder(ListNight.this, android.R.style.Theme_Material_Dialog_Alert);
         } else {
-            builder = new AlertDialog.Builder(Nacht_Liste.this);
+            builder = new AlertDialog.Builder(ListNight.this);
         }
         builder.setTitle("Warnung")
                 .setMessage("Möchtest du die App wirklich verlassen? Der gesamte Spielstand geht verloren.")
@@ -380,7 +377,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
         switch (charakterPosition) {
             case 0:                         //Amor
                 if (anzahlAmor > 0) {
-                    textSpielstand.setText("Amor");
+                    textSpielstand.setText(R.string.amor);
                     layoutSpielstand.setBackgroundResource(R.drawable.leiste_amor);
 
                     if (langerText) {
@@ -402,7 +399,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
 
             case 1:                         //Freunde
                 if (anzahlFreunde > 0) {
-                    textSpielstand.setText("Freunde");
+                    textSpielstand.setText(R.string.freunde);
                     layoutSpielstand.setBackgroundResource(R.drawable.leiste_freunde);
                     if (langerText) {
                         beschreibung.setText("Ich tippe alle Freunde kurz an. - Jetzt erwachen die Freunde und schauen sich an, um sich später wiederzuerkennen. - Die Freunde schlafen beruhigt wieder ein, da sie wisssen, dass sie nicht alleine sind.");
@@ -422,7 +419,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
 
             case 2:                         //Dieb
                 if (anzahlDieb > 0) {
-                    textSpielstand.setText("Dieb");
+                    textSpielstand.setText(R.string.dieb);
                     layoutSpielstand.setBackgroundResource(R.drawable.leiste_dieb);
                     if (langerText) {
                         beschreibung.setText("Jetzt erwacht der Dieb und sucht sich eine Person aus, bei der er oder sie die Nacht verbringen möchten. - Er zeigt auf diese Person und schläft danach wieder ein.");
@@ -441,7 +438,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
 
             case 3:                         //Wächter
                 if (anzahlWaechter > 0) {
-                    textSpielstand.setText("Wächter");
+                    textSpielstand.setText(R.string.waechter);
                     layoutSpielstand.setBackgroundResource(R.drawable.leiste_waechter);
                     if (langerText) {
                         beschreibung.setText("Der Wächter wählt eine Person, die er diese Nacht beschützen möchte. - Der Wächter schläft wieder ein.");
@@ -460,7 +457,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
 
             case 4:                         //Junges
                 if (anzahlJunges > 0) {
-                    textSpielstand.setText("Junges");
+                    textSpielstand.setText(R.string.junges);
                     layoutSpielstand.setBackgroundResource(R.drawable.leiste_junges);
                     if (langerText) {
                         beschreibung.setText("Das Werwolfjunge erwacht und sucht sich ein Vorbild aus. Sollte dieses Vorbild sterben, wirst du auch ein Werwolf und wachst gemeinsam mit ihnen auf. -\n Das Junge schläft wieder.");
@@ -482,7 +479,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
 
             case 5:                         //Seher
                 if (anzahlSeher > 0) {
-                    textSpielstand.setText("Seher");
+                    textSpielstand.setText(R.string.seher);
                     layoutSpielstand.setBackgroundResource(R.drawable.leiste_seher);
                     if (langerText) {
                         beschreibung.setText("Als nächstes wacht der Seher auf und zeigt auf eine Person, deren Karte er sehen möchte. Wenn er sie gesehen hat schläft er wieder ein.");
@@ -500,7 +497,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
 
             case 6:         //Flötenspieler
                 if (anzahlFloetenspieler > 0) {
-                    textSpielstand.setText("Flötemspieler");
+                    textSpielstand.setText(R.string.floetenspieler);
                     layoutSpielstand.setBackgroundResource(R.drawable.leiste_floetenspieler);
                     if (langerText) {
                         beschreibung.setText("Zuletzt erwacht der bezaubernde Flötenspieler und darf eine Person seiner Wahl verzaubern. Hat er alle Mitspieler verzaubert gewinnt er.");
@@ -523,7 +520,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
                     ritterDialogVorbereiten();
                 } else {
                     if (anzahlWerwolf + anzahlUrwolf + anzahlWeisserWerwolf > 0) {
-                        textSpielstand.setText("Werwolf");
+                        textSpielstand.setText(R.string.werwolf);
                         layoutSpielstand.setBackgroundResource(R.drawable.leiste_werwolf);
                         if (langerText) {
                             beschreibung.setText("Jetzt wachen die Werwölfe auf und suchen sich ihr Opfer für diese Nacht aus. Haben sie sich entschieden schlafen sie auch schon wieder ein.");
@@ -534,10 +531,6 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
                         weiterNacht.setBackground(getResources().getDrawable(R.drawable.knopf_blau_unclickable));
                         customAdapter.notifyDataSetChanged();
                         personen.setVisibility(View.VISIBLE);
-                   /* if (ritterletzteRundeGetoetet) {
-                        ritterDialogII();
-                        ritterletzteRundeGetoetet = false;
-                    }*/
                     } else {
                         beschreibung.setText("Fehler: Es sind keine Werwölfe mehr im Spiel!");
                     }
@@ -546,7 +539,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
 
             case 8:                     //Weisser Werwolf
                 if (anzahlWeisserWerwolf > 0 && !wwletzteRundeAktiv) {
-                    textSpielstand.setText("Weißer Werwolf");
+                    textSpielstand.setText(R.string.weisser_werwolf);
                     layoutSpielstand.setBackgroundResource(R.drawable.leiste_weisserwerwolf);
                     if (langerText) {
                         beschreibung.setText("Text Weißer Werwolf");
@@ -569,7 +562,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
                 if (anzahlUrwolf > 0 && urwolfVeto != -1) {
                     personen.setVisibility(View.GONE);
                     layoutUrwolf.setVisibility(View.VISIBLE);
-                    textSpielstand.setText("Urwolf");
+                    textSpielstand.setText(R.string.urwolf);
                     layoutSpielstand.setBackgroundResource(R.drawable.leiste_urwolf);
                     if (langerText) {
                         beschreibung.setText("Text Urwolf");
@@ -589,7 +582,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
                 layoutUrwolf.setVisibility(View.GONE);
                 if (anzahlHexe > 0) {
                     if (trankLebenEinsetzbar || trankTodEinsetzbar) {
-                        textSpielstand.setText("Hexe");
+                        textSpielstand.setText(R.string.hexe);
                         werwolfOpferIDBackupHexe = werwolfOpferID;
                         layoutSpielstand.setBackgroundResource(R.drawable.leiste_hexe);
                         if (langerText) {
@@ -604,15 +597,12 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
 
                         if (trankLebenEinsetzbar || trankTodEinsetzbar) {
                             layoutHexeNacht.setVisibility(View.VISIBLE);
-                            if(!(trankLebenEinsetzbar && trankTodEinsetzbar))
-                            {
-                                if(trankLebenEinsetzbar)        //leben anzaeigen, sonst nur tod
+                            if (!(trankLebenEinsetzbar && trankTodEinsetzbar)) {
+                                if (trankLebenEinsetzbar)        //leben anzaeigen, sonst nur tod
                                 {
                                     rettenLayoutHexe.setVisibility(View.VISIBLE);
                                     toetenLayoutHexe.setVisibility(View.GONE);
-                                }
-                                else
-                                {
+                                } else {
                                     LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                                             LinearLayout.LayoutParams.MATCH_PARENT,
                                             LinearLayout.LayoutParams.WRAP_CONTENT
@@ -659,23 +649,20 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
                 }
 
                 auswerten();
-                if(tot.compareTo("")==0)
-                {
+                if (tot.compareTo("") == 0) {
                     beschreibung.setText("Das ganze Dorf erwacht, alle haben überlebt");
-                }
-                else
-                {
+                } else {
                     beschreibung.setText("Das ganze Dorf erwacht außer: " + tot);
                 }
-                tot="";
+                tot = "";
 
                 //wenn Jäger gestorben, entsprechende charakterposition
                 if (!jaegerAktiv) {
-                    layoutHexeNacht.setVisibility(View.GONE);       //um hinter der Hexe aufzuräumen...
+                    layoutHexeNacht.setVisibility(View.GONE);
                     weiterNacht.setClickable(true);
-                    weiterNacht.setBackground(getResources().getDrawable(R.drawable.knopf_blau));
+                    weiterNacht.setBackground(getResources().getDrawable(R.drawable.buttonblue));
                     personen.setVisibility(View.INVISIBLE);
-                    textSpielstand.setText("Dorf");
+                    textSpielstand.setText(R.string.village);
                     layoutSpielstand.setBackgroundResource(R.drawable.leiste_hellgruen);
                     charakterPosition++;
 
@@ -700,7 +687,6 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
 
                 customAdapter.notifyDataSetChanged();
                 personen.setVisibility(View.VISIBLE);
-
 
 
                 //was macht der folgende Abschnitt????
@@ -770,8 +756,8 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
                     weisserWerwolfOpferID = -1;
                     schlafplatzWaechterID = -1;
                     schlafplatzDiebID = -1;
-                    tot="";
-                   // totErweiterungWW = "";
+                    tot = "";
+                    // totErweiterungWW = "";
                 } else {
                     String s = beschreibung.getText().toString();
                     beschreibung.setText(s + "\n\nDer Jäger ist gestorben. Er darf eine weitere Person töten:");
@@ -1183,7 +1169,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
 
 
     private void siegbildschirmOeffnen(String sieger) {
-        Intent intent = new Intent(this, sieg_activity.class);
+        Intent intent = new Intent(this, VictoryActivity.class);
         intent.putExtra("sieger", sieger);
         startActivity(intent);
     }
@@ -1440,7 +1426,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
         sicherToeten(jaegerOpfer, jaegerOpferName, jaegerOpferCharakter);
 
         charakterPosition = charakterPositionJaegerBackup;
-       // charakterPosition++;
+        // charakterPosition++;
         charakterPositionBestimmen();
     }
 
@@ -1557,7 +1543,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
                     personen.setVisibility(View.INVISIBLE);
                     customAdapter.notifyDataSetChanged();
                     weiterNacht.setClickable(true);
-                    weiterNacht.setBackground(getResources().getDrawable(R.drawable.knopf_blau));
+                    weiterNacht.setBackground(getResources().getDrawable(R.drawable.buttonblue));
                     trankTodEinsetzbar = true;
                     CharakterpositionErstInkementieren = false;
                     charakterPosition++;
@@ -1620,11 +1606,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
                             }
                         } else {
                             beschreibung.setText("Das ganze Dorf schläft ein.");
-                            if (langerText) {
-                                langerText = false;
-                            } else {
-                                langerText = true;
-                            }
+                            langerText = !langerText;
 
                         }
                         break;
@@ -1750,7 +1732,7 @@ public class Nacht_Liste extends AppCompatActivity implements View.OnClickListen
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            convertView = getLayoutInflater().inflate(R.layout.mein_list_item_icon, null);
+            convertView = getLayoutInflater().inflate(R.layout.mylistitemicon, null);
             pers = (TextView) convertView.findViewById(R.id.textPer);
             icon = (ImageView) convertView.findViewById(R.id.iconListe);
             data.moveToPosition(position);

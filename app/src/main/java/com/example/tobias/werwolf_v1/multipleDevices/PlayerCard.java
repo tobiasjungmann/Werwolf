@@ -1,4 +1,4 @@
-package com.example.tobias.werwolf_v1;
+package com.example.tobias.werwolf_v1.multipleDevices;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,7 +10,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class Spieler_Karte extends AppCompatActivity implements View.OnTouchListener {
+import com.example.tobias.werwolf_v1.R;
+import com.example.tobias.werwolf_v1.SquareLayout;
+import com.example.tobias.werwolf_v1.StartScreen;
+
+public class PlayerCard extends AppCompatActivity implements View.OnTouchListener {
 
 
     private TextView charakterKarte;
@@ -22,7 +26,7 @@ public class Spieler_Karte extends AppCompatActivity implements View.OnTouchList
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_spieler__karte);
+        setContentView(R.layout.activity_playercard);
 
         charakterKarte = findViewById(R.id.charakterKarte);
         layoutKarteSpieler = findViewById(R.id.layoutKarteSpieler);
@@ -108,7 +112,7 @@ public class Spieler_Karte extends AppCompatActivity implements View.OnTouchList
             }
         }
 
-        if(v.getId()==R.id.statbildschirmbutton)
+        if(v.getId()==R.id.victoryStartScreenButton)
         {
             startbildschirmOeffnen();
             return super.onTouchEvent(event);
@@ -121,7 +125,7 @@ public class Spieler_Karte extends AppCompatActivity implements View.OnTouchList
 
     private void startbildschirmOeffnen()
     {
-        Intent intent =new Intent(this, Startbildschirm.class);
+        Intent intent =new Intent(this, StartScreen.class);
         startActivity(intent);
     }
 }
