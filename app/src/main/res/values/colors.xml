@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#A53B3B</color>
+    <color name="colorPrimaryDark">#494949</color>
+    <color name="colorAccent">#c9a34246</color>
+    <color name="blau"> #2874a6 </color>
+    <color name="blau_unclickable">#486375</color>
+    <color name="orange">#D3442B</color>
+    <color name="gruen"> #DAF7A6 </color>
+    <color name="gelb"> #FFC300  </color>
+    <color name="schwarz">#000000</color>
+
+    <color name="grau">#979696</color>
+
+    <color name="farbe_werwolf">#777070</color>
+    <color name="farbe_buerger">#22C02A</color>
+    <color name="farbe_amor">#FF0000</color>
+    <color name="farbe_hexe">#FAC706</color>
+    <color name="farbe_waechter">#F57C00</color>
+    <color name="farbe_maedchen">#D48EF1</color>
+    <color name="farbe_seher">#AEEEBD44</color>
+    <color name="farbe_dieb">#7B1FA2</color>
+    <color name="farbe_jaeger">#235825</color>
+    <color name="farbe_ritter">#A3310D</color>
+    <color name="farbe_floetenspieler">#1976D2</color>
+    <color name="farbe_freunde">#689F38</color>
+    <color name="farbe_junges">#607D81</color>
+    <color name="farbe_weisserwolf">#D5D5D5</color>
+    <color name="farbe_urwolf">#343642</color>
+
+</resources>

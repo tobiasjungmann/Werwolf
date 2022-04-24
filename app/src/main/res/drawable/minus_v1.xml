@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <item android:top="0dp" android:left="0dp" android:right="20dp" android:bottom="20dp">
+        <shape android:shape="rectangle">
+            <size android:width="24dp"
+                android:height="24dp"/>
+            <solid android:color="@color/gruen"/>
+            <corners android:topLeftRadius="13dp"/>
+        </shape>
+    </item>
+
+
+
+    <item android:top="24dp" android:left="0dp" android:right="20dp" android:bottom="0dp">
+        <shape android:shape="rectangle">
+            <size android:width="24dp"
+                android:height="24dp"/>
+            <solid android:color="@color/gruen"/>
+            <corners android:bottomLeftRadius="13dp"/>
+        </shape>
+    </item>
+
+    <item android:top="0dp" android:left="40dp" android:right="0dp" android:bottom="24dp" >
+        <shape android:shape="rectangle">
+            <size android:width="24dp"
+                android:height="24dp"/>
+            <solid android:color="@color/gruen"/>
+            <corners android:topRightRadius="13dp"/>
+        </shape>
+    </item>
+
+    <item android:top="40dp" android:left="40dp" android:right="0dp" android:bottom="0dp">
+        <shape android:shape="rectangle">
+            <size android:width="24dp"
+                android:height="24dp"/>
+            <solid android:color="@color/gruen"/>
+            <corners android:bottomRightRadius="13dp"/>
+        </shape>
+    </item>
+
+
+    <item android:top="24dp" android:left="8dp" android:bottom="24dp" android:right="8dp" >
+        <shape android:shape="rectangle">
+            <size android:width="48dp"
+                android:height="16dp"/>
+            <solid android:color="@color/schwarz"/>
+        </shape>
+    </item>
+
+
+</layer-list>

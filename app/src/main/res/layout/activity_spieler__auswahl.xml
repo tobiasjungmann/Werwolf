@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Spieler_Auswahl"
+    android:background="@color/grey">
+
+    <LinearLayout
+        android:id="@+id/layoutModus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/leiste_gelb">
+
+        <TextView
+            android:id="@+id/textModus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:text="@string/spieler"
+            android:textColor="@color/schwarz"
+            android:textSize="21sp" />
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:id="@+id/nameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/knopf_grau"
+        android:layout_below="@id/layoutModus"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/nameEingeben"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:hint="@string/name"
+            android:inputType="textPersonName"
+            android:textSize="20sp"
+            android:visibility="visible"
+            android:importantForAutofill="no" />
+
+        <Button
+            android:id="@+id/bereit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/knopf_blau"
+            android:gravity="center"
+            android:text="Bereit"
+            android:textSize="20dp"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+
+
+        <!-- auf andereSpieler warten -->
+    <TextView
+        android:id="@+id/statusVerbindung"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_below="@id/nameLayout"
+        android:text="Verbunden\nWähle deinen Spielernamen und bestätige mit BEREIT."
+        android:textColor="@color/weiss"
+        android:textSize="25dp"
+        android:visibility="gone" />
+
+    <LinearLayout
+        android:id="@+id/wartenLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_below="@id/statusVerbindung"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/knopf_grau"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Bereit"
+            android:textSize="35dp"
+            android:gravity="center"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/knopf_blau"
+            android:orientation="vertical"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/textWarten"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="8dp"
+                android:gravity="center"
+                android:text="warten auf andere Spieler"
+                android:textSize="30dp" />
+
+            <TextView
+                android:id="@+id/textWartenAnimation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:gravity="center"
+                android:text="..."
+                android:textSize="30dp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+
+<!-- Name eingeben -->
+
+
+    <com.example.tobias.werwolf_v1.SquareLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:layout_marginRight="16dp"
+    android:layout_marginLeft="16dp"
+    android:id="@+id/square"
+    android:visibility="visible">
+
+    <SurfaceView
+        android:id="@+id/cameraview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</com.example.tobias.werwolf_v1.SquareLayout>
+
+
+<TextView
+    android:id="@+id/infoText"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Scanne den QR-Code des Spielleiters um dich zu Verbinden."
+    android:gravity="center"
+    android:textSize="25dp"
+    android:textColor="@color/weiss"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="24dp"
+    android:layout_below="@+id/square"
+    android:visibility="visible"/>
+
+</RelativeLayout>
