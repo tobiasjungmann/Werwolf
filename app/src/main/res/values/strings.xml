@@ -56,6 +56,11 @@
     <string name="charakterkarte_dr_cken_und_halten_um_eigene_rolle_zu_sehen">Charakterkarte drücken und halten um eigene Rolle zu sehen.</string>
     <string name="mitspielerAnzahl">Mitspieler: 0 von Max</string>
 
+
+
+    <string name="numberWrapper">%1$d</string>
+    <string name="combinedWrapper">Gesamt %1$d</string>
+
     <color name="grey">#696969</color>
     <color name="hellgrau">#808080</color>
     <color name="weiss">#ffffff</color>

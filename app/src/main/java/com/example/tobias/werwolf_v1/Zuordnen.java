@@ -150,7 +150,7 @@ public class Zuordnen extends AppCompatActivity {
 
                 String charakterHilfe = charakterErmitteln(position);
                 Log.e("D", "Name:    " + nameAkt);
-                mDatabaseHelper.deleteNurName(nameAkt);
+                mDatabaseHelper.deleteOnlyName(nameAkt);
                 mDatabaseHelper.addCharakter(nameAkt, charakterHilfe);
                 // Toast.makeText(Zuordnen.this, ""+nameAkt+"  |  "+charakterHilfe, Toast.LENGTH_SHORT).show();
                 namenSchreiben();
