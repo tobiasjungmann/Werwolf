@@ -420,9 +420,37 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
-                    android:text="Wie in II.Karten beschrieben muss die Anzahl der verschiedenen Charaktere sowie die Namen der mitspielenden Personen eingegeben werden.\n\nDie App lost jeder Person dann eine Rolle zu. Nacheinander wird je ein Namen, sowie dessen Karte ausgegeben. Der Spielleiter weckt die entsprechende Person und zeigt die Karte. Jeder Mitspieler muss sie sich merken. Sie kann nicht erneut gezeigt werden."
+                    android:text="@string/manual_text_without_cards"
                     android:textColor="@color/weiss"
                     android:textSize="17dp" />
+
+
+                <TextView
+                    android:id="@+id/sourcesHeadline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:text="\nIV. Quellen"
+                    android:textColor="@color/weiss"
+                    android:textSize="25dp" />
+
+                <TextView
+                    android:id="@+id/sourcesText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="32dp"
+                    android:text="
+Wolf Icons erstellt von Freepik - Flaticon: https://www.flaticon.com/de/kostenlose-icons/wolf\n
+Victory icons created by imaginationlol - Flaticon: https://www.flaticon.com/free-icons/victory\n
+Heart icons created by Freepik - Flaticon: https://www.flaticon.com/free-icons/heart\n
+Shield icons created by Good Ware - Flaticon: https://www.flaticon.com/free-icons/shield\n
+Magic icons created by Freepik - Flaticon: https://www.flaticon.com/free-icons/magic\n
+Dog icons created by Freepik - Flaticon: https://www.flaticon.com/free-icons/dog\n
+Hacker icons created by Andy Horvath - Flaticon: https://www.flaticon.com/free-icons/hacker\n
+Target icons created by Uniconlabs - Flaticon: https://www.flaticon.com/free-icons/target"
+                    android:textColor="@color/weiss"
+                    android:textSize="17dp"
+                    android:autoLink="web"/>
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 

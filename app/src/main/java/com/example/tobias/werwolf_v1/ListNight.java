@@ -1740,57 +1740,57 @@ public class ListNight extends AppCompatActivity implements View.OnClickListener
             switch (charakterPosition) {
                 case 0:                                     //Amor
                     if (data.getInt(0) == liebenderEinsID) {
-                        icon.setImageResource(R.drawable.herz_v1);
+                        icon.setImageResource(R.drawable.icon_heart);
                     }
                     if (data.getInt(0) == liebenderZweiID) {
-                        icon.setImageResource(R.drawable.herz_v1);
+                        icon.setImageResource(R.drawable.icon_heart);
                     }
                     break;
 
                 case 2:                                   //dieb
                     if (data.getInt(0) == schlafplatzDiebID) {
-                        icon.setImageResource(R.drawable.dieb_icon_v1);
+                        icon.setImageResource(R.drawable.icon_thief);
                     }
                     break;
 
                 case 3:                                     //wächter
                     if (data.getInt(0) == schlafplatzWaechterID) {
-                        icon.setImageResource(R.drawable.schild_v1);
+                        icon.setImageResource(R.drawable.icon_shield);
                     }
                     break;
 
                 case 4:                                     //Junges
                     if (data.getInt(0) == vorbildID) {
-                        icon.setImageResource(R.drawable.werwolf_icon_v1);
+                        icon.setImageResource(R.drawable.icon_wolf);
                     }
                     break;
 
 
                 case 6:                                     //flötenspieler
                     if (data.getString(4).compareTo("ja") == 0) {
-                        icon.setImageResource(R.drawable.verzaubert_v1);
+                        icon.setImageResource(R.drawable.icon_magic);
                     }
                     if (data.getInt(0) == verzaubertAktuell) {
-                        icon.setImageResource(R.drawable.verzaubert_v1);
+                        icon.setImageResource(R.drawable.icon_magic);
                     }
                     break;
 
 
                 case 7:                                     //Werwölfe
                     if (data.getInt(0) == werwolfOpferID) {
-                        icon.setImageResource(R.drawable.totenkopf_v1);
+                        icon.setImageResource(R.drawable.icon_dead);
                     }
                     if (data.getInt(0) == werwolfDurchUrwolfID && werwolfDurchUrwolfID != -1) {
-                        icon.setImageResource(R.drawable.werwolf_icon_v1);
+                        icon.setImageResource(R.drawable.icon_wolf);
                     }
                     if (data.getString(2).compareTo("werwolf") == 0) {
-                        icon.setImageResource(R.drawable.werwolf_icon_v1);
+                        icon.setImageResource(R.drawable.icon_wolf);
                     }
                     if (data.getString(2).compareTo("weisserwerwolf") == 0) {
-                        icon.setImageResource(R.drawable.werwolf_icon_v1);
+                        icon.setImageResource(R.drawable.icon_wolf);
                     }
                     if (data.getString(2).compareTo("urwolf") == 0) {
-                        icon.setImageResource(R.drawable.werwolf_icon_v1);
+                        icon.setImageResource(R.drawable.icon_wolf);
                     }
                     break;
 
@@ -1798,55 +1798,55 @@ public class ListNight extends AppCompatActivity implements View.OnClickListener
                 case 8:                                     //Weisserwolf
 
                     if (data.getInt(0) == werwolfDurchUrwolfID && werwolfDurchUrwolfID != -1) {
-                        icon.setImageResource(R.drawable.werwolf_icon_v1);
+                        icon.setImageResource(R.drawable.icon_wolf);
                     }
                     if (data.getString(2).compareTo("werwolf") == 0) {
-                        icon.setImageResource(R.drawable.werwolf_icon_v1);
+                        icon.setImageResource(R.drawable.icon_wolf);
                     }
                     if (data.getString(2).compareTo("weisserwerwolf") == 0) {
-                        icon.setImageResource(R.drawable.werwolf_icon_v1);
+                        icon.setImageResource(R.drawable.icon_wolf);
                     }
                     if (data.getString(2).compareTo("urwolf") == 0) {
-                        icon.setImageResource(R.drawable.werwolf_icon_v1);
+                        icon.setImageResource(R.drawable.icon_wolf);
                     }
                     if (data.getInt(0) == weisserWerwolfOpferID) {
-                        icon.setImageResource(R.drawable.totenkopf_v1);
+                        icon.setImageResource(R.drawable.icon_dead);
                     }
                     break;
 
                 case 10:                                    //Hexe
                     if (data.getInt(0) == hexeOpferID) {
-                        icon.setImageResource(R.drawable.totenkopf_v1);
+                        icon.setImageResource(R.drawable.icon_dead);
                     }
                     break;
 
                 case 12:                                    //Bürgeropfer
                     if (data.getInt(0) == buergerOpfer) {
-                        icon.setImageResource(R.drawable.kreuz_v1);
+                        icon.setImageResource(R.drawable.icon_dead);
                     }
                     break;
 
                 case 20:                                    //Bürgeropfer
                     if (data.getInt(0) == jaegerOpfer) {
-                        icon.setImageResource(R.drawable.kreuz_v1);
+                        icon.setImageResource(R.drawable.icon_dead);
                     }
                     break;
 
                 case 21:                                     //Ritter töten
                     if (data.getInt(0) == ritterOpfer) {
-                        icon.setImageResource(R.drawable.totenkopf_v1);
+                        icon.setImageResource(R.drawable.icon_dead);
                     }
                     if (data.getInt(0) == werwolfDurchUrwolfID && werwolfDurchUrwolfID != -1) {
-                        icon.setImageResource(R.drawable.werwolf_icon_v1);
+                        icon.setImageResource(R.drawable.icon_wolf);
                     }
                     if (data.getString(2).compareTo("werwolf") == 0) {
-                        icon.setImageResource(R.drawable.werwolf_icon_v1);
+                        icon.setImageResource(R.drawable.icon_wolf);
                     }
                     if (data.getString(2).compareTo("weisserwerwolf") == 0) {
-                        icon.setImageResource(R.drawable.werwolf_icon_v1);
+                        icon.setImageResource(R.drawable.icon_wolf);
                     }
                     if (data.getString(2).compareTo("urwolf") == 0) {
-                        icon.setImageResource(R.drawable.werwolf_icon_v1);
+                        icon.setImageResource(R.drawable.icon_wolf);
                     }
                     break;
 

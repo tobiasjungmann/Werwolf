@@ -9,6 +9,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.tobias.werwolf_v1.multipleDevices.PlayerConnectToHost;
+
 import maes.tech.intentanim.CustomIntent;
 
 
@@ -79,7 +81,7 @@ public class StartScreen extends AppCompatActivity implements View.OnClickListen
 
 
     private void spielerAuswahlOeffnen() {
-        Intent intent = new Intent(StartScreen.this, Spieler_Auswahl.class);
+        Intent intent = new Intent(StartScreen.this, PlayerConnectToHost.class);
         intent.putExtra("Karten", "nein");
         startActivity(intent);
         CustomIntent.customType(this, "left-to-right");

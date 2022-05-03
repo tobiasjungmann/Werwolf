@@ -69,6 +69,7 @@
     <string name="VictoryFlute">Der Flötenspieler hat alle anderen Spieler verzaubert! Er hat gewonnen!</string>
     <string name="pressBackAgain">Um die App zu schließen Taste erneut drücken.</string>
     <string name="village">Dorf</string>
+    <string name="manual_text_without_cards">Wie in II.Karten beschrieben muss die Anzahl der verschiedenen Charaktere sowie die Namen der mitspielenden Personen eingegeben werden.\n\nDie App lost jeder Person dann eine Rolle zu. Nacheinander wird je ein Namen, sowie dessen Karte ausgegeben. Der Spielleiter weckt die entsprechende Person und zeigt die Karte. Jeder Mitspieler muss sie sich merken. Sie kann nicht erneut gezeigt werden.</string>
 
 
     <color name="grey">#696969</color>
