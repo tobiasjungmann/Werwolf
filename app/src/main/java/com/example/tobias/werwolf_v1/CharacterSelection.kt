@@ -1,606 +1,527 @@
-package com.example.tobias.werwolf_v1;
+package com.example.tobias.werwolf_v1
 
-import static com.example.tobias.werwolf_v1.R.id.minusAmor;
+import android.annotation.TargetApi
+import android.content.Intent
+import android.graphics.Color
+import android.os.Build
+import android.os.Bundle
+import android.os.Vibrator
+import android.view.View
+import android.view.Window
+import android.view.WindowManager
+import android.widget.*
+import androidx.appcompat.app.AppCompatActivity
+import com.example.tobias.werwolf_v1.R.id
+import com.example.tobias.werwolf_v1.multipleDevices.HostConnectWithPlayers
+import maes.tech.intentanim.CustomIntent
 
-import android.annotation.TargetApi;
-import android.content.Intent;
-import android.graphics.Color;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Vibrator;
-import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.tobias.werwolf_v1.multipleDevices.HostConnectWithPlayers;
-
-import maes.tech.intentanim.CustomIntent;
-
-public class CharacterSelection extends AppCompatActivity implements View.OnClickListener {
-
-    private TextView nummerAmor;
-    private TextView nummerHexe;
-    private TextView nummerWaechter;
-    private TextView nummerDieb;
-    private TextView nummerSeher;
-    private TextView nummerBuerger;
-    private TextView nummerWerwolf;
-    private TextView nummerJunges;
-    private TextView nummerJaeger;
-    private TextView nummerWeisserWerwolf;
-    private TextView nummerMaedchen;
-    private TextView nummerFloetenspieler;
-    private TextView nummerUrwolf;
-    private TextView nummerRitter;
-    private TextView nummerFreunde;
-
-    private TextView infoTextAmor;
-    private TextView infoTextHexe;
-    private TextView infoTextWaechter;
-    private TextView infoTextDieb;
-    private TextView infoTextSeher;
-    private TextView infoTextBuerger;
-    private TextView infoTextWerwolf;
-    private TextView infoTextJunges;
-    private TextView infoTextJaeger;
-    private TextView infoTextWeisserWerwolf;
-    private TextView infoTextMaedchen;
-    private TextView infoTextFloetenspieler;
-    private TextView infoTextUrwolf;
-    private TextView infoTextRitter;
-    private TextView infoTextFreunde;
-
-    private int anzahlAmor;
-    private int anzahlWerwolf;
-    private int anzahlHexe;
-    private int anzahlDieb;
-    private int anzahlSeher;
-    private int anzahlJunges;
-    private int anzahlJaeger;
-    private int anzahlBuerger;
-    private int anzahlWaechter;
-    private int anzahlWeisserWerwolf;
-    private int anzahlMaedchen;
-    private int anzahlFloetenspieler;
-    private int anzahlUrwolf;
-    private int anzahlRitter;
-    private int anzahlFreunde;
-    private int gesamtPer;
-
-    private TextView gesamtTxt;
-    private boolean einGeraet;
-    private Vibrator vibrator;
-    private int vibrationsdauer;
-
-
+class CharacterSelection : AppCompatActivity(), View.OnClickListener {
+    private var nummerAmor: TextView? = null
+    private var nummerHexe: TextView? = null
+    private var nummerWaechter: TextView? = null
+    private var nummerDieb: TextView? = null
+    private var nummerSeher: TextView? = null
+    private var nummerBuerger: TextView? = null
+    private var nummerWerwolf: TextView? = null
+    private var nummerJunges: TextView? = null
+    private var nummerJaeger: TextView? = null
+    private var nummerWeisserWerwolf: TextView? = null
+    private var nummerMaedchen: TextView? = null
+    private var nummerFloetenspieler: TextView? = null
+    private var nummerUrwolf: TextView? = null
+    private var nummerRitter: TextView? = null
+    private var nummerFreunde: TextView? = null
+    private var infoTextAmor: TextView? = null
+    private var infoTextHexe: TextView? = null
+    private var infoTextWaechter: TextView? = null
+    private var infoTextDieb: TextView? = null
+    private var infoTextSeher: TextView? = null
+    private var infoTextBuerger: TextView? = null
+    private var infoTextWerwolf: TextView? = null
+    private var infoTextJunges: TextView? = null
+    private var infoTextJaeger: TextView? = null
+    private var infoTextWeisserWerwolf: TextView? = null
+    private var infoTextMaedchen: TextView? = null
+    private var infoTextFloetenspieler: TextView? = null
+    private var infoTextUrwolf: TextView? = null
+    private var infoTextRitter: TextView? = null
+    private var infoTextFreunde: TextView? = null
+    private var anzahlAmor = 0
+    private var anzahlWerwolf = 0
+    private var anzahlHexe = 0
+    private var anzahlDieb = 0
+    private var anzahlSeher = 0
+    private var anzahlJunges = 0
+    private var anzahlJaeger = 0
+    private var anzahlBuerger = 0
+    private var anzahlWaechter = 0
+    private var anzahlWeisserWerwolf = 0
+    private var anzahlMaedchen = 0
+    private var anzahlFloetenspieler = 0
+    private var anzahlUrwolf = 0
+    private var anzahlRitter = 0
+    private var anzahlFreunde = 0
+    private var gesamtPer = 0
+    private var gesamtTxt: TextView? = null
+    private var einGeraet = false
+    private var vibrator: Vibrator? = null
+    private var vibrationsdauer = 0
     @TargetApi(Build.VERSION_CODES.M)
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         //this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_charakterselection);
-
-        einGeraet = getIntent().getExtras().getBoolean("EinGeraet", true);
-        anzahlAmor = 0;
-        anzahlBuerger = 0;
-        anzahlWaechter = 0;
-        anzahlDieb = 0;
-        anzahlHexe = 0;
-        anzahlJaeger = 0;
-        anzahlJunges = 0;
-        anzahlSeher = 0;
-        anzahlWerwolf = 0;
-        anzahlWeisserWerwolf = 0;
-        anzahlMaedchen = 0;
-        anzahlFloetenspieler = 0;
-        anzahlUrwolf = 0;
-        anzahlRitter = 0;
-        anzahlFreunde = 0;
-
-
-        TextView textModus = findViewById(R.id.textModus);
-        LinearLayout layoutModus = findViewById(R.id.layoutModus);
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        this.window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+        setContentView(R.layout.activity_charakterselection)
+        einGeraet = intent.extras!!.getBoolean("EinGeraet", true)
+        anzahlAmor = 0
+        anzahlBuerger = 0
+        anzahlWaechter = 0
+        anzahlDieb = 0
+        anzahlHexe = 0
+        anzahlJaeger = 0
+        anzahlJunges = 0
+        anzahlSeher = 0
+        anzahlWerwolf = 0
+        anzahlWeisserWerwolf = 0
+        anzahlMaedchen = 0
+        anzahlFloetenspieler = 0
+        anzahlUrwolf = 0
+        anzahlRitter = 0
+        anzahlFreunde = 0
+        val textModus = findViewById<TextView>(id.textModus)
+        val layoutModus = findViewById<LinearLayout>(id.layoutModus)
         if (einGeraet) {
-            layoutModus.setBackgroundResource(R.drawable.leiste_hellgruen);
+            layoutModus.setBackgroundResource(R.drawable.leiste_hellgruen)
         } else {
-            layoutModus.setBackgroundResource(R.drawable.leiste_orange);
-
+            layoutModus.setBackgroundResource(R.drawable.leiste_orange)
         }
-        textModus.setText(R.string.spielleiter);
-
-
-        vibrationsdauer = 8;
-        vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-
-
-        gesamtPer = 0;
-        gesamtTxt = findViewById(R.id.gesamtTxt);
-        gesamtTxt.setTextColor(Color.WHITE);
-
-        Button spiel_starten = findViewById(R.id.spiel_starten);
-        spiel_starten.setOnClickListener(CharacterSelection.this);
-
-        TextView iconAmor = findViewById(R.id.iconAmor);
-        iconAmor.setOnClickListener(CharacterSelection.this);
-        TextView iconHexe = findViewById(R.id.iconHexe);
-        iconHexe.setOnClickListener(CharacterSelection.this);
-        TextView iconWaechter = findViewById(R.id.iconWaechter);
-        iconWaechter.setOnClickListener(CharacterSelection.this);
-        TextView iconDieb = findViewById(R.id.iconDieb);
-        iconDieb.setOnClickListener(CharacterSelection.this);
-        TextView iconSeher = findViewById(R.id.iconSeher);
-        iconSeher.setOnClickListener(CharacterSelection.this);
-        TextView iconBuerger = findViewById(R.id.iconBuerger);
-        iconBuerger.setOnClickListener(CharacterSelection.this);
-        TextView iconWerwolf = findViewById(R.id.iconWerwolf);
-        iconWerwolf.setOnClickListener(CharacterSelection.this);
-        TextView iconJunges = findViewById(R.id.iconJunges);
-        iconJunges.setOnClickListener(CharacterSelection.this);
-        TextView iconJaeger = findViewById(R.id.iconJaeger);
-        iconJaeger.setOnClickListener(CharacterSelection.this);
-        TextView iconWeisserWerwolf = findViewById(R.id.iconWeisserWerwolf);
-        iconWeisserWerwolf.setOnClickListener(CharacterSelection.this);
-        TextView iconMaedchen = findViewById(R.id.iconMaedchen);
-        iconMaedchen.setOnClickListener(CharacterSelection.this);
-        TextView iconFloetenspieler = findViewById(R.id.iconFloetenspieler);
-        iconFloetenspieler.setOnClickListener(CharacterSelection.this);
-        TextView iconUrwolf = findViewById(R.id.iconUrwolf);
-        iconUrwolf.setOnClickListener(CharacterSelection.this);
-        TextView iconRitter = findViewById(R.id.iconRitter);
-        iconRitter.setOnClickListener(CharacterSelection.this);
-        TextView iconFreunde = findViewById(R.id.iconFreunde);
-        iconFreunde.setOnClickListener(CharacterSelection.this);
-
-        ImageView minusAmor = findViewById(R.id.minusAmor);
-        minusAmor.setOnClickListener(CharacterSelection.this);
-        ImageView plusAmor = findViewById(R.id.plusAmor);
-        plusAmor.setOnClickListener(CharacterSelection.this);
-        nummerAmor = findViewById(R.id.nummerAmor);
-        nummerAmor.setTextColor(Color.WHITE);
-
-        ImageView minusHexe = findViewById(R.id.minusHexe);
-        minusHexe.setOnClickListener(CharacterSelection.this);
-        ImageView plusHexe = findViewById(R.id.plusHexe);
-        plusHexe.setOnClickListener(CharacterSelection.this);
-        nummerHexe = findViewById(R.id.nummerHexe);
-        nummerHexe.setTextColor(Color.WHITE);
-
-        ImageView minusWaechter = findViewById(R.id.minusWaechter);
-        minusWaechter.setOnClickListener(CharacterSelection.this);
-        ImageView plusWaechter = findViewById(R.id.plusWaechter);
-        plusWaechter.setOnClickListener(CharacterSelection.this);
-        nummerWaechter = findViewById(R.id.nummerWaechter);
-        nummerWaechter.setTextColor(Color.WHITE);
-
-        ImageView minusDieb = findViewById(R.id.minusDieb);
-        minusDieb.setOnClickListener(CharacterSelection.this);
-        ImageView plusDieb = findViewById(R.id.plusDieb);
-        plusDieb.setOnClickListener(CharacterSelection.this);
-        nummerDieb = findViewById(R.id.nummerDieb);
-        nummerDieb.setTextColor(Color.WHITE);
-
-        ImageView minusSeher = findViewById(R.id.minusSeher);
-        minusSeher.setOnClickListener(CharacterSelection.this);
-        ImageView plusSeher = findViewById(R.id.plusSeher);
-        plusSeher.setOnClickListener(CharacterSelection.this);
-        nummerSeher = findViewById(R.id.nummerSeher);
-        nummerSeher.setTextColor(Color.WHITE);
-
-        ImageView minusBuerger = findViewById(R.id.minusBuerger);
-        minusBuerger.setOnClickListener(CharacterSelection.this);
-        ImageView plusBuerger = findViewById(R.id.plusBuerger);
-        plusBuerger.setOnClickListener(CharacterSelection.this);
-        nummerBuerger = findViewById(R.id.nummerBuerger);
-        nummerBuerger.setTextColor(Color.WHITE);
-
-        ImageView minusWerwolf = findViewById(R.id.minusWerwolf);
-        minusWerwolf.setOnClickListener(CharacterSelection.this);
-        ImageView plusWerwolf = findViewById(R.id.plusWerwolf);
-        plusWerwolf.setOnClickListener(CharacterSelection.this);
-        nummerWerwolf = findViewById(R.id.nummerWerwolf);
-        nummerWerwolf.setTextColor(Color.WHITE);
-
-        ImageView minusJunges = findViewById(R.id.minusJunges);
-        minusJunges.setOnClickListener(CharacterSelection.this);
-        ImageView plusJunges = findViewById(R.id.plusJunges);
-        plusJunges.setOnClickListener(CharacterSelection.this);
-        nummerJunges = findViewById(R.id.nummerJunges);
-        nummerJunges.setTextColor(Color.WHITE);
-
-        ImageView minusJaeger = findViewById(R.id.minusJaeger);
-        minusJaeger.setOnClickListener(CharacterSelection.this);
-        ImageView plusJaeger = findViewById(R.id.plusJaeger);
-        plusJaeger.setOnClickListener(CharacterSelection.this);
-        nummerJaeger = findViewById(R.id.nummerJaeger);
-        nummerJaeger.setTextColor(Color.WHITE);
-
-        ImageView minusMaedchen = findViewById(R.id.minusMaedchen);
-        minusMaedchen.setOnClickListener(CharacterSelection.this);
-        ImageView plusMaedchen = findViewById(R.id.plusMaedchen);
-        plusMaedchen.setOnClickListener(CharacterSelection.this);
-        nummerMaedchen = findViewById(R.id.nummerMaedchen);
-        nummerMaedchen.setTextColor(Color.WHITE);
-
-        ImageView minusRitter = findViewById(R.id.minusRitter);
-        minusRitter.setOnClickListener(CharacterSelection.this);
-        ImageView plusRitter = findViewById(R.id.plusRitter);
-        plusRitter.setOnClickListener(CharacterSelection.this);
-        nummerRitter = findViewById(R.id.nummerRitter);
-        nummerRitter.setTextColor(Color.WHITE);
-
-        ImageView minusUrwolf = findViewById(R.id.minusUrwolf);
-        minusUrwolf.setOnClickListener(CharacterSelection.this);
-        ImageView plusUrwolf = findViewById(R.id.plusUrwolf);
-        plusUrwolf.setOnClickListener(CharacterSelection.this);
-        nummerUrwolf = findViewById(R.id.nummerUrwolf);
-        nummerUrwolf.setTextColor(Color.WHITE);
-
-        ImageView minusWeisserWerwolf = findViewById(R.id.minusWeisserWerwolf);
-        minusWeisserWerwolf.setOnClickListener(CharacterSelection.this);
-        ImageView plusWeisserWerwolf = findViewById(R.id.plusWeisserWerwolf);
-        plusWeisserWerwolf.setOnClickListener(CharacterSelection.this);
-        nummerWeisserWerwolf = findViewById(R.id.nummerWeisserWerwolf);
-        nummerWeisserWerwolf.setTextColor(Color.WHITE);
-
-        ImageView minusFloetenspieler = findViewById(R.id.minusFloetenspieler);
-        minusFloetenspieler.setOnClickListener(CharacterSelection.this);
-        ImageView plusFloetenspieler = findViewById(R.id.plusFloetenspieler);
-        plusFloetenspieler.setOnClickListener(CharacterSelection.this);
-        nummerFloetenspieler = findViewById(R.id.nummerFloetenspieler);
-        nummerFloetenspieler.setTextColor(Color.WHITE);
-
-        ImageView minusFreunde = findViewById(R.id.minusFreunde);
-        minusFreunde.setOnClickListener(CharacterSelection.this);
-        ImageView plusFreunde = findViewById(R.id.plusFreunde);
-        plusFreunde.setOnClickListener(CharacterSelection.this);
-        nummerFreunde = findViewById(R.id.nummerFreunde);
-        nummerFreunde.setTextColor(Color.WHITE);
-
-        infoTextAmor = findViewById(R.id.infoTextAmor);
-        infoTextHexe = findViewById(R.id.infoTextHexe);
-        infoTextWaechter = findViewById(R.id.infoTextWaechter);
-        infoTextDieb = findViewById(R.id.infoTextDieb);
-        infoTextSeher = findViewById(R.id.infoTextSeher);
-        infoTextBuerger = findViewById(R.id.infoTextBuerger);
-        infoTextWerwolf = findViewById(R.id.infoTextWerwolf);
-        infoTextJunges = findViewById(R.id.infoTextJunges);
-        infoTextJaeger = findViewById(R.id.infoTextJaeger);
-        infoTextWeisserWerwolf = findViewById(R.id.infoTextWeisserWerwolf);
-        infoTextMaedchen = findViewById(R.id.infoTextMaedchen);
-        infoTextFloetenspieler = findViewById(R.id.infoTextFloetenspieler);
-        infoTextUrwolf = findViewById(R.id.infoTextUrwolf);
-        infoTextRitter = findViewById(R.id.infoTextRitter);
-        infoTextFreunde = findViewById(R.id.infoTextFreunde);
+        textModus.setText(R.string.spielleiter)
+        vibrationsdauer = 8
+        vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator
+        gesamtPer = 0
+        gesamtTxt = findViewById(id.gesamtTxt)
+        gesamtTxt?.setTextColor(Color.WHITE)
+        val spiel_starten = findViewById<Button>(id.spiel_starten)
+        spiel_starten.setOnClickListener(this@CharacterSelection)
+        val iconAmor = findViewById<TextView>(id.iconAmor)
+        iconAmor.setOnClickListener(this@CharacterSelection)
+        val iconHexe = findViewById<TextView>(id.iconHexe)
+        iconHexe.setOnClickListener(this@CharacterSelection)
+        val iconWaechter = findViewById<TextView>(id.iconWaechter)
+        iconWaechter.setOnClickListener(this@CharacterSelection)
+        val iconDieb = findViewById<TextView>(id.iconDieb)
+        iconDieb.setOnClickListener(this@CharacterSelection)
+        val iconSeher = findViewById<TextView>(id.iconSeher)
+        iconSeher.setOnClickListener(this@CharacterSelection)
+        val iconBuerger = findViewById<TextView>(id.iconBuerger)
+        iconBuerger.setOnClickListener(this@CharacterSelection)
+        val iconWerwolf = findViewById<TextView>(id.iconWerwolf)
+        iconWerwolf.setOnClickListener(this@CharacterSelection)
+        val iconJunges = findViewById<TextView>(id.iconJunges)
+        iconJunges.setOnClickListener(this@CharacterSelection)
+        val iconJaeger = findViewById<TextView>(id.iconJaeger)
+        iconJaeger.setOnClickListener(this@CharacterSelection)
+        val iconWeisserWerwolf = findViewById<TextView>(id.iconWeisserWerwolf)
+        iconWeisserWerwolf.setOnClickListener(this@CharacterSelection)
+        val iconMaedchen = findViewById<TextView>(id.iconMaedchen)
+        iconMaedchen.setOnClickListener(this@CharacterSelection)
+        val iconFloetenspieler = findViewById<TextView>(id.iconFloetenspieler)
+        iconFloetenspieler.setOnClickListener(this@CharacterSelection)
+        val iconUrwolf = findViewById<TextView>(id.iconUrwolf)
+        iconUrwolf.setOnClickListener(this@CharacterSelection)
+        val iconRitter = findViewById<TextView>(id.iconRitter)
+        iconRitter.setOnClickListener(this@CharacterSelection)
+        val iconFreunde = findViewById<TextView>(id.iconFreunde)
+        iconFreunde.setOnClickListener(this@CharacterSelection)
+        val minusAmor = findViewById<ImageView>(id.minusAmor)
+        minusAmor.setOnClickListener(this@CharacterSelection)
+        val plusAmor = findViewById<ImageView>(id.plusAmor)
+        plusAmor.setOnClickListener(this@CharacterSelection)
+        nummerAmor = findViewById(id.nummerAmor)
+        nummerAmor?.setTextColor(Color.WHITE)
+        val minusHexe = findViewById<ImageView>(id.minusHexe)
+        minusHexe.setOnClickListener(this@CharacterSelection)
+        val plusHexe = findViewById<ImageView>(id.plusHexe)
+        plusHexe.setOnClickListener(this@CharacterSelection)
+        nummerHexe = findViewById(id.nummerHexe)
+        nummerHexe?.setTextColor(Color.WHITE)
+        val minusWaechter = findViewById<ImageView>(id.minusWaechter)
+        minusWaechter.setOnClickListener(this@CharacterSelection)
+        val plusWaechter = findViewById<ImageView>(id.plusWaechter)
+        plusWaechter.setOnClickListener(this@CharacterSelection)
+        nummerWaechter = findViewById(id.nummerWaechter)
+        nummerWaechter?.setTextColor(Color.WHITE)
+        val minusDieb = findViewById<ImageView>(id.minusDieb)
+        minusDieb.setOnClickListener(this@CharacterSelection)
+        val plusDieb = findViewById<ImageView>(id.plusDieb)
+        plusDieb.setOnClickListener(this@CharacterSelection)
+        nummerDieb = findViewById(id.nummerDieb)
+        nummerDieb?.setTextColor(Color.WHITE)
+        val minusSeher = findViewById<ImageView>(id.minusSeher)
+        minusSeher.setOnClickListener(this@CharacterSelection)
+        val plusSeher = findViewById<ImageView>(id.plusSeher)
+        plusSeher.setOnClickListener(this@CharacterSelection)
+        nummerSeher = findViewById(id.nummerSeher)
+        nummerSeher?.setTextColor(Color.WHITE)
+        val minusBuerger = findViewById<ImageView>(id.minusBuerger)
+        minusBuerger.setOnClickListener(this@CharacterSelection)
+        val plusBuerger = findViewById<ImageView>(id.plusBuerger)
+        plusBuerger.setOnClickListener(this@CharacterSelection)
+        nummerBuerger = findViewById(id.nummerBuerger)
+        nummerBuerger?.setTextColor(Color.WHITE)
+        val minusWerwolf = findViewById<ImageView>(id.minusWerwolf)
+        minusWerwolf.setOnClickListener(this@CharacterSelection)
+        val plusWerwolf = findViewById<ImageView>(id.plusWerwolf)
+        plusWerwolf.setOnClickListener(this@CharacterSelection)
+        nummerWerwolf = findViewById(id.nummerWerwolf)
+        nummerWerwolf?.setTextColor(Color.WHITE)
+        val minusJunges = findViewById<ImageView>(id.minusJunges)
+        minusJunges.setOnClickListener(this@CharacterSelection)
+        val plusJunges = findViewById<ImageView>(id.plusJunges)
+        plusJunges.setOnClickListener(this@CharacterSelection)
+        nummerJunges = findViewById(id.nummerJunges)
+        nummerJunges?.setTextColor(Color.WHITE)
+        val minusJaeger = findViewById<ImageView>(id.minusJaeger)
+        minusJaeger.setOnClickListener(this@CharacterSelection)
+        val plusJaeger = findViewById<ImageView>(id.plusJaeger)
+        plusJaeger.setOnClickListener(this@CharacterSelection)
+        nummerJaeger = findViewById(id.nummerJaeger)
+        nummerJaeger?.setTextColor(Color.WHITE)
+        val minusMaedchen = findViewById<ImageView>(id.minusMaedchen)
+        minusMaedchen.setOnClickListener(this@CharacterSelection)
+        val plusMaedchen = findViewById<ImageView>(id.plusMaedchen)
+        plusMaedchen.setOnClickListener(this@CharacterSelection)
+        nummerMaedchen = findViewById(id.nummerMaedchen)
+        nummerMaedchen?.setTextColor(Color.WHITE)
+        val minusRitter = findViewById<ImageView>(id.minusRitter)
+        minusRitter.setOnClickListener(this@CharacterSelection)
+        val plusRitter = findViewById<ImageView>(id.plusRitter)
+        plusRitter.setOnClickListener(this@CharacterSelection)
+        nummerRitter = findViewById(id.nummerRitter)
+        nummerRitter?.setTextColor(Color.WHITE)
+        val minusUrwolf = findViewById<ImageView>(id.minusUrwolf)
+        minusUrwolf.setOnClickListener(this@CharacterSelection)
+        val plusUrwolf = findViewById<ImageView>(id.plusUrwolf)
+        plusUrwolf.setOnClickListener(this@CharacterSelection)
+        nummerUrwolf = findViewById(id.nummerUrwolf)
+        nummerUrwolf?.setTextColor(Color.WHITE)
+        val minusWeisserWerwolf = findViewById<ImageView>(id.minusWeisserWerwolf)
+        minusWeisserWerwolf.setOnClickListener(this@CharacterSelection)
+        val plusWeisserWerwolf = findViewById<ImageView>(id.plusWeisserWerwolf)
+        plusWeisserWerwolf.setOnClickListener(this@CharacterSelection)
+        nummerWeisserWerwolf = findViewById(id.nummerWeisserWerwolf)
+        nummerWeisserWerwolf?.setTextColor(Color.WHITE)
+        val minusFloetenspieler = findViewById<ImageView>(id.minusFloetenspieler)
+        minusFloetenspieler.setOnClickListener(this@CharacterSelection)
+        val plusFloetenspieler = findViewById<ImageView>(id.plusFloetenspieler)
+        plusFloetenspieler.setOnClickListener(this@CharacterSelection)
+        nummerFloetenspieler = findViewById(id.nummerFloetenspieler)
+        nummerFloetenspieler?.setTextColor(Color.WHITE)
+        val minusFreunde = findViewById<ImageView>(id.minusFreunde)
+        minusFreunde.setOnClickListener(this@CharacterSelection)
+        val plusFreunde = findViewById<ImageView>(id.plusFreunde)
+        plusFreunde.setOnClickListener(this@CharacterSelection)
+        nummerFreunde = findViewById(id.nummerFreunde)
+        nummerFreunde?.setTextColor(Color.WHITE)
+        infoTextAmor = findViewById(id.infoTextAmor)
+        infoTextHexe = findViewById(id.infoTextHexe)
+        infoTextWaechter = findViewById(id.infoTextWaechter)
+        infoTextDieb = findViewById(id.infoTextDieb)
+        infoTextSeher = findViewById(id.infoTextSeher)
+        infoTextBuerger = findViewById(id.infoTextBuerger)
+        infoTextWerwolf = findViewById(id.infoTextWerwolf)
+        infoTextJunges = findViewById(id.infoTextJunges)
+        infoTextJaeger = findViewById(id.infoTextJaeger)
+        infoTextWeisserWerwolf = findViewById(id.infoTextWeisserWerwolf)
+        infoTextMaedchen = findViewById(id.infoTextMaedchen)
+        infoTextFloetenspieler = findViewById(id.infoTextFloetenspieler)
+        infoTextUrwolf = findViewById(id.infoTextUrwolf)
+        infoTextRitter = findViewById(id.infoTextRitter)
+        infoTextFreunde = findViewById(id.infoTextFreunde)
     }
 
-    @Override
-    public void onClick(View v) {
-
-        if (v.getId() == minusAmor) {
-            anzahlAmor--;
+    override fun onClick(v: View) {
+        if (v.id == id.minusAmor) {
+            anzahlAmor--
             if (anzahlAmor == -1) {
-                anzahlAmor = 0;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlAmor = 0
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerAmor.setText(getString(R.string.numberWrapper, anzahlAmor));
-        } else if (v.getId() == R.id.plusAmor) {
-            anzahlAmor++;
-            nummerAmor.setText(getString(R.string.numberWrapper, anzahlAmor));
-        } else if (v.getId() == R.id.minusHexe) {
-            anzahlHexe--;
+            nummerAmor!!.text = getString(R.string.numberWrapper, anzahlAmor)
+        } else if (v.id == id.plusAmor) {
+            anzahlAmor++
+            nummerAmor!!.text = getString(R.string.numberWrapper, anzahlAmor)
+        } else if (v.id == id.minusHexe) {
+            anzahlHexe--
             if (anzahlHexe == -1) {
-                anzahlHexe = 0;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlHexe = 0
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerHexe.setText(getString(R.string.numberWrapper, anzahlHexe));
-        } else if (v.getId() == R.id.plusHexe) {
-            anzahlHexe++;
+            nummerHexe!!.text = getString(R.string.numberWrapper, anzahlHexe)
+        } else if (v.id == id.plusHexe) {
+            anzahlHexe++
             if (anzahlHexe == 2) {
-                anzahlHexe = 1;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlHexe = 1
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-
-            nummerHexe.setText(getString(R.string.numberWrapper, anzahlHexe));
-        } else if (v.getId() == R.id.minusWaechter) {
-            anzahlWaechter--;
+            nummerHexe!!.text = getString(R.string.numberWrapper, anzahlHexe)
+        } else if (v.id == id.minusWaechter) {
+            anzahlWaechter--
             if (anzahlWaechter == -1) {
-                anzahlWaechter = 0;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlWaechter = 0
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerWaechter.setText(getString(R.string.numberWrapper, anzahlWaechter));
-        } else if (v.getId() == R.id.plusWaechter) {
-            anzahlWaechter++;
+            nummerWaechter!!.text = getString(R.string.numberWrapper, anzahlWaechter)
+        } else if (v.id == id.plusWaechter) {
+            anzahlWaechter++
             if (anzahlWaechter == 2) {
-                anzahlWaechter = 1;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlWaechter = 1
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerWaechter.setText(getString(R.string.numberWrapper, anzahlWaechter));
-        } else if (v.getId() == R.id.minusSeher) {
-            anzahlSeher--;
+            nummerWaechter!!.text = getString(R.string.numberWrapper, anzahlWaechter)
+        } else if (v.id == id.minusSeher) {
+            anzahlSeher--
             if (anzahlSeher == -1) {
-                anzahlSeher = 0;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlSeher = 0
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerSeher.setText(getString(R.string.numberWrapper, anzahlSeher));
-        } else if (v.getId() == R.id.plusSeher) {
-            anzahlSeher++;
-            nummerSeher.setText(getString(R.string.numberWrapper, anzahlSeher));
-        } else if (v.getId() == R.id.minusDieb) {
-            anzahlDieb--;
+            nummerSeher!!.text = getString(R.string.numberWrapper, anzahlSeher)
+        } else if (v.id == id.plusSeher) {
+            anzahlSeher++
+            nummerSeher!!.text = getString(R.string.numberWrapper, anzahlSeher)
+        } else if (v.id == id.minusDieb) {
+            anzahlDieb--
             if (anzahlDieb == -1) {
-                anzahlDieb = 0;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlDieb = 0
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerDieb.setText(getString(R.string.numberWrapper, anzahlDieb));
-        } else if (v.getId() == R.id.plusDieb) {
-            anzahlDieb++;
+            nummerDieb!!.text = getString(R.string.numberWrapper, anzahlDieb)
+        } else if (v.id == id.plusDieb) {
+            anzahlDieb++
             if (anzahlDieb == 2) {
-                anzahlDieb = 1;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlDieb = 1
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerDieb.setText(getString(R.string.numberWrapper, anzahlDieb));
-        } else if (v.getId() == R.id.minusBuerger) {
-            anzahlBuerger--;
+            nummerDieb!!.text = getString(R.string.numberWrapper, anzahlDieb)
+        } else if (v.id == id.minusBuerger) {
+            anzahlBuerger--
             if (anzahlBuerger == -1) {
-                anzahlBuerger = 0;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlBuerger = 0
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerBuerger.setText(getString(R.string.numberWrapper, anzahlBuerger));
-        } else if (v.getId() == R.id.plusBuerger) {
-            anzahlBuerger++;
-            nummerBuerger.setText(getString(R.string.numberWrapper, anzahlBuerger));
-        } else if (v.getId() == R.id.minusWerwolf) {
-            anzahlWerwolf--;
+            nummerBuerger!!.text = getString(R.string.numberWrapper, anzahlBuerger)
+        } else if (v.id == id.plusBuerger) {
+            anzahlBuerger++
+            nummerBuerger!!.text = getString(R.string.numberWrapper, anzahlBuerger)
+        } else if (v.id == id.minusWerwolf) {
+            anzahlWerwolf--
             if (anzahlWerwolf == -1) {
-                anzahlWerwolf = 0;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlWerwolf = 0
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerWerwolf.setText(getString(R.string.numberWrapper, anzahlWerwolf));
-        } else if (v.getId() == R.id.plusWerwolf) {
-            anzahlWerwolf++;
-            nummerWerwolf.setText(getString(R.string.numberWrapper, anzahlWerwolf));
-        } else if (v.getId() == R.id.minusJunges) {
-            anzahlJunges--;
+            nummerWerwolf!!.text = getString(R.string.numberWrapper, anzahlWerwolf)
+        } else if (v.id == id.plusWerwolf) {
+            anzahlWerwolf++
+            nummerWerwolf!!.text = getString(R.string.numberWrapper, anzahlWerwolf)
+        } else if (v.id == id.minusJunges) {
+            anzahlJunges--
             if (anzahlJunges == -1) {
-                anzahlJunges = 0;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlJunges = 0
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerJunges.setText(getString(R.string.numberWrapper, anzahlJunges));
-        } else if (v.getId() == R.id.plusJunges) {
-            anzahlJunges++;
+            nummerJunges!!.text = getString(R.string.numberWrapper, anzahlJunges)
+        } else if (v.id == id.plusJunges) {
+            anzahlJunges++
             if (anzahlJunges == 2) {
-                anzahlJunges = 1;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlJunges = 1
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerJunges.setText(getString(R.string.numberWrapper, anzahlJunges));
-        } else if (v.getId() == R.id.minusMaedchen) {
-            anzahlMaedchen--;
+            nummerJunges!!.text = getString(R.string.numberWrapper, anzahlJunges)
+        } else if (v.id == id.minusMaedchen) {
+            anzahlMaedchen--
             if (anzahlMaedchen == -1) {
-                anzahlMaedchen = 0;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlMaedchen = 0
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerMaedchen.setText(getString(R.string.numberWrapper, anzahlMaedchen));
-        } else if (v.getId() == R.id.plusMaedchen) {
-            anzahlMaedchen++;
-            nummerMaedchen.setText(getString(R.string.numberWrapper, anzahlMaedchen));
-        } else if (v.getId() == R.id.minusJaeger) {
-            anzahlJaeger--;
+            nummerMaedchen!!.text = getString(R.string.numberWrapper, anzahlMaedchen)
+        } else if (v.id == id.plusMaedchen) {
+            anzahlMaedchen++
+            nummerMaedchen!!.text = getString(R.string.numberWrapper, anzahlMaedchen)
+        } else if (v.id == id.minusJaeger) {
+            anzahlJaeger--
             if (anzahlJaeger == -1) {
-                anzahlJaeger = 0;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlJaeger = 0
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerJaeger.setText(getString(R.string.numberWrapper, anzahlJaeger));
-        } else if (v.getId() == R.id.plusJaeger) {
-            anzahlJaeger++;
-
+            nummerJaeger!!.text = getString(R.string.numberWrapper, anzahlJaeger)
+        } else if (v.id == id.plusJaeger) {
+            anzahlJaeger++
             if (anzahlJaeger == 2) {
-                anzahlJaeger = 1;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlJaeger = 1
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerJaeger.setText(getString(R.string.numberWrapper, anzahlJaeger));
-        } else if (v.getId() == R.id.minusFreunde) {
-            anzahlFreunde--;
+            nummerJaeger!!.text = getString(R.string.numberWrapper, anzahlJaeger)
+        } else if (v.id == id.minusFreunde) {
+            anzahlFreunde--
             if (anzahlFreunde == -1 || anzahlFreunde == 1) {
-                anzahlFreunde = 0;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlFreunde = 0
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerFreunde.setText(getString(R.string.numberWrapper, anzahlFreunde));
-        } else if (v.getId() == R.id.plusFreunde) {
-            anzahlFreunde++;
+            nummerFreunde!!.text = getString(R.string.numberWrapper, anzahlFreunde)
+        } else if (v.id == id.plusFreunde) {
+            anzahlFreunde++
             if (anzahlFreunde == 1) {
-                anzahlFreunde = 2;
+                anzahlFreunde = 2
             }
-            nummerFreunde.setText(getString(R.string.numberWrapper, anzahlFreunde));
-        } else if (v.getId() == R.id.minusFloetenspieler) {
-            anzahlFloetenspieler--;
+            nummerFreunde!!.text = getString(R.string.numberWrapper, anzahlFreunde)
+        } else if (v.id == id.minusFloetenspieler) {
+            anzahlFloetenspieler--
             if (anzahlFloetenspieler == -1) {
-                anzahlFloetenspieler = 0;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlFloetenspieler = 0
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerFloetenspieler.setText(getString(R.string.numberWrapper, anzahlFloetenspieler));
-        } else if (v.getId() == R.id.plusFloetenspieler) {
-            anzahlFloetenspieler++;
+            nummerFloetenspieler!!.text = getString(R.string.numberWrapper, anzahlFloetenspieler)
+        } else if (v.id == id.plusFloetenspieler) {
+            anzahlFloetenspieler++
             if (anzahlFloetenspieler == 2) {
-                anzahlFloetenspieler = 1;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlFloetenspieler = 1
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerFloetenspieler.setText(getString(R.string.numberWrapper, anzahlFloetenspieler));
-        } else if (v.getId() == R.id.minusRitter) {
-            anzahlRitter--;
+            nummerFloetenspieler!!.text = getString(R.string.numberWrapper, anzahlFloetenspieler)
+        } else if (v.id == id.minusRitter) {
+            anzahlRitter--
             if (anzahlRitter == -1) {
-                anzahlRitter = 0;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlRitter = 0
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerRitter.setText(getString(R.string.numberWrapper, anzahlRitter));
-        } else if (v.getId() == R.id.plusRitter) {
-            anzahlRitter++;
+            nummerRitter!!.text = getString(R.string.numberWrapper, anzahlRitter)
+        } else if (v.id == id.plusRitter) {
+            anzahlRitter++
             if (anzahlRitter == 2) {
-                anzahlRitter = 1;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlRitter = 1
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerRitter.setText(getString(R.string.numberWrapper, anzahlRitter));
-        } else if (v.getId() == R.id.minusUrwolf) {
-            anzahlUrwolf--;
+            nummerRitter!!.text = getString(R.string.numberWrapper, anzahlRitter)
+        } else if (v.id == id.minusUrwolf) {
+            anzahlUrwolf--
             if (anzahlUrwolf == -1) {
-                anzahlUrwolf = 0;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlUrwolf = 0
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerUrwolf.setText(getString(R.string.numberWrapper, anzahlUrwolf));
-        } else if (v.getId() == R.id.plusUrwolf) {
-            anzahlUrwolf++;
+            nummerUrwolf!!.text = getString(R.string.numberWrapper, anzahlUrwolf)
+        } else if (v.id == id.plusUrwolf) {
+            anzahlUrwolf++
             if (anzahlUrwolf == 2) {
-                anzahlUrwolf = 1;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlUrwolf = 1
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerUrwolf.setText(getString(R.string.numberWrapper, anzahlUrwolf));
-        } else if (v.getId() == R.id.minusWeisserWerwolf) {
-            anzahlWeisserWerwolf--;
+            nummerUrwolf!!.text = getString(R.string.numberWrapper, anzahlUrwolf)
+        } else if (v.id == id.minusWeisserWerwolf) {
+            anzahlWeisserWerwolf--
             if (anzahlWeisserWerwolf == -1) {
-                anzahlWeisserWerwolf = 0;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlWeisserWerwolf = 0
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerWeisserWerwolf.setText(getString(R.string.numberWrapper, anzahlWeisserWerwolf));
-        } else if (v.getId() == R.id.plusWeisserWerwolf) {
-
-            anzahlWeisserWerwolf++;
+            nummerWeisserWerwolf!!.text = getString(R.string.numberWrapper, anzahlWeisserWerwolf)
+        } else if (v.id == id.plusWeisserWerwolf) {
+            anzahlWeisserWerwolf++
             if (anzahlWeisserWerwolf == 2) {
-                anzahlWeisserWerwolf = 1;
-                vibrator.vibrate(vibrationsdauer);
+                anzahlWeisserWerwolf = 1
+                vibrator!!.vibrate(vibrationsdauer.toLong())
             }
-            nummerWeisserWerwolf.setText(getString(R.string.numberWrapper, anzahlWeisserWerwolf));
-        } else if (v.getId() == R.id.spiel_starten) {
-
-            weiter();
-        } else if (v.getId() == R.id.iconAmor) {
-            if (infoTextAmor.getVisibility() == View.VISIBLE)
-                infoTextAmor.setVisibility(View.GONE);
-            else
-                infoTextAmor.setVisibility(View.VISIBLE);
-
-        } else if (v.getId() == R.id.iconHexe) {
-            if (infoTextHexe.getVisibility() == View.VISIBLE)
-                infoTextHexe.setVisibility(View.GONE);
-            else
-                infoTextHexe.setVisibility(View.VISIBLE);
-        } else if (v.getId() == R.id.iconWaechter) {
-            if (infoTextWaechter.getVisibility() == View.VISIBLE)
-                infoTextWaechter.setVisibility(View.GONE);
-            else
-                infoTextWaechter.setVisibility(View.VISIBLE);
-        } else if (v.getId() == R.id.iconDieb) {
-            if (infoTextDieb.getVisibility() == View.VISIBLE)
-                infoTextDieb.setVisibility(View.GONE);
-            else
-                infoTextDieb.setVisibility(View.VISIBLE);
-        } else if (v.getId() == R.id.iconSeher) {
-            if (infoTextSeher.getVisibility() == View.VISIBLE)
-                infoTextSeher.setVisibility(View.GONE);
-            else
-                infoTextSeher.setVisibility(View.VISIBLE);
-        } else if (v.getId() == R.id.iconBuerger) {
-            if (infoTextBuerger.getVisibility() == View.VISIBLE)
-                infoTextBuerger.setVisibility(View.GONE);
-            else
-                infoTextBuerger.setVisibility(View.VISIBLE);
-        } else if (v.getId() == R.id.iconWerwolf) {
-            if (infoTextWerwolf.getVisibility() == View.VISIBLE)
-                infoTextWerwolf.setVisibility(View.GONE);
-            else
-                infoTextWerwolf.setVisibility(View.VISIBLE);
-        } else if (v.getId() == R.id.iconJunges) {
-            if (infoTextJunges.getVisibility() == View.VISIBLE)
-                infoTextJunges.setVisibility(View.GONE);
-            else
-                infoTextJunges.setVisibility(View.VISIBLE);
-        } else if (v.getId() == R.id.iconJaeger) {
-            if (infoTextJaeger.getVisibility() == View.VISIBLE)
-                infoTextJaeger.setVisibility(View.GONE);
-            else
-                infoTextJaeger.setVisibility(View.VISIBLE);
-        } else if (v.getId() == R.id.iconWeisserWerwolf) {
-            if (infoTextWeisserWerwolf.getVisibility() == View.VISIBLE)
-                infoTextWeisserWerwolf.setVisibility(View.GONE);
-            else
-                infoTextWeisserWerwolf.setVisibility(View.VISIBLE);
-        } else if (v.getId() == R.id.iconMaedchen) {
-            if (infoTextMaedchen.getVisibility() == View.VISIBLE)
-                infoTextMaedchen.setVisibility(View.GONE);
-            else
-                infoTextMaedchen.setVisibility(View.VISIBLE);
-        } else if (v.getId() == R.id.iconFloetenspieler) {
-            if (infoTextFloetenspieler.getVisibility() == View.VISIBLE)
-                infoTextFloetenspieler.setVisibility(View.GONE);
-            else
-                infoTextFloetenspieler.setVisibility(View.VISIBLE);
-        } else if (v.getId() == R.id.iconUrwolf) {
-            if (infoTextUrwolf.getVisibility() == View.VISIBLE)
-                infoTextUrwolf.setVisibility(View.GONE);
-            else
-                infoTextUrwolf.setVisibility(View.VISIBLE);
-        } else if (v.getId() == R.id.iconRitter) {
-            if (infoTextRitter.getVisibility() == View.VISIBLE)
-                infoTextRitter.setVisibility(View.GONE);
-            else
-                infoTextRitter.setVisibility(View.VISIBLE);
-        } else if (v.getId() == R.id.iconFreunde) {
-            if (infoTextFreunde.getVisibility() == View.VISIBLE)
-                infoTextFreunde.setVisibility(View.GONE);
-            else
-                infoTextFreunde.setVisibility(View.VISIBLE);
+            nummerWeisserWerwolf!!.text = getString(R.string.numberWrapper, anzahlWeisserWerwolf)
+        } else if (v.id == id.spiel_starten) {
+            weiter()
+        } else if (v.id == id.iconAmor) {
+            if (infoTextAmor!!.visibility == View.VISIBLE) infoTextAmor!!.visibility =
+                View.GONE else infoTextAmor!!.visibility = View.VISIBLE
+        } else if (v.id == id.iconHexe) {
+            if (infoTextHexe!!.visibility == View.VISIBLE) infoTextHexe!!.visibility =
+                View.GONE else infoTextHexe!!.visibility = View.VISIBLE
+        } else if (v.id == id.iconWaechter) {
+            if (infoTextWaechter!!.visibility == View.VISIBLE) infoTextWaechter!!.visibility =
+                View.GONE else infoTextWaechter!!.visibility = View.VISIBLE
+        } else if (v.id == id.iconDieb) {
+            if (infoTextDieb!!.visibility == View.VISIBLE) infoTextDieb!!.visibility =
+                View.GONE else infoTextDieb!!.visibility = View.VISIBLE
+        } else if (v.id == id.iconSeher) {
+            if (infoTextSeher!!.visibility == View.VISIBLE) infoTextSeher!!.visibility =
+                View.GONE else infoTextSeher!!.visibility = View.VISIBLE
+        } else if (v.id == id.iconBuerger) {
+            if (infoTextBuerger!!.visibility == View.VISIBLE) infoTextBuerger!!.visibility =
+                View.GONE else infoTextBuerger!!.visibility = View.VISIBLE
+        } else if (v.id == id.iconWerwolf) {
+            if (infoTextWerwolf!!.visibility == View.VISIBLE) infoTextWerwolf!!.visibility =
+                View.GONE else infoTextWerwolf!!.visibility = View.VISIBLE
+        } else if (v.id == id.iconJunges) {
+            if (infoTextJunges!!.visibility == View.VISIBLE) infoTextJunges!!.visibility =
+                View.GONE else infoTextJunges!!.visibility = View.VISIBLE
+        } else if (v.id == id.iconJaeger) {
+            if (infoTextJaeger!!.visibility == View.VISIBLE) infoTextJaeger!!.visibility =
+                View.GONE else infoTextJaeger!!.visibility = View.VISIBLE
+        } else if (v.id == id.iconWeisserWerwolf) {
+            if (infoTextWeisserWerwolf!!.visibility == View.VISIBLE) infoTextWeisserWerwolf!!.visibility =
+                View.GONE else infoTextWeisserWerwolf!!.visibility = View.VISIBLE
+        } else if (v.id == id.iconMaedchen) {
+            if (infoTextMaedchen!!.visibility == View.VISIBLE) infoTextMaedchen!!.visibility =
+                View.GONE else infoTextMaedchen!!.visibility = View.VISIBLE
+        } else if (v.id == id.iconFloetenspieler) {
+            if (infoTextFloetenspieler!!.visibility == View.VISIBLE) infoTextFloetenspieler!!.visibility =
+                View.GONE else infoTextFloetenspieler!!.visibility = View.VISIBLE
+        } else if (v.id == id.iconUrwolf) {
+            if (infoTextUrwolf!!.visibility == View.VISIBLE) infoTextUrwolf!!.visibility =
+                View.GONE else infoTextUrwolf!!.visibility = View.VISIBLE
+        } else if (v.id == id.iconRitter) {
+            if (infoTextRitter!!.visibility == View.VISIBLE) infoTextRitter!!.visibility =
+                View.GONE else infoTextRitter!!.visibility = View.VISIBLE
+        } else if (v.id == id.iconFreunde) {
+            if (infoTextFreunde!!.visibility == View.VISIBLE) infoTextFreunde!!.visibility =
+                View.GONE else infoTextFreunde!!.visibility = View.VISIBLE
         }
-
-        gesamtPer = anzahlAmor + anzahlWaechter + anzahlBuerger + anzahlJunges + anzahlJaeger + anzahlWerwolf + anzahlSeher + anzahlHexe + anzahlDieb + anzahlWeisserWerwolf + anzahlRitter + anzahlFloetenspieler + anzahlFreunde + anzahlMaedchen + anzahlUrwolf;
-        gesamtTxt.setText(getString(R.string.combinedWrapper, gesamtPer));
+        gesamtPer =
+            anzahlAmor + anzahlWaechter + anzahlBuerger + anzahlJunges + anzahlJaeger + anzahlWerwolf + anzahlSeher + anzahlHexe + anzahlDieb + anzahlWeisserWerwolf + anzahlRitter + anzahlFloetenspieler + anzahlFreunde + anzahlMaedchen + anzahlUrwolf
+        gesamtTxt!!.text = getString(R.string.combinedWrapper, gesamtPer)
     }
 
-
-    private void weiter() {
+    private fun weiter() {
         if (anzahlWerwolf + anzahlWeisserWerwolf + anzahlUrwolf == 0 || anzahlWerwolf + anzahlWeisserWerwolf + anzahlUrwolf == gesamtPer) {
-            Toast.makeText(CharacterSelection.this, "ungültige Eingabe", Toast.LENGTH_LONG).show();
-            vibrator.vibrate(vibrationsdauer);
+            Toast.makeText(this@CharacterSelection, "ungültige Eingabe", Toast.LENGTH_LONG).show()
+            vibrator!!.vibrate(vibrationsdauer.toLong())
         } else {
-            Intent intent;
-            if (einGeraet) {
-                intent = new Intent(this, PlayerManagement.class);
+            val intent: Intent
+            intent = if (einGeraet) {
+                Intent(this, PlayerManagement::class.java)
             } else {
-                intent = new Intent(this, HostConnectWithPlayers.class);
+                Intent(this, HostConnectWithPlayers::class.java)
             }
-            intent.putExtra("anzahlAmor", anzahlAmor);
-            intent.putExtra("anzahlBuerger", anzahlBuerger);
-            intent.putExtra("anzahlWaechter", anzahlWaechter);
-            intent.putExtra("anzahlDieb", anzahlDieb);
-            intent.putExtra("anzahlHexe", anzahlHexe);
-            intent.putExtra("anzahlJaeger", anzahlJaeger);
-            intent.putExtra("anzahlJunges", anzahlJunges);
-            intent.putExtra("anzahlSeher", anzahlSeher);
-            intent.putExtra("anzahlWerwolf", anzahlWerwolf);
-            intent.putExtra("anzahlWeisserWerwolf", anzahlWeisserWerwolf);
-            intent.putExtra("anzahlRitter", anzahlRitter);
-            intent.putExtra("anzahlFloetenspieler", anzahlFloetenspieler);
-            intent.putExtra("anzahlFreunde", anzahlFreunde);
-            intent.putExtra("anzahlMaedchen", anzahlMaedchen);
-            intent.putExtra("anzahlUrwolf", anzahlUrwolf);
-            intent.putExtra("gesamtPer", gesamtPer);
-            intent.putExtra("EinGeraet", einGeraet);
-            startActivity(intent);
-
-            CustomIntent.customType(this, "left-to-right");
+            intent.putExtra("anzahlAmor", anzahlAmor)
+            intent.putExtra("anzahlBuerger", anzahlBuerger)
+            intent.putExtra("anzahlWaechter", anzahlWaechter)
+            intent.putExtra("anzahlDieb", anzahlDieb)
+            intent.putExtra("anzahlHexe", anzahlHexe)
+            intent.putExtra("anzahlJaeger", anzahlJaeger)
+            intent.putExtra("anzahlJunges", anzahlJunges)
+            intent.putExtra("anzahlSeher", anzahlSeher)
+            intent.putExtra("anzahlWerwolf", anzahlWerwolf)
+            intent.putExtra("anzahlWeisserWerwolf", anzahlWeisserWerwolf)
+            intent.putExtra("anzahlRitter", anzahlRitter)
+            intent.putExtra("anzahlFloetenspieler", anzahlFloetenspieler)
+            intent.putExtra("anzahlFreunde", anzahlFreunde)
+            intent.putExtra("anzahlMaedchen", anzahlMaedchen)
+            intent.putExtra("anzahlUrwolf", anzahlUrwolf)
+            intent.putExtra("gesamtPer", gesamtPer)
+            intent.putExtra("EinGeraet", einGeraet)
+            startActivity(intent)
+            CustomIntent.customType(this, "left-to-right")
         }
     }
 
-    @Override
-    public void finish() {
-        super.finish();
-        CustomIntent.customType(this, "right-to-left");
+    override fun finish() {
+        super.finish()
+        CustomIntent.customType(this, "right-to-left")
     }
-
 }

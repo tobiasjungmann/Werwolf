@@ -1,34 +1,24 @@
-package com.example.tobias.werwolf_v1;
+package com.example.tobias.werwolf_v1
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.widget.LinearLayout;
+import android.content.Context
+import android.util.AttributeSet
+import android.widget.LinearLayout
 
-public class SquareLayout extends LinearLayout {
+class SquareLayout : LinearLayout {
+    constructor(context: Context?) : super(context) {}
+    constructor(context: Context?, attrs: AttributeSet?) : super(context, attrs) {}
 
-    public SquareLayout(Context context) {
-        super(context);
-    }
-
-    public SquareLayout(Context context, AttributeSet attrs){
-        super(context, attrs);
-    }
-
-    @Override
-    protected void onMeasure(int widthMaesureSpec, int hightMeasureSpec){
-        int width = MeasureSpec.getSize(widthMaesureSpec);
-        int height = MeasureSpec.getSize(hightMeasureSpec);
-
-
-        if (width > (int)((height) + 0.5)) {
-            width = (int)((height) + 0.5);
+    override fun onMeasure(widthMaesureSpec: Int, hightMeasureSpec: Int) {
+        var width = MeasureSpec.getSize(widthMaesureSpec)
+        var height = MeasureSpec.getSize(hightMeasureSpec)
+        if (width > (height + 0.5).toInt()) {
+            width = (height + 0.5).toInt()
         } else {
-            height = (int)((width) + 0.5);
+            height = (width + 0.5).toInt()
         }
-
         super.onMeasure(
-                MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
-                MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
-        );
+            MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
+            MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY)
+        )
     }
 }

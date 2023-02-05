@@ -1,461 +1,396 @@
-package com.example.tobias.werwolf_v1.multipleDevices;
+package com.example.tobias.werwolf_v1.multipleDevices
 
-import static java.lang.Thread.sleep;
+import android.app.AlertDialog
+import android.content.Intent
+import android.database.Cursor
+import android.graphics.Point
+import android.net.ConnectivityManager
+import android.net.wifi.WifiManager
+import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.text.format.Formatter
+import android.util.Log
+import android.view.*
+import android.widget.*
+import androidmads.library.qrgenearator.QRGContents
+import androidmads.library.qrgenearator.QRGEncoder
+import androidx.appcompat.app.AppCompatActivity
+import com.example.tobias.werwolf_v1.DatabaseHelper
+import com.example.tobias.werwolf_v1.ListNight
+import com.example.tobias.werwolf_v1.R
+import com.google.zxing.WriterException
+import maes.tech.intentanim.CustomIntent
+import java.io.IOException
+import java.net.ServerSocket
+import java.util.*
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.Point;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.wifi.WifiManager;
-import android.os.Build;
-import android.os.Bundle;
-import android.os.Handler;
-import android.text.format.Formatter;
-import android.util.Log;
-import android.view.Display;
-import android.view.View;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.tobias.werwolf_v1.DatabaseHelper;
-import com.example.tobias.werwolf_v1.ListNight;
-import com.example.tobias.werwolf_v1.R;
-import com.google.zxing.WriterException;
-
-import java.io.IOException;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.TreeMap;
-
-import androidmads.library.qrgenearator.QRGContents;
-import androidmads.library.qrgenearator.QRGEncoder;
-import maes.tech.intentanim.CustomIntent;
-
-public class HostConnectWithPlayers extends AppCompatActivity {
-
-    private ImageView qrImage;
-    private QRGEncoder qrgEncoder;
-    private boolean end = false;
-    final Handler handler = new Handler();
-    private static Map<String, String> ipToName;
-    private ArrayList<String> ipAdressen;
-    private ArrayList<HostToPlayerConnectionThread> clients;
-    private ListView listViewPersonen;
-    private CustomAdapter adapter;
-    private DatabaseHelper mDatabaseHelper;
-    private Cursor data;
-
-
-    private int anzahlAmor;
-    private int anzahlWerwolf;
-    private int anzahlHexe;
-    private int anzahlDieb;
-    private int anzahlSeher;
-    private int anzahlJunges;
-    private int anzahlJaeger;
-    private int anzahlBuerger;
-    private int anzahlWaechter;
-    private int anzahlWeisserWerwolf;
-    private int anzahlMaedchen;
-    private int anzahlFloetenspieler;
-    private int anzahlUrwolf;
-    private int anzahlRitter;
-    private int anzahlFreunde;
-    private int gesamtPer;
-
-    private int anzahlAmorZuweisung;
-    private int anzahlWerwolfZuweisung;
-    private int anzahlHexeZuweisung;
-    private int anzahlDiebZuweisung;
-    private int anzahlSeherZuweisung;
-    private int anzahlJungesZuweisung;
-    private int anzahlJaegerZuweisung;
-    private int anzahlBuergerZuweisung;
-    private int anzahlWaechterZuweisung;
-    private int anzahlWeisserWerwolfZuweisung;
-    private int anzahlMaedchenZuweisung;
-    private int anzahlFloetenspielerZuweisung;
-    private int anzahlUrwolfZuweisung;
-    private int anzahlRitterZuweisung;
-    private int anzahlFreundeZuweisung;
-    private int gesamtPerZuweisung;
-
-    private TextView anzahlMitspielerText;
-    private ServerSocket ss;
-    private HostConnectWithPlayers ichselbst;
-    private Thread pruefenThread;
-    private boolean alleSpielbereit = false;
-    private Intent intent;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_hostconnectwithplayers);
-
-        if (!isNetworkAvailable()) {
-            dialogInternetConnection();
+class HostConnectWithPlayers : AppCompatActivity() {
+    private var qrImage: ImageView? = null
+    private var qrgEncoder: QRGEncoder? = null
+    private var end = false
+    val handler = Handler()
+    private var ipAdressen: ArrayList<String>? = null
+    private var clients: ArrayList<HostToPlayerConnectionThread>? = null
+    private var listViewPersonen: ListView? = null
+    private var adapter: CustomAdapter? = null
+    private var mDatabaseHelper: DatabaseHelper? = null
+    private var data: Cursor? = null
+    private var anzahlAmor = 0
+    private var anzahlWerwolf = 0
+    private var anzahlHexe = 0
+    private var anzahlDieb = 0
+    private var anzahlSeher = 0
+    private var anzahlJunges = 0
+    private var anzahlJaeger = 0
+    private var anzahlBuerger = 0
+    private var anzahlWaechter = 0
+    private var anzahlWeisserWerwolf = 0
+    private var anzahlMaedchen = 0
+    private var anzahlFloetenspieler = 0
+    private var anzahlUrwolf = 0
+    private var anzahlRitter = 0
+    private var anzahlFreunde = 0
+    private var gesamtPer = 0
+    private var anzahlAmorZuweisung = 0
+    private var anzahlWerwolfZuweisung = 0
+    private var anzahlHexeZuweisung = 0
+    private var anzahlDiebZuweisung = 0
+    private var anzahlSeherZuweisung = 0
+    private var anzahlJungesZuweisung = 0
+    private var anzahlJaegerZuweisung = 0
+    private var anzahlBuergerZuweisung = 0
+    private var anzahlWaechterZuweisung = 0
+    private var anzahlWeisserWerwolfZuweisung = 0
+    private var anzahlMaedchenZuweisung = 0
+    private var anzahlFloetenspielerZuweisung = 0
+    private var anzahlUrwolfZuweisung = 0
+    private var anzahlRitterZuweisung = 0
+    private var anzahlFreundeZuweisung = 0
+    private var gesamtPerZuweisung = 0
+    private var anzahlMitspielerText: TextView? = null
+    private var ss: ServerSocket? = null
+    private var ichselbst: HostConnectWithPlayers? = null
+    private var pruefenThread: Thread? = null
+    private var alleSpielbereit = false
+    private var intent: Intent? = null
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        this.window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
+        setContentView(R.layout.activity_hostconnectwithplayers)
+        if (!isNetworkAvailable) {
+            dialogInternetConnection()
         }
-
-
-        charakterDatenHolen();
-
-        anzahlMitspielerText = findViewById(R.id.anzahlMitspielerText);
-        anzahlMitspielerText.setText("Mitspieler: 0 von " + gesamtPer);
-        qrImage = findViewById(R.id.imageQR);
-
-        WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
-        Display display = manager.getDefaultDisplay();
-        Point point = new Point();
-        display.getSize(point);
-        int width = point.x;
-        int height = point.y;
-        int smallerDimension = width < height ? width : height;
-
-        WifiManager wm = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
-        String ip = Formatter.formatIpAddress(wm.getConnectionInfo().getIpAddress());
-
-        qrgEncoder = new QRGEncoder(ip, null, QRGContents.Type.TEXT, smallerDimension);
-
+        charakterDatenHolen()
+        anzahlMitspielerText = findViewById(R.id.anzahlMitspielerText)
+        anzahlMitspielerText.setText("Mitspieler: 0 von $gesamtPer")
+        qrImage = findViewById(R.id.imageQR)
+        val manager = getSystemService(WINDOW_SERVICE) as WindowManager
+        val display = manager.defaultDisplay
+        val point = Point()
+        display.getSize(point)
+        val width = point.x
+        val height = point.y
+        val smallerDimension = if (width < height) width else height
+        val wm = applicationContext.getSystemService(WIFI_SERVICE) as WifiManager
+        val ip = Formatter.formatIpAddress(wm.connectionInfo.ipAddress)
+        qrgEncoder = QRGEncoder(ip, null, QRGContents.Type.TEXT, smallerDimension)
         try {
-            Bitmap bitmap = qrgEncoder.encodeAsBitmap();
-            qrImage.setImageBitmap(bitmap);
-
-        } catch (WriterException e) {
-            Log.v("d", e.toString());
+            val bitmap = qrgEncoder!!.encodeAsBitmap()
+            qrImage.setImageBitmap(bitmap)
+        } catch (e: WriterException) {
+            Log.v("d", e.toString())
         }
-
-
-        ichselbst = this;
+        ichselbst = this
         try {
-            ss = new ServerSocket(9002);
-        } catch (IOException e) {
-            e.printStackTrace();
+            ss = ServerSocket(9002)
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
-        startServerSocket();
-
-        ipToName = new TreeMap<>();
-        ipAdressen = new ArrayList<>();
-        clients = new ArrayList<>();
-
-        listViewPersonen = findViewById(R.id.listViewPersonen);
-        adapter = new CustomAdapter(ipAdressen, ipToName);
-        listViewPersonen.setAdapter(adapter);
-
-        mDatabaseHelper = new DatabaseHelper(this);
-        mDatabaseHelper.clearDatabase();
-        data = mDatabaseHelper.getData();
+        startServerSocket()
+        ipToName = TreeMap()
+        ipAdressen = ArrayList()
+        clients = ArrayList()
+        listViewPersonen = findViewById(R.id.listViewPersonen)
+        adapter = CustomAdapter(ipAdressen, ipToName)
+        listViewPersonen.setAdapter(adapter)
+        mDatabaseHelper = DatabaseHelper(this)
+        mDatabaseHelper!!.clearDatabase()
+        data = mDatabaseHelper!!.data
 
 //todo:Datenbank leeren
-        verbindungAuswerten();
-         intent = new Intent(this, ListNight.class);
-        intent.putExtra("anzahlAmor", anzahlAmor);
-        intent.putExtra("anzahlBuerger", anzahlBuerger);
-        intent.putExtra("anzahlWaechter", anzahlWaechter);
-        intent.putExtra("anzahlDieb", anzahlDieb);
-        intent.putExtra("anzahlHexe", anzahlHexe);
-        intent.putExtra("anzahlJaeger", anzahlJaeger);
-        intent.putExtra("anzahlJunges", anzahlJunges);
-        intent.putExtra("anzahlSeher", anzahlSeher);
-        intent.putExtra("anzahlWerwolf", anzahlWerwolf);
-        intent.putExtra("anzahlWeisserWerwolf", anzahlWeisserWerwolf);
-        intent.putExtra("anzahlRitter", anzahlRitter);
-        intent.putExtra("anzahlFloetenspieler", anzahlFloetenspieler);
-        intent.putExtra("anzahlFreunde", anzahlFreunde);
-        intent.putExtra("anzahlMaedchen", anzahlMaedchen);
-        intent.putExtra("anzahlUrwolf", anzahlUrwolf);
+        verbindungAuswerten()
+        intent = Intent(this, ListNight::class.java)
+        intent!!.putExtra("anzahlAmor", anzahlAmor)
+        intent!!.putExtra("anzahlBuerger", anzahlBuerger)
+        intent!!.putExtra("anzahlWaechter", anzahlWaechter)
+        intent!!.putExtra("anzahlDieb", anzahlDieb)
+        intent!!.putExtra("anzahlHexe", anzahlHexe)
+        intent!!.putExtra("anzahlJaeger", anzahlJaeger)
+        intent!!.putExtra("anzahlJunges", anzahlJunges)
+        intent!!.putExtra("anzahlSeher", anzahlSeher)
+        intent!!.putExtra("anzahlWerwolf", anzahlWerwolf)
+        intent!!.putExtra("anzahlWeisserWerwolf", anzahlWeisserWerwolf)
+        intent!!.putExtra("anzahlRitter", anzahlRitter)
+        intent!!.putExtra("anzahlFloetenspieler", anzahlFloetenspieler)
+        intent!!.putExtra("anzahlFreunde", anzahlFreunde)
+        intent!!.putExtra("anzahlMaedchen", anzahlMaedchen)
+        intent!!.putExtra("anzahlUrwolf", anzahlUrwolf)
     }
 
-    private boolean isNetworkAvailable() {
-        ConnectivityManager connectivityManager
-                = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
-        return activeNetworkInfo != null && activeNetworkInfo.isConnected();
-    }
+    private val isNetworkAvailable: Boolean
+        private get() {
+            val connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
+            val activeNetworkInfo = connectivityManager.activeNetworkInfo
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected
+        }
 
-    private void dialogInternetConnection() {
-        AlertDialog.Builder[] builder = new AlertDialog.Builder[1];
+    private fun dialogInternetConnection() {
+        val builder = arrayOfNulls<AlertDialog.Builder>(1)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            builder[0] = new AlertDialog.Builder(HostConnectWithPlayers.this, android.R.style.Theme_Material_Dialog_Alert);
+            builder[0] = AlertDialog.Builder(
+                this@HostConnectWithPlayers,
+                android.R.style.Theme_Material_Dialog_Alert
+            )
         } else {
-            builder[0] = new AlertDialog.Builder(HostConnectWithPlayers.this);
+            builder[0] = AlertDialog.Builder(this@HostConnectWithPlayers)
         }
-        builder[0].setTitle("Hinweis")
-                .setMessage("Stelle sicher, dass das Gerät it dem W-lan verbunden ist. Eine Verbindung mit den Spielern ist sonst nicht möglich")
-                .setPositiveButton("Okay.", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // weiter[0] =true;
-                    }
-
-                })
-                .show();
+        builder[0]!!.setTitle("Hinweis")
+            .setMessage("Stelle sicher, dass das Gerät it dem W-lan verbunden ist. Eine Verbindung mit den Spielern ist sonst nicht möglich")
+            .setPositiveButton("Okay.") { dialog, which ->
+                // weiter[0] =true;
+            }
+            .show()
     }
 
-
-    @Override
-    public void finish() {
-        super.finish();
+    override fun finish() {
+        super.finish()
         try {
-            ss.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+            ss!!.close()
+        } catch (e: IOException) {
+            e.printStackTrace()
         }
-        end = true;
-        CustomIntent.customType(this, "right-to-left");
+        end = true
+        CustomIntent.customType(this, "right-to-left")
     }
 
-
-    private void startServerSocket() {
-        Thread thread = new Thread(new Runnable() {
-
-            private String stringData = null;
-
-            @Override
-            public void run() {
+    private fun startServerSocket() {
+        val thread = Thread(object : Runnable {
+            private val stringData: String? = null
+            override fun run() {
                 while (!end) {
                     try {
-                        Socket client = ss.accept();
-                        HostToPlayerConnectionThread sv = new HostToPlayerConnectionThread(client, ichselbst);
-                        sv.start();
-                        clients.add(sv);
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        val client = ss!!.accept()
+                        val sv = HostToPlayerConnectionThread(client, ichselbst)
+                        sv.start()
+                        clients!!.add(sv)
+                    } catch (e: IOException) {
+                        e.printStackTrace()
                     }
                 }
             }
-        });
-        thread.start();
-
-
+        })
+        thread.start()
     }
 
-
-    public void verbindungAuswerten() {
-        pruefenThread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (!end) {
-                    if (ipAdressen.size() == gesamtPer) {
-                        alleSpielbereit = true;
-                        for (int i = 0; i < clients.size(); i++) {
-                            if (clients.get(i).getSpielbereit() == false) {
-                                alleSpielbereit = false;
-                            }
-                        }
-
-                        if (alleSpielbereit == true) {
-                            for (int i = 0; i < clients.size(); i++) {
-                                charakterZuweisen(clients.get(i));
-                                clients.get(i).bereitSenden();
-                            }
-                            end=true;
-                            data=mDatabaseHelper.getData();
-                            startActivity(intent);
+    fun verbindungAuswerten() {
+        pruefenThread = Thread {
+            while (!end) {
+                if (ipAdressen!!.size == gesamtPer) {
+                    alleSpielbereit = true
+                    for (i in clients!!.indices) {
+                        if (clients!![i].spielbereit == false) {
+                            alleSpielbereit = false
                         }
                     }
-
-                    runOnUiThread(new Runnable() {
-                        public void run() {
-                            adapter.notifyDataSetChanged();
-                            anzahlMitspielerText.setText("Mitspieler: " + ipAdressen.size() + " von " + gesamtPer);
+                    if (alleSpielbereit == true) {
+                        for (i in clients!!.indices) {
+                            charakterZuweisen(clients!![i])
+                            clients!![i].bereitSenden()
                         }
-                    });
-
-                    try {
-                        sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        end = true
+                        data = mDatabaseHelper!!.data
+                        startActivity(intent)
                     }
                 }
+                runOnUiThread {
+                    adapter!!.notifyDataSetChanged()
+                    anzahlMitspielerText!!.text =
+                        "Mitspieler: " + ipAdressen!!.size + " von " + gesamtPer
+                }
+                try {
+                    Thread.sleep(1000)
+                } catch (e: InterruptedException) {
+                    e.printStackTrace()
+                }
             }
-        });
-        pruefenThread.start();
+        }
+        pruefenThread!!.start()
     }
 
-
-    private void charakterDatenHolen() {
-        anzahlAmor = getIntent().getExtras().getInt("anzahlAmor");
-        anzahlBuerger = getIntent().getExtras().getInt("anzahlBuerger");
-        anzahlWaechter = getIntent().getExtras().getInt("anzahlWaechter");
-        anzahlDieb = getIntent().getExtras().getInt("anzahlDieb");
-        anzahlHexe = getIntent().getExtras().getInt("anzahlHexe");
-        anzahlJaeger = getIntent().getExtras().getInt("anzahlJaeger");
-        anzahlJunges = getIntent().getExtras().getInt("anzahlJunges");
-        anzahlSeher = getIntent().getExtras().getInt("anzahlSeher");
-        anzahlWerwolf = getIntent().getExtras().getInt("anzahlWerwolf");
-        anzahlWeisserWerwolf = getIntent().getExtras().getInt("anzahlWeisserWerwolf");
-        anzahlRitter = getIntent().getExtras().getInt("anzahlRitter");
-        anzahlFloetenspieler = getIntent().getExtras().getInt("anzahlFloetenspieler");
-        anzahlFreunde = getIntent().getExtras().getInt("anzahlFreunde");
-        anzahlMaedchen = getIntent().getExtras().getInt("anzahlMaedchen");
-        anzahlUrwolf = getIntent().getExtras().getInt("anzahlUrwolf");
-        gesamtPer = getIntent().getExtras().getInt("gesamtPer");
-
-        anzahlAmorZuweisung = getIntent().getExtras().getInt("anzahlAmor");
-        anzahlBuergerZuweisung = getIntent().getExtras().getInt("anzahlBuerger");
-        anzahlWaechterZuweisung = getIntent().getExtras().getInt("anzahlWaechter");
-        anzahlDiebZuweisung = getIntent().getExtras().getInt("anzahlDieb");
-        anzahlHexeZuweisung = getIntent().getExtras().getInt("anzahlHexe");
-        anzahlJaegerZuweisung = getIntent().getExtras().getInt("anzahlJaeger");
-        anzahlJungesZuweisung = getIntent().getExtras().getInt("anzahlJunges");
-        anzahlSeherZuweisung = getIntent().getExtras().getInt("anzahlSeher");
-        anzahlWerwolfZuweisung = getIntent().getExtras().getInt("anzahlWerwolf");
-        anzahlWeisserWerwolfZuweisung = getIntent().getExtras().getInt("anzahlWeisserWerwolf");
-        anzahlRitterZuweisung = getIntent().getExtras().getInt("anzahlRitter");
-        anzahlFloetenspielerZuweisung = getIntent().getExtras().getInt("anzahlFloetenspieler");
-        anzahlFreundeZuweisung = getIntent().getExtras().getInt("anzahlFreunde");
-        anzahlMaedchenZuweisung = getIntent().getExtras().getInt("anzahlMaedchen");
-        anzahlUrwolfZuweisung = getIntent().getExtras().getInt("anzahlUrwolf");
-        gesamtPerZuweisung = getIntent().getExtras().getInt("gesamtPer");
+    private fun charakterDatenHolen() {
+        anzahlAmor = getIntent().extras!!.getInt("anzahlAmor")
+        anzahlBuerger = getIntent().extras!!.getInt("anzahlBuerger")
+        anzahlWaechter = getIntent().extras!!.getInt("anzahlWaechter")
+        anzahlDieb = getIntent().extras!!.getInt("anzahlDieb")
+        anzahlHexe = getIntent().extras!!.getInt("anzahlHexe")
+        anzahlJaeger = getIntent().extras!!.getInt("anzahlJaeger")
+        anzahlJunges = getIntent().extras!!.getInt("anzahlJunges")
+        anzahlSeher = getIntent().extras!!.getInt("anzahlSeher")
+        anzahlWerwolf = getIntent().extras!!.getInt("anzahlWerwolf")
+        anzahlWeisserWerwolf = getIntent().extras!!.getInt("anzahlWeisserWerwolf")
+        anzahlRitter = getIntent().extras!!.getInt("anzahlRitter")
+        anzahlFloetenspieler = getIntent().extras!!.getInt("anzahlFloetenspieler")
+        anzahlFreunde = getIntent().extras!!.getInt("anzahlFreunde")
+        anzahlMaedchen = getIntent().extras!!.getInt("anzahlMaedchen")
+        anzahlUrwolf = getIntent().extras!!.getInt("anzahlUrwolf")
+        gesamtPer = getIntent().extras!!.getInt("gesamtPer")
+        anzahlAmorZuweisung = getIntent().extras!!.getInt("anzahlAmor")
+        anzahlBuergerZuweisung = getIntent().extras!!.getInt("anzahlBuerger")
+        anzahlWaechterZuweisung = getIntent().extras!!.getInt("anzahlWaechter")
+        anzahlDiebZuweisung = getIntent().extras!!.getInt("anzahlDieb")
+        anzahlHexeZuweisung = getIntent().extras!!.getInt("anzahlHexe")
+        anzahlJaegerZuweisung = getIntent().extras!!.getInt("anzahlJaeger")
+        anzahlJungesZuweisung = getIntent().extras!!.getInt("anzahlJunges")
+        anzahlSeherZuweisung = getIntent().extras!!.getInt("anzahlSeher")
+        anzahlWerwolfZuweisung = getIntent().extras!!.getInt("anzahlWerwolf")
+        anzahlWeisserWerwolfZuweisung = getIntent().extras!!.getInt("anzahlWeisserWerwolf")
+        anzahlRitterZuweisung = getIntent().extras!!.getInt("anzahlRitter")
+        anzahlFloetenspielerZuweisung = getIntent().extras!!.getInt("anzahlFloetenspieler")
+        anzahlFreundeZuweisung = getIntent().extras!!.getInt("anzahlFreunde")
+        anzahlMaedchenZuweisung = getIntent().extras!!.getInt("anzahlMaedchen")
+        anzahlUrwolfZuweisung = getIntent().extras!!.getInt("anzahlUrwolf")
+        gesamtPerZuweisung = getIntent().extras!!.getInt("gesamtPer")
     }
 
-
-    private String charakterZuweisen(HostToPlayerConnectionThread verbindung) {
-        String retValue = "";
+    private fun charakterZuweisen(verbindung: HostToPlayerConnectionThread): String {
+        val retValue = ""
         if (gesamtPerZuweisung > 0) {
-            int position = ((int) Math.random() * gesamtPerZuweisung - 1);
-
-            if (position < anzahlWerwolfZuweisung && 0<anzahlWerwolfZuweisung) {
-                verbindung.setCharakter("werwolf");
-                anzahlWerwolfZuweisung--;
-            } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung&& 0<anzahlBuergerZuweisung) {
-                verbindung.setCharakter("buerger");
-                anzahlBuergerZuweisung--;
-            } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung + anzahlAmorZuweisung&& 0<anzahlAmorZuweisung) {
-                verbindung.setCharakter("amor");
-                anzahlAmorZuweisung--;
-            } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung + anzahlAmorZuweisung + anzahlHexeZuweisung && 0<anzahlHexeZuweisung) {
-                verbindung.setCharakter("hexe");
-                anzahlHexeZuweisung--;
-            } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung + anzahlAmorZuweisung + anzahlHexeZuweisung + anzahlWaechterZuweisung&& 0<anzahlWaechterZuweisung) {
-                verbindung.setCharakter("waechter");
-                anzahlWaechterZuweisung--;
-            } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung + anzahlAmorZuweisung + anzahlHexeZuweisung + anzahlWaechterZuweisung + anzahlMaedchenZuweisung && 0< anzahlMaedchenZuweisung) {
-                verbindung.setCharakter("maedchen");
-                anzahlMaedchenZuweisung--;
-            } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung + anzahlAmorZuweisung + anzahlHexeZuweisung + anzahlWaechterZuweisung + anzahlMaedchenZuweisung + anzahlSeherZuweisung && 0<anzahlSeherZuweisung) {
-                verbindung.setCharakter("seher");
-                anzahlSeherZuweisung--;
-            } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung + anzahlAmorZuweisung + anzahlHexeZuweisung + anzahlWaechterZuweisung + anzahlMaedchenZuweisung + anzahlSeherZuweisung + anzahlDiebZuweisung && 0<anzahlDiebZuweisung) {
-                verbindung.setCharakter("dieb");
-                anzahlDiebZuweisung--;
+            val position = Math.random().toInt() * gesamtPerZuweisung - 1
+            if (position < anzahlWerwolfZuweisung && 0 < anzahlWerwolfZuweisung) {
+                verbindung.charakter = "werwolf"
+                anzahlWerwolfZuweisung--
+            } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung && 0 < anzahlBuergerZuweisung) {
+                verbindung.charakter = "buerger"
+                anzahlBuergerZuweisung--
+            } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung + anzahlAmorZuweisung && 0 < anzahlAmorZuweisung) {
+                verbindung.charakter = "amor"
+                anzahlAmorZuweisung--
+            } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung + anzahlAmorZuweisung + anzahlHexeZuweisung && 0 < anzahlHexeZuweisung) {
+                verbindung.charakter = "hexe"
+                anzahlHexeZuweisung--
+            } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung + anzahlAmorZuweisung + anzahlHexeZuweisung + anzahlWaechterZuweisung && 0 < anzahlWaechterZuweisung) {
+                verbindung.charakter = "waechter"
+                anzahlWaechterZuweisung--
+            } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung + anzahlAmorZuweisung + anzahlHexeZuweisung + anzahlWaechterZuweisung + anzahlMaedchenZuweisung && 0 < anzahlMaedchenZuweisung) {
+                verbindung.charakter = "maedchen"
+                anzahlMaedchenZuweisung--
+            } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung + anzahlAmorZuweisung + anzahlHexeZuweisung + anzahlWaechterZuweisung + anzahlMaedchenZuweisung + anzahlSeherZuweisung && 0 < anzahlSeherZuweisung) {
+                verbindung.charakter = "seher"
+                anzahlSeherZuweisung--
+            } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung + anzahlAmorZuweisung + anzahlHexeZuweisung + anzahlWaechterZuweisung + anzahlMaedchenZuweisung + anzahlSeherZuweisung + anzahlDiebZuweisung && 0 < anzahlDiebZuweisung) {
+                verbindung.charakter = "dieb"
+                anzahlDiebZuweisung--
             } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung + anzahlAmorZuweisung + anzahlHexeZuweisung +
-                    anzahlWaechterZuweisung + anzahlMaedchenZuweisung + anzahlSeherZuweisung + anzahlDiebZuweisung + anzahlJaegerZuweisung && 0<anzahlJaegerZuweisung) {
-                verbindung.setCharakter("jaeger");
-                anzahlJaegerZuweisung--;
+                anzahlWaechterZuweisung + anzahlMaedchenZuweisung + anzahlSeherZuweisung + anzahlDiebZuweisung + anzahlJaegerZuweisung && 0 < anzahlJaegerZuweisung
+            ) {
+                verbindung.charakter = "jaeger"
+                anzahlJaegerZuweisung--
             } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung + anzahlAmorZuweisung + anzahlHexeZuweisung +
-                    anzahlWaechterZuweisung + anzahlMaedchenZuweisung + anzahlSeherZuweisung + anzahlDiebZuweisung + anzahlJaegerZuweisung + anzahlRitterZuweisung&& 0<anzahlRitterZuweisung) {
-                verbindung.setCharakter("ritter");
-                anzahlRitterZuweisung--;
+                anzahlWaechterZuweisung + anzahlMaedchenZuweisung + anzahlSeherZuweisung + anzahlDiebZuweisung + anzahlJaegerZuweisung + anzahlRitterZuweisung && 0 < anzahlRitterZuweisung
+            ) {
+                verbindung.charakter = "ritter"
+                anzahlRitterZuweisung--
             } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung + anzahlAmorZuweisung + anzahlHexeZuweisung +
-                    anzahlWaechterZuweisung + anzahlMaedchenZuweisung + anzahlSeherZuweisung + anzahlDiebZuweisung + anzahlJaegerZuweisung + anzahlRitterZuweisung + anzahlFloetenspielerZuweisung && 0<anzahlFloetenspielerZuweisung) {
-                verbindung.setCharakter("floetenspieler");
-                anzahlFloetenspielerZuweisung--;
+                anzahlWaechterZuweisung + anzahlMaedchenZuweisung + anzahlSeherZuweisung + anzahlDiebZuweisung + anzahlJaegerZuweisung + anzahlRitterZuweisung + anzahlFloetenspielerZuweisung && 0 < anzahlFloetenspielerZuweisung
+            ) {
+                verbindung.charakter = "floetenspieler"
+                anzahlFloetenspielerZuweisung--
             } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung + anzahlAmorZuweisung + anzahlHexeZuweisung +
-                    anzahlWaechterZuweisung + anzahlMaedchenZuweisung + anzahlSeherZuweisung + anzahlDiebZuweisung + anzahlJaegerZuweisung + anzahlRitterZuweisung + anzahlFloetenspielerZuweisung + anzahlFreundeZuweisung&& 0< anzahlFreundeZuweisung) {
-                verbindung.setCharakter("freunde");
-                anzahlFreundeZuweisung--;
+                anzahlWaechterZuweisung + anzahlMaedchenZuweisung + anzahlSeherZuweisung + anzahlDiebZuweisung + anzahlJaegerZuweisung + anzahlRitterZuweisung + anzahlFloetenspielerZuweisung + anzahlFreundeZuweisung && 0 < anzahlFreundeZuweisung
+            ) {
+                verbindung.charakter = "freunde"
+                anzahlFreundeZuweisung--
             } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung + anzahlAmorZuweisung + anzahlHexeZuweisung +
-                    anzahlWaechterZuweisung + anzahlMaedchenZuweisung + anzahlSeherZuweisung + anzahlDiebZuweisung +
-                    anzahlJaegerZuweisung + anzahlRitterZuweisung + anzahlFloetenspielerZuweisung + anzahlFreundeZuweisung +
-                    anzahlWeisserWerwolfZuweisung && 0<anzahlWeisserWerwolfZuweisung) {
-                verbindung.setCharakter("weisserwerwolf");
-                anzahlWeisserWerwolfZuweisung--;
+                anzahlWaechterZuweisung + anzahlMaedchenZuweisung + anzahlSeherZuweisung + anzahlDiebZuweisung +
+                anzahlJaegerZuweisung + anzahlRitterZuweisung + anzahlFloetenspielerZuweisung + anzahlFreundeZuweisung + anzahlWeisserWerwolfZuweisung && 0 < anzahlWeisserWerwolfZuweisung
+            ) {
+                verbindung.charakter = "weisserwerwolf"
+                anzahlWeisserWerwolfZuweisung--
             } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung + anzahlAmorZuweisung + anzahlHexeZuweisung +
-                    anzahlWaechterZuweisung + anzahlMaedchenZuweisung + anzahlSeherZuweisung + anzahlDiebZuweisung +
-                    anzahlJaegerZuweisung + anzahlRitterZuweisung + anzahlFloetenspielerZuweisung + anzahlFreundeZuweisung +
-                    anzahlWeisserWerwolfZuweisung + anzahlJungesZuweisung && 0<anzahlJungesZuweisung) {
-                verbindung.setCharakter("junges");
-                anzahlJungesZuweisung--;
+                anzahlWaechterZuweisung + anzahlMaedchenZuweisung + anzahlSeherZuweisung + anzahlDiebZuweisung +
+                anzahlJaegerZuweisung + anzahlRitterZuweisung + anzahlFloetenspielerZuweisung + anzahlFreundeZuweisung +
+                anzahlWeisserWerwolfZuweisung + anzahlJungesZuweisung && 0 < anzahlJungesZuweisung
+            ) {
+                verbindung.charakter = "junges"
+                anzahlJungesZuweisung--
             } else if (position < anzahlWerwolfZuweisung + anzahlBuergerZuweisung + anzahlAmorZuweisung + anzahlHexeZuweisung +
-                    anzahlWaechterZuweisung + anzahlMaedchenZuweisung + anzahlSeherZuweisung + anzahlDiebZuweisung +
-                    anzahlJaegerZuweisung + anzahlRitterZuweisung + anzahlFloetenspielerZuweisung + anzahlFreundeZuweisung +
-                    anzahlWeisserWerwolfZuweisung + anzahlJungesZuweisung + anzahlUrwolfZuweisung && 0<anzahlUrwolfZuweisung) {
-                verbindung.setCharakter("urwolf");
-                anzahlUrwolfZuweisung--;
+                anzahlWaechterZuweisung + anzahlMaedchenZuweisung + anzahlSeherZuweisung + anzahlDiebZuweisung +
+                anzahlJaegerZuweisung + anzahlRitterZuweisung + anzahlFloetenspielerZuweisung + anzahlFreundeZuweisung +
+                anzahlWeisserWerwolfZuweisung + anzahlJungesZuweisung + anzahlUrwolfZuweisung && 0 < anzahlUrwolfZuweisung
+            ) {
+                verbindung.charakter = "urwolf"
+                anzahlUrwolfZuweisung--
             }
-
         }
-        gesamtPerZuweisung--;
-        mDatabaseHelper.addCharakter(verbindung.getNameNichtThread(), verbindung.getCharakter());
-        return retValue;
+        gesamtPerZuweisung--
+        mDatabaseHelper!!.addCharakter(verbindung.nameNichtThread, verbindung.charakter)
+        return retValue
     }
 
-
-    class CustomAdapter extends BaseAdapter {
-
-        private TextView pers;
-        private ArrayList<String> ipAdressen;
-        private Map<String, String> ipToName;
-
-        public CustomAdapter(ArrayList<String> ipAdressen, Map<String, String> ipToName) {
-            this.ipAdressen = ipAdressen;
-            this.ipToName = ipToName;
+    internal inner class CustomAdapter(
+        private val ipAdressen: ArrayList<String>,
+        private val ipToName: Map<String, String>
+    ) : BaseAdapter() {
+        private var pers: TextView? = null
+        override fun getCount(): Int {
+            return ipAdressen.size
         }
 
-        @Override
-        public int getCount() {
-            return ipAdressen.size();
+        override fun getItem(position: Int): Any {
+            return position
         }
 
-        @Override
-        public Object getItem(int position) {
-            return position;
+        override fun getItemId(position: Int): Long {
+            return position.toLong()
         }
 
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        override fun getView(position: Int, convertView: View, parent: ViewGroup): View {
 
             //charakter.setImageResource(R.drawable.amor_v3);
-            convertView = getLayoutInflater().inflate(R.layout.mylistitemwhitetext, null);
-            pers = (TextView) convertView.findViewById(R.id.textPer);
-
-            pers.setText(ipAdressen.get(position) + "   " + ipToName.get(ipAdressen.get(position)));
-
-
-            return convertView;
+            var convertView = convertView
+            convertView = layoutInflater.inflate(R.layout.mylistitemwhitetext, null)
+            pers = convertView.findViewById<View>(R.id.textPer) as TextView
+            pers!!.text = ipAdressen[position] + "   " + ipToName[ipAdressen[position]]
+            return convertView
         }
     }
 
-    public boolean iPToNameContainsName(String name) {
-        return ipToName.containsValue(name);
+    fun iPToNameContainsName(name: String): Boolean {
+        return ipToName!!.containsValue(name)
     }
 
-    public boolean iPToNameContainsKey(String ipAdresse) {
-        return ipToName.containsKey(ipAdresse);
+    fun iPToNameContainsKey(ipAdresse: String): Boolean {
+        return ipToName!!.containsKey(ipAdresse)
     }
 
-    public String getNameIPToName(String ipAdresse) {
-        return ipToName.get(ipAdresse);
+    fun getNameIPToName(ipAdresse: String): String? {
+        return ipToName!![ipAdresse]
     }
 
-    public void ipToNamePut(String ipSender, String name) {
-        ipToName.put(ipSender, name);
+    fun ipToNamePut(ipSender: String, name: String) {
+        ipToName!![ipSender] = name
     }
 
+    fun ipAdressenAdd(ipSender: String) {
+        ipAdressen!!.add(ipSender)
+    }
 
-    public void ipAdressenAdd(String ipSender) {
-        ipAdressen.add(ipSender);
+    companion object {
+        private var ipToName: MutableMap<String, String>? = null
     }
 }

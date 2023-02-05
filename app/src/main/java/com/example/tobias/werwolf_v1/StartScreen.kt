@@ -1,112 +1,81 @@
-package com.example.tobias.werwolf_v1;
+package com.example.tobias.werwolf_v1
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.Handler;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.content.Intent
+import android.os.Bundle
+import android.os.Handler
+import android.view.View
+import android.widget.Button
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.example.tobias.werwolf_v1.multipleDevices.PlayerConnectToHost
+import maes.tech.intentanim.CustomIntent
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.example.tobias.werwolf_v1.multipleDevices.PlayerConnectToHost;
-
-import maes.tech.intentanim.CustomIntent;
-
-
-public class StartScreen extends AppCompatActivity implements View.OnClickListener {
-
-
-    private boolean zweiMalzurueck;
-
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_startscreen);
-
-
-        Button mitKarten = findViewById(R.id.spielleiterEinzeln);
-        mitKarten.setOnClickListener(StartScreen.this);
-        Button ohneKarten = findViewById(R.id.spieler);
-        ohneKarten.setOnClickListener(StartScreen.this);
-        Button handbuch_knopf = findViewById(R.id.handbuch_knopf);
-        handbuch_knopf.setOnClickListener(StartScreen.this);
-        Button einzelspieler = findViewById(R.id.spielleiterServer);
-        einzelspieler.setOnClickListener(StartScreen.this);
+class StartScreen : AppCompatActivity(), View.OnClickListener {
+    private var zweiMalzurueck = false
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_startscreen)
+        val mitKarten = findViewById<Button>(R.id.spielleiterEinzeln)
+        mitKarten.setOnClickListener(this@StartScreen)
+        val ohneKarten = findViewById<Button>(R.id.spieler)
+        ohneKarten.setOnClickListener(this@StartScreen)
+        val handbuch_knopf = findViewById<Button>(R.id.handbuch_knopf)
+        handbuch_knopf.setOnClickListener(this@StartScreen)
+        val einzelspieler = findViewById<Button>(R.id.spielleiterServer)
+        einzelspieler.setOnClickListener(this@StartScreen)
     }
 
-    @Override
-    public void onBackPressed() {
+    override fun onBackPressed() {
         if (zweiMalzurueck) {
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.addCategory(Intent.CATEGORY_HOME);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
-            finish();
-            System.exit(0);
+            val intent = Intent(Intent.ACTION_MAIN)
+            intent.addCategory(Intent.CATEGORY_HOME)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+            startActivity(intent)
+            finish()
+            System.exit(0)
         }
-
-        Toast.makeText(StartScreen.this, "Um die App zu schließen Taste erneut drücken.", Toast.LENGTH_SHORT).show();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                zweiMalzurueck = false;
-            }
-        }, 2000);
-        zweiMalzurueck = true;
+        Toast.makeText(
+            this@StartScreen,
+            "Um die App zu schließen Taste erneut drücken.",
+            Toast.LENGTH_SHORT
+        ).show()
+        Handler().postDelayed({ zweiMalzurueck = false }, 2000)
+        zweiMalzurueck = true
     }
 
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.spielleiterEinzeln:
-                charakterauswahlOeffnenEinGeraet();
-                break;
-
-            case R.id.spielleiterServer:
-                charakterauswahlOeffnen();
-                break;
-
-            case R.id.spieler:
-                spielerAuswahlOeffnen();
-                break;
-
-            case R.id.handbuch_knopf:
-                handbuchOeffnen();
-                break;
+    override fun onClick(v: View) {
+        when (v.id) {
+            R.id.spielleiterEinzeln -> charakterauswahlOeffnenEinGeraet()
+            R.id.spielleiterServer -> charakterauswahlOeffnen()
+            R.id.spieler -> spielerAuswahlOeffnen()
+            R.id.handbuch_knopf -> handbuchOeffnen()
         }
     }
 
-
-    private void spielerAuswahlOeffnen() {
-        Intent intent = new Intent(StartScreen.this, PlayerConnectToHost.class);
-        intent.putExtra("Karten", "nein");
-        startActivity(intent);
-        CustomIntent.customType(this, "left-to-right");
+    private fun spielerAuswahlOeffnen() {
+        val intent = Intent(this@StartScreen, PlayerConnectToHost::class.java)
+        intent.putExtra("Karten", "nein")
+        startActivity(intent)
+        CustomIntent.customType(this, "left-to-right")
     }
 
-
-    private void charakterauswahlOeffnenEinGeraet() {
-        Intent intent = new Intent(this, CharacterSelection.class);
-        intent.putExtra("EinGeraet", true);
-        startActivity(intent);
-        CustomIntent.customType(this, "left-to-right");
+    private fun charakterauswahlOeffnenEinGeraet() {
+        val intent = Intent(this, CharacterSelection::class.java)
+        intent.putExtra("EinGeraet", true)
+        startActivity(intent)
+        CustomIntent.customType(this, "left-to-right")
     }
 
-    private void charakterauswahlOeffnen() {
-        Intent intent = new Intent(this, CharacterSelection.class);
-        intent.putExtra("EinGeraet", false);
-        startActivity(intent);
-        CustomIntent.customType(this, "left-to-right");
+    private fun charakterauswahlOeffnen() {
+        val intent = Intent(this, CharacterSelection::class.java)
+        intent.putExtra("EinGeraet", false)
+        startActivity(intent)
+        CustomIntent.customType(this, "left-to-right")
     }
 
-    private void handbuchOeffnen() {
-        Intent intent = new Intent(this, Manual.class);
-        startActivity(intent);
-        CustomIntent.customType(this, "bottom-to-up");
+    private fun handbuchOeffnen() {
+        val intent = Intent(this, Manual::class.java)
+        startActivity(intent)
+        CustomIntent.customType(this, "bottom-to-up")
     }
 }
-
-
