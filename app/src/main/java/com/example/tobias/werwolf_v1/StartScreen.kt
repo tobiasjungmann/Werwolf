@@ -4,29 +4,28 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.tobias.werwolf_v1.databinding.ActivityStartscreenBinding
 import com.example.tobias.werwolf_v1.multipleDevices.PlayerConnectToHost
 import maes.tech.intentanim.CustomIntent
 
 class StartScreen : AppCompatActivity(), View.OnClickListener {
-    private var zweiMalzurueck = false
+    private var backPressedTwice = false
+    private lateinit var binding: ActivityStartscreenBinding
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_startscreen)
-        val mitKarten = findViewById<Button>(R.id.spielleiterEinzeln)
-        mitKarten.setOnClickListener(this@StartScreen)
-        val ohneKarten = findViewById<Button>(R.id.spieler)
-        ohneKarten.setOnClickListener(this@StartScreen)
-        val handbuch_knopf = findViewById<Button>(R.id.handbuch_knopf)
-        handbuch_knopf.setOnClickListener(this@StartScreen)
-        val einzelspieler = findViewById<Button>(R.id.spielleiterServer)
-        einzelspieler.setOnClickListener(this@StartScreen)
+        binding = ActivityStartscreenBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.spieler.setOnClickListener(this@StartScreen)
+        binding.handbuchKnopf.setOnClickListener(this@StartScreen)
+        binding.spielleiterEinzeln.setOnClickListener(this@StartScreen)
+        binding.spielleiterServer.setOnClickListener(this@StartScreen)
     }
 
     override fun onBackPressed() {
-        if (zweiMalzurueck) {
+        if (backPressedTwice) {
             val intent = Intent(Intent.ACTION_MAIN)
             intent.addCategory(Intent.CATEGORY_HOME)
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
@@ -39,41 +38,34 @@ class StartScreen : AppCompatActivity(), View.OnClickListener {
             "Um die App zu schließen Taste erneut drücken.",
             Toast.LENGTH_SHORT
         ).show()
-        Handler().postDelayed({ zweiMalzurueck = false }, 2000)
-        zweiMalzurueck = true
+        Handler().postDelayed({ backPressedTwice = false }, 2000)
+        backPressedTwice = true
     }
 
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.spielleiterEinzeln -> charakterauswahlOeffnenEinGeraet()
-            R.id.spielleiterServer -> charakterauswahlOeffnen()
-            R.id.spieler -> spielerAuswahlOeffnen()
-            R.id.handbuch_knopf -> handbuchOeffnen()
+            R.id.spielleiterEinzeln -> openCharacterSelection(true)
+            R.id.spielleiterServer -> openCharacterSelection(false)
+            R.id.spieler -> openPlayerSelection()
+            R.id.handbuch_knopf -> openManual()
         }
     }
 
-    private fun spielerAuswahlOeffnen() {
+    private fun openPlayerSelection() {
         val intent = Intent(this@StartScreen, PlayerConnectToHost::class.java)
         intent.putExtra("Karten", "nein")
         startActivity(intent)
         CustomIntent.customType(this, "left-to-right")
     }
 
-    private fun charakterauswahlOeffnenEinGeraet() {
+    private fun openCharacterSelection(oneDevice: Boolean) {
         val intent = Intent(this, CharacterSelection::class.java)
-        intent.putExtra("EinGeraet", true)
+        intent.putExtra("EinGeraet", oneDevice)
         startActivity(intent)
         CustomIntent.customType(this, "left-to-right")
     }
 
-    private fun charakterauswahlOeffnen() {
-        val intent = Intent(this, CharacterSelection::class.java)
-        intent.putExtra("EinGeraet", false)
-        startActivity(intent)
-        CustomIntent.customType(this, "left-to-right")
-    }
-
-    private fun handbuchOeffnen() {
+    private fun openManual() {
         val intent = Intent(this, Manual::class.java)
         startActivity(intent)
         CustomIntent.customType(this, "bottom-to-up")
