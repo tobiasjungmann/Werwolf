@@ -19,10 +19,10 @@ class StartScreenActivity : AppCompatActivity(), View.OnClickListener {
         binding = ActivityStartscreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.spieler.setOnClickListener(this@StartScreenActivity)
-        binding.handbuchKnopf.setOnClickListener(this@StartScreenActivity)
-        binding.spielleiterEinzeln.setOnClickListener(this@StartScreenActivity)
-        binding.spielleiterServer.setOnClickListener(this@StartScreenActivity)
+        binding.spieler.setOnClickListener(this)
+        binding.handbuchKnopf.setOnClickListener(this)
+        binding.spielleiterEinzeln.setOnClickListener(this)
+        binding.spielleiterServer.setOnClickListener(this)
     }
 
     override fun onBackPressed() {

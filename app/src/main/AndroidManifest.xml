@@ -19,57 +19,41 @@
         tools:ignore="GoogleAppIndexingWarning">
 
         <activity
-            android:name=".LoadingScreen"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:exported="false"/>
-        <activity
-            android:name=".CharacterSelection"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:exported="false"/>
-        <activity
-            android:name=".PlayerManagement"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:exported="false"/>
-        <activity
-            android:name=".CardsToPlayerMatching"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:exported="false"/>
-        <activity
-            android:name=".ListNight"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
-            android:exported="false"/>
-        <activity
             android:name=".StartScreenActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".LoadingScreen"
+            android:exported="false"/>
+        <activity
+            android:name=".CharacterSelection"
+            android:exported="false"/>
+        <activity
+            android:name=".PlayerManagement"
+            android:exported="false"/>
+        <activity
+            android:name=".CardsToPlayerMatching"
+            android:exported="false"/>
+        <activity
+            android:name=".ListNight"
+            android:exported="false"/>
         <activity
             android:name=".Manual"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
+            android:exported="false"/>
         <activity
             android:name=".VictoryActivity"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
+            android:exported="false"/>
         <activity
             android:name=".multipleDevices.HostConnectWithPlayers"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
+            android:exported="false"/>
         <activity
             android:name=".multipleDevices.PlayerConnectToHost"
-            android:configChanges="orientation"
-            android:screenOrientation="portrait" />
+            android:exported="false"/>
     </application>
 
 </manifest>
