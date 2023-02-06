@@ -24,31 +24,7 @@ class CharacterListAdapter(private var characters: List<Character>) :
     override fun onBindViewHolder(holder: CharacterHolder, position: Int) {
         val currentItem = characters[position]
 
-
-        //  observeThumbnail(holder, characters[position].)
     }
-
-    /*   private fun observeThumbnail(holder: PlantHolder, elementId: Int) {
-           plantViewModel.getThumbnailsForList().observe(
-               viewLifecycleOwner
-           ) { pathList: List<PathElement> ->
-               val firstThumbnailIndex = pathList.indexOfFirst { it.parentEntry == elementId }
-
-               if (firstThumbnailIndex >= 0) {
-                   holder.binding.listThumbnailImageView.visibility = View.VISIBLE
-                   holder.binding.listThumbnailImageView.setImageBitmap(
-                       pathList[firstThumbnailIndex].loadThumbnail(
-                           thumbnailSize
-                       )
-                   )
-                   val alpha = 1.toFloat()
-                   holder.binding.listThumbnailImageView.alpha = alpha
-
-               } else {
-                   holder.binding.listThumbnailImageView.visibility = View.GONE
-               }
-           }
-       }*/
 
     override fun getItemCount(): Int {
         return characters.size
@@ -56,20 +32,20 @@ class CharacterListAdapter(private var characters: List<Character>) :
 
 
     class CharacterHolder(
-        val binding: ItemCharacterSelectionBinding
+       private val binding: ItemCharacterSelectionBinding
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
             itemView.setOnClickListener {
-                binding.nummerWerwolf.text = "5"
+                binding.textviewAmountCharacter.text = "5"
             }
 
             itemView.setOnLongClickListener(View.OnLongClickListener {
                 val position = bindingAdapterPosition
                 if (position != RecyclerView.NO_POSITION) {
-                    if (binding.infoTextWerwolf.visibility == View.GONE) {
-                        binding.infoTextWerwolf.visibility = View.VISIBLE
+                    if (binding.textviewInfo.visibility == View.GONE) {
+                        binding.textviewInfo.visibility = View.VISIBLE
                     } else {
-                        binding.infoTextWerwolf.visibility = View.GONE
+                        binding.textviewInfo.visibility = View.GONE
                     }
                     return@OnLongClickListener true
                 }

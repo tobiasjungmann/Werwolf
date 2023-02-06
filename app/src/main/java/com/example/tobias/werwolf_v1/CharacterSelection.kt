@@ -6,6 +6,7 @@ import android.os.Vibrator
 import android.view.View
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tobias.werwolf_v1.R.id
 import com.example.tobias.werwolf_v1.databinding.ActivityCharakterselectionBinding
@@ -40,16 +41,8 @@ class CharacterSelection : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityCharakterselectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        initHeader()
 
-        einGeraet = intent.extras!!.getBoolean("EinGeraet", true)
-
-        // todo extract everywhere
-        binding.textModus.setText(R.string.spielleiter)
-        if (einGeraet) {
-            binding.layoutModus.setBackgroundResource(R.drawable.leiste_hellgruen)
-        } else {
-            binding.layoutModus.setBackgroundResource(R.drawable.leiste_orange)
-        }
         vibrator = getSystemService(VIBRATOR_SERVICE) as Vibrator
         binding.spielStarten.setOnClickListener(this@CharacterSelection)
         val adapter = CharacterListAdapter(generateCharacters())
@@ -57,8 +50,23 @@ class CharacterSelection : AppCompatActivity(), View.OnClickListener {
         binding.recyclerviewCharacterSelection.layoutManager = LinearLayoutManager(this)
     }
 
+    private fun initHeader() {
+        einGeraet = intent.extras!!.getBoolean("EinGeraet", true)
+        binding.textModus.setText(R.string.spielleiter)
+        var color = R.color.orange
+        if (einGeraet) {
+            color = R.color.gruen
+        }
+        binding.layoutModus.background.setTint(
+            ContextCompat.getColor(
+                this,
+                color
+            )
+        )
+    }
+
     private fun generateCharacters(): ArrayList<Character> {
-        return arrayListOf(Character("Werwolf","blabla"))
+        return arrayListOf(Character("Werwolf", "blabla"))
     }
 
     override fun onClick(v: View) {
