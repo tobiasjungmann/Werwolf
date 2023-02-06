@@ -7,6 +7,7 @@ import android.view.View
 import android.view.View.OnTouchListener
 import android.view.Window
 import android.view.WindowManager
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tobias.werwolf_v1.R
@@ -14,7 +15,7 @@ import com.example.tobias.werwolf_v1.StartScreenActivity
 
 class PlayerCard : AppCompatActivity(), OnTouchListener {
     private var charakterKarte: TextView? = null
-    private var layoutKarteSpieler: SquareLayout? = null
+    private var layoutKarteSpieler: LinearLayout? = null
     private var rolle: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,7 +27,7 @@ class PlayerCard : AppCompatActivity(), OnTouchListener {
         setContentView(R.layout.activity_playercard)
         charakterKarte = findViewById(R.id.charakterKarte)
         layoutKarteSpieler = findViewById(R.id.layoutKarteSpieler)
-        charakterKarte.setOnTouchListener(this)
+        charakterKarte!!.setOnTouchListener(this)
         rolle = intent.extras!!.getString("rolle")
         rolle = if (rolle == null || rolle!!.compareTo("") == 0) {
             "Fehler: keine Rolle übermittelt"

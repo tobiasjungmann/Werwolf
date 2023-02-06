@@ -19,7 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.tobias.werwolf_v1.DatabaseHelper
 import com.example.tobias.werwolf_v1.ListNight
 import com.example.tobias.werwolf_v1.R
-import com.google.zxing.WriterException
+//import com.google.zxing.WriterException
 import maes.tech.intentanim.CustomIntent
 import java.io.IOException
 import java.net.ServerSocket
@@ -99,12 +99,12 @@ class HostConnectWithPlayers : AppCompatActivity() {
         val wm = applicationContext.getSystemService(WIFI_SERVICE) as WifiManager
         val ip = Formatter.formatIpAddress(wm.connectionInfo.ipAddress)
         qrgEncoder = QRGEncoder(ip, null, QRGContents.Type.TEXT, smallerDimension)
-        try {
+    /*    try {
             val bitmap = qrgEncoder!!.encodeAsBitmap()
             qrImage!!.setImageBitmap(bitmap)
         } catch (e: WriterException) {
             Log.v("d", e.toString())
-        }
+        }*/ // todo add again
         ichselbst = this
         try {
             ss = ServerSocket(9002)
