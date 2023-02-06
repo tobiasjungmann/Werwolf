@@ -38,7 +38,7 @@ class Manual : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View) {
         if (v.id == R.id.backmanual) {
-            val intent = Intent(this@Manual, StartScreen::class.java)
+            val intent = Intent(this@Manual, StartScreenActivity::class.java)
             startActivity(intent)
             CustomIntent.customType(this, "up-to-bottom")
         } else if (v.id == R.id.characterText) {

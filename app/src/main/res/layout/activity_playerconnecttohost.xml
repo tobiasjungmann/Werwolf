@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Spieler_Auswahl"
     android:background="@color/grey">
 
     <LinearLayout
@@ -147,7 +146,7 @@
 <!-- Name eingeben -->
 
 
-    <com.example.tobias.werwolf_v1.SquareLayout
+    <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerHorizontal="true"
@@ -161,7 +160,7 @@
         android:id="@+id/cameraview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-</com.example.tobias.werwolf_v1.SquareLayout>
+    </LinearLayout>
 
 
 <TextView

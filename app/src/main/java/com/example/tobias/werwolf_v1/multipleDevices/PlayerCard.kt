@@ -10,8 +10,7 @@ import android.view.WindowManager
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tobias.werwolf_v1.R
-import com.example.tobias.werwolf_v1.SquareLayout
-import com.example.tobias.werwolf_v1.StartScreen
+import com.example.tobias.werwolf_v1.StartScreenActivity
 
 class PlayerCard : AppCompatActivity(), OnTouchListener {
     private var charakterKarte: TextView? = null
@@ -77,7 +76,7 @@ class PlayerCard : AppCompatActivity(), OnTouchListener {
     }
 
     private fun startbildschirmOeffnen() {
-        val intent = Intent(this, StartScreen::class.java)
+        val intent = Intent(this, StartScreenActivity::class.java)
         startActivity(intent)
     }
 }

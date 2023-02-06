@@ -15,8 +15,7 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.example.tobias.werwolf_v1.R
-import com.example.tobias.werwolf_v1.SquareLayout
-import com.example.tobias.werwolf_v1.StartScreen
+import com.example.tobias.werwolf_v1.StartScreenActivity
 import com.google.android.gms.vision.CameraSource
 import com.google.android.gms.vision.Detector
 import com.google.android.gms.vision.Detector.Detections
@@ -27,7 +26,7 @@ import java.io.*
 import java.net.Socket
 
 class PlayerConnectToHost : AppCompatActivity(), View.OnClickListener {
-    private var square: SquareLayout? = null
+    private var square: LinearLayout? = null
     private var infoText: TextView? = null
     private var cameraSource: CameraSource? = null
     private var ipAdresseHost: String? = null
@@ -58,7 +57,7 @@ class PlayerConnectToHost : AppCompatActivity(), View.OnClickListener {
         val wm = applicationContext.getSystemService(WIFI_SERVICE) as WifiManager
         meineIp = Formatter.formatIpAddress(wm.connectionInfo.ipAddress)
         bereit = findViewById(R.id.bereit)
-        bereit.setOnClickListener(this)
+        bereit!!.setOnClickListener(this)
         nameEingeben = findViewById(R.id.nameEingeben)
         statusVerbindung = findViewById(R.id.statusVerbindung)
         // textWartenAnimation = findViewById(R.id.textWartenAnimation);
@@ -86,7 +85,7 @@ class PlayerConnectToHost : AppCompatActivity(), View.OnClickListener {
                     return
                 }
                 try {
-                    cameraSource.start(holder)
+                    cameraSource!!.start(holder)
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
@@ -101,7 +100,7 @@ class PlayerConnectToHost : AppCompatActivity(), View.OnClickListener {
             }
 
             override fun surfaceDestroyed(holder: SurfaceHolder) {
-                cameraSource.stop()
+                cameraSource!!.stop()
             }
         })
         barcodeDetector.setProcessor(object : Detector.Processor<Barcode> {
@@ -111,9 +110,9 @@ class PlayerConnectToHost : AppCompatActivity(), View.OnClickListener {
                 if (qrCodes.size() != 0) {
                     ipAdresseHost = qrCodes.valueAt(0).displayValue
                     Log.e("D", "qrCode erfasst: $ipAdresseHost")
-                    val ipTest = ipAdresseHost.toCharArray()
+                    val ipTest = ipAdresseHost!!.toCharArray()
                     var korrekterQRCode = true
-                    if (ipAdresseHost.compareTo("0.0.0.0") == 0) {
+                    if (ipAdresseHost!!.compareTo("0.0.0.0") == 0) {
                         korrekterQRCode = false
                     }
                     for (c in ipTest) {
@@ -129,13 +128,13 @@ class PlayerConnectToHost : AppCompatActivity(), View.OnClickListener {
                                 Log.e("D", "if: Thread$ipAdresseHost")
                                 runOnUiThread {
                                     Log.e("D", "if runonui $ipAdresseHost")
-                                    square.setVisibility(View.GONE)
-                                    infoText.setVisibility(View.GONE)
+                                    square!!.setVisibility(View.GONE)
+                                    infoText!!.setVisibility(View.GONE)
                                     //  bereit.setVisibility(View.VISIBLE);
-                                    nameLayout.setVisibility(View.VISIBLE)
-                                    statusVerbindung.setVisibility(View.VISIBLE)
+                                    nameLayout!!.setVisibility(View.VISIBLE)
+                                    statusVerbindung!!.setVisibility(View.VISIBLE)
                                     //todo refreshen der UI, damit die elemente angezeigt werden
-                                    cameraSource.stop()
+                                    cameraSource!!.stop()
                                 }
                             }
                         }.start()
@@ -353,7 +352,7 @@ class PlayerConnectToHost : AppCompatActivity(), View.OnClickListener {
     }
 
     override fun onBackPressed() {
-        val intent = Intent(this, StartScreen::class.java)
+        val intent = Intent(this, StartScreenActivity::class.java)
         startActivity(intent)
     }
 }

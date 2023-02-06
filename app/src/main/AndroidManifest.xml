@@ -22,29 +22,29 @@
             android:name=".LoadingScreen"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:exported="true"/>
+            android:exported="false"/>
         <activity
             android:name=".CharacterSelection"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:exported="true"/>
+            android:exported="false"/>
         <activity
             android:name=".PlayerManagement"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:exported="true"/>
+            android:exported="false"/>
         <activity
             android:name=".CardsToPlayerMatching"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:exported="true"/>
+            android:exported="false"/>
         <activity
             android:name=".ListNight"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
-            android:exported="true"/>
+            android:exported="false"/>
         <activity
-            android:name=".StartScreen"
+            android:name=".StartScreenActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:exported="true">

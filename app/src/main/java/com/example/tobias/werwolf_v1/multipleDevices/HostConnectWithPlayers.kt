@@ -87,7 +87,7 @@ class HostConnectWithPlayers : AppCompatActivity() {
         }
         charakterDatenHolen()
         anzahlMitspielerText = findViewById(R.id.anzahlMitspielerText)
-        anzahlMitspielerText.setText("Mitspieler: 0 von $gesamtPer")
+        anzahlMitspielerText?.setText("Mitspieler: 0 von $gesamtPer")
         qrImage = findViewById(R.id.imageQR)
         val manager = getSystemService(WINDOW_SERVICE) as WindowManager
         val display = manager.defaultDisplay
@@ -101,7 +101,7 @@ class HostConnectWithPlayers : AppCompatActivity() {
         qrgEncoder = QRGEncoder(ip, null, QRGContents.Type.TEXT, smallerDimension)
         try {
             val bitmap = qrgEncoder!!.encodeAsBitmap()
-            qrImage.setImageBitmap(bitmap)
+            qrImage!!.setImageBitmap(bitmap)
         } catch (e: WriterException) {
             Log.v("d", e.toString())
         }
@@ -116,8 +116,8 @@ class HostConnectWithPlayers : AppCompatActivity() {
         ipAdressen = ArrayList()
         clients = ArrayList()
         listViewPersonen = findViewById(R.id.listViewPersonen)
-        adapter = CustomAdapter(ipAdressen, ipToName)
-        listViewPersonen.setAdapter(adapter)
+        adapter = CustomAdapter(ipAdressen!!, ipToName!!)
+        listViewPersonen?.setAdapter(adapter)
         mDatabaseHelper = DatabaseHelper(this)
         mDatabaseHelper!!.clearDatabase()
         data = mDatabaseHelper!!.data

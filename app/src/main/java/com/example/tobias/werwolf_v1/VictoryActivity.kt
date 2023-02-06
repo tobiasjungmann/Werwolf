@@ -10,28 +10,28 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.example.tobias.werwolf_v1.databinding.ActivityStartscreenBinding
+import com.example.tobias.werwolf_v1.databinding.ActivityVictoryBinding
 
 class VictoryActivity : AppCompatActivity(), View.OnClickListener {
     private var twoTimesBackPressed = false
+    private lateinit var binding: ActivityVictoryBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        this.window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
-        setContentView(R.layout.activity_victory)
+        binding = ActivityVictoryBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.victoryStartScreenButton.setOnClickListener(this@VictoryActivity)
+
         val winner = intent.extras!!.getString("sieger")
-        val sartScreenButton = findViewById<Button>(R.id.victoryStartScreenButton)
-        sartScreenButton.setOnClickListener(this@VictoryActivity)
-        val winnerText = findViewById<TextView>(R.id.siegerText)
         when (winner) {
-            "floetenspieler" -> winnerText.setText(R.string.VictoryFlute)
-            "buerger" -> winnerText.setText(R.string.VictoryCiticens)
-            "werwoelfe" -> winnerText.setText(R.string.VictoryWolfes)
-            "liebespaar" -> winnerText.setText(R.string.VictoryLovers)
-            "ww" -> winnerText.setText(R.string.victoryWhiteWolf)
-            else -> winnerText.setText(R.string.victoryError)
+            "floetenspieler" -> binding.textViewWinner.setText(R.string.VictoryFlute)
+            "buerger" -> binding.textViewWinner.setText(R.string.VictoryCiticens)
+            "werwoelfe" -> binding.textViewWinner.setText(R.string.VictoryWolfes)
+            "liebespaar" -> binding.textViewWinner.setText(R.string.VictoryLovers)
+            "ww" -> binding.textViewWinner.setText(R.string.victoryWhiteWolf)
+            else -> binding.textViewWinner.setText(R.string.victoryError)
         }
     }
 
@@ -54,7 +54,7 @@ class VictoryActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun openStartScreen() {
-        val intent = Intent(this, StartScreen::class.java)
+        val intent = Intent(this, StartScreenActivity::class.java)
         startActivity(intent)
     }
 }

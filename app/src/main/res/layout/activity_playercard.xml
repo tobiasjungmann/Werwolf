@@ -33,7 +33,7 @@
     </LinearLayout>
 
 
-    <com.example.tobias.werwolf_v1.SquareLayout
+    <LinearLayout
         android:id="@+id/layoutKarteSpieler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
             android:textColor="@color/weiss"
             android:textSize="40sp"
             android:focusable="true" />
-    </com.example.tobias.werwolf_v1.SquareLayout>
+    </LinearLayout>
 
     <TextView
         android:id="@+id/textView8"

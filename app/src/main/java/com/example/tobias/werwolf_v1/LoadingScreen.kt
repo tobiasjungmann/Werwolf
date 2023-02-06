@@ -17,7 +17,7 @@ class LoadingScreen : AppCompatActivity() {
         )
         setContentView(R.layout.activity_loadingscreen)
         Handler().postDelayed({
-            val intent = Intent(this@LoadingScreen, StartScreen::class.java)
+            val intent = Intent(this@LoadingScreen, StartScreenActivity::class.java)
             overridePendingTransition(R.anim.fade_in, R.anim.fade_out)
             startActivity(intent)
             finish()

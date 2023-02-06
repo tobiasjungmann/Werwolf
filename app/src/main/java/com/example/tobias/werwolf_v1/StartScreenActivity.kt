@@ -10,7 +10,7 @@ import com.example.tobias.werwolf_v1.databinding.ActivityStartscreenBinding
 import com.example.tobias.werwolf_v1.multipleDevices.PlayerConnectToHost
 import maes.tech.intentanim.CustomIntent
 
-class StartScreen : AppCompatActivity(), View.OnClickListener {
+class StartScreenActivity : AppCompatActivity(), View.OnClickListener {
     private var backPressedTwice = false
     private lateinit var binding: ActivityStartscreenBinding
     
@@ -18,10 +18,11 @@ class StartScreen : AppCompatActivity(), View.OnClickListener {
         super.onCreate(savedInstanceState)
         binding = ActivityStartscreenBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.spieler.setOnClickListener(this@StartScreen)
-        binding.handbuchKnopf.setOnClickListener(this@StartScreen)
-        binding.spielleiterEinzeln.setOnClickListener(this@StartScreen)
-        binding.spielleiterServer.setOnClickListener(this@StartScreen)
+
+        binding.spieler.setOnClickListener(this@StartScreenActivity)
+        binding.handbuchKnopf.setOnClickListener(this@StartScreenActivity)
+        binding.spielleiterEinzeln.setOnClickListener(this@StartScreenActivity)
+        binding.spielleiterServer.setOnClickListener(this@StartScreenActivity)
     }
 
     override fun onBackPressed() {
@@ -34,7 +35,7 @@ class StartScreen : AppCompatActivity(), View.OnClickListener {
             System.exit(0)
         }
         Toast.makeText(
-            this@StartScreen,
+            this@StartScreenActivity,
             "Um die App zu schließen Taste erneut drücken.",
             Toast.LENGTH_SHORT
         ).show()
@@ -52,7 +53,7 @@ class StartScreen : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun openPlayerSelection() {
-        val intent = Intent(this@StartScreen, PlayerConnectToHost::class.java)
+        val intent = Intent(this@StartScreenActivity, PlayerConnectToHost::class.java)
         intent.putExtra("Karten", "nein")
         startActivity(intent)
         CustomIntent.customType(this, "left-to-right")
