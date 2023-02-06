@@ -43,7 +43,7 @@
             android:name=".ListNight"
             android:exported="false"/>
         <activity
-            android:name=".Manual"
+            android:name=".ManualActivity"
             android:exported="false"/>
         <activity
             android:name=".VictoryActivity"

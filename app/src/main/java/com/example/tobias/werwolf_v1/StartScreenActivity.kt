@@ -67,7 +67,7 @@ class StartScreenActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun openManual() {
-        val intent = Intent(this, Manual::class.java)
+        val intent = Intent(this, ManualActivity::class.java)
         startActivity(intent)
         CustomIntent.customType(this, "bottom-to-up")
     }

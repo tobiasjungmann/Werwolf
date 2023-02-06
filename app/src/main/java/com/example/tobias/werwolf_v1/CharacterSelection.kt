@@ -66,7 +66,7 @@ class CharacterSelection : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun generateCharacters(): ArrayList<Character> {
-        return arrayListOf(Character("Werwolf", "blabla"))
+        return arrayListOf(Character("Werwolf", "blabla",R.color.grau))
     }
 
     override fun onClick(v: View) {

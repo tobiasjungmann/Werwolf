@@ -5,6 +5,7 @@ import androidx.lifecycle.LifecycleOwner
 class Character(
     val name: String,
     val info: String,
+    val color: Int
 
 ) {
     var amount:Int=0
