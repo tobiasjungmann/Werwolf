@@ -28,12 +28,13 @@ class CharacterSelectionFragment : Fragment(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityCharakterselectionBinding.inflate(layoutInflater)
-        //setContentView(binding.root)
+
         initHeader()
         preGameViewModel = ViewModelProvider(requireActivity()).get(PreGameViewModel::class.java)
-        vibrator = requireActivity().getSystemService(AppCompatActivity.VIBRATOR_SERVICE) as Vibrator
+        vibrator =
+            requireActivity().getSystemService(AppCompatActivity.VIBRATOR_SERVICE) as Vibrator
         binding.spielStarten.setOnClickListener(this)
-        val adapter = CharacterListAdapter(preGameViewModel.generateCharacters(),preGameViewModel)
+        val adapter = CharacterListAdapter(preGameViewModel.generateCharacters(), preGameViewModel)
         binding.recyclerviewCharacterSelection.adapter = adapter
         binding.recyclerviewCharacterSelection.layoutManager = LinearLayoutManager(requireContext())
     }
@@ -68,20 +69,26 @@ class CharacterSelectionFragment : Fragment(), View.OnClickListener {
     }
 
     private fun next() {
-        if(preGameViewModel.invalidConfiguration()){
+        if (preGameViewModel.invalidConfiguration()) {
             Toast.makeText(requireContext(), "ungültige Eingabe", Toast.LENGTH_LONG).show()
             vibrator!!.vibrate(vibrationsdauer.toLong())
         } else {
             // todo add as fragment -> all three stages with the same viewmodel
-            val intent: Intent
-            intent = if (einGeraet) {
-                Intent(requireContext(), PlayerManagement::class.java)
+            if (einGeraet) {
+                val nextFrag = AddPlayersFragment()
+                requireActivity().supportFragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container_view_pregame, nextFrag, "findThisFragment")
+                    .addToBackStack(null)
+                    .commit()
+                //   Intent(requireContext(), PlayerManagement::class.java)
             } else {
-                Intent(requireContext(), HostConnectWithPlayers::class.java)
+                val intent: Intent
+                intent = Intent(requireContext(), HostConnectWithPlayers::class.java)
+                intent.putExtra("EinGeraet", einGeraet)
+                startActivity(intent)
+                CustomIntent.customType(requireContext(), "left-to-right")
             }
-            intent.putExtra("EinGeraet", einGeraet)
-            startActivity(intent)
-            CustomIntent.customType(requireContext(), "left-to-right")
+
         }
     }
 
