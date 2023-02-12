@@ -17,43 +17,45 @@
         android:supportsRtl="true"
         android:theme="@style/NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
-
+        <activity
+            android:name=".PreGameActivity"
+            android:exported="false" />
         <activity
             android:name=".StartScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".LoadingScreen"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".CharacterSelection"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".PlayerManagement"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".CardsToPlayerMatching"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ListNight"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".ManualActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".VictoryActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".multipleDevices.HostConnectWithPlayers"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".multipleDevices.PlayerConnectToHost"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>
