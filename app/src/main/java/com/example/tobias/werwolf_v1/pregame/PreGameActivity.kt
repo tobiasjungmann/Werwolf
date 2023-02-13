@@ -1,10 +1,11 @@
-package com.example.tobias.werwolf_v1
+package com.example.tobias.werwolf_v1.pregame
 
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.add
 import androidx.fragment.app.commit
+import com.example.tobias.werwolf_v1.R
 import maes.tech.intentanim.CustomIntent
 
 

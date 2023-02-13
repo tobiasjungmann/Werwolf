@@ -1,4 +1,4 @@
-package com.example.tobias.werwolf_v1
+package com.example.tobias.werwolf_v1.pregame
 
 import androidx.lifecycle.LifecycleOwner
 

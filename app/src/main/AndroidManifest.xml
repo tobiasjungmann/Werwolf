@@ -18,7 +18,7 @@
         android:theme="@style/NoActionBar"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name=".PreGameActivity"
+            android:name=".pregame.PreGameActivity"
             android:exported="false" />
         <activity
             android:name=".StartScreenActivity"
@@ -29,15 +29,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".LoadingScreen"
-            android:exported="false" />
-        <activity
-            android:name=".CharacterSelection"
-            android:exported="false" />
-        <activity
-            android:name=".PlayerManagement"
-            android:exported="false" />
         <activity
             android:name=".CardsToPlayerMatching"
             android:exported="false" />

@@ -1,4 +1,4 @@
-package com.example.tobias.werwolf_v1
+package com.example.tobias.werwolf_v1.pregame
 
 import android.content.Intent
 import android.database.Cursor
@@ -10,7 +10,9 @@ import androidx.fragment.app.Fragment
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.tobias.werwolf_v1.databinding.ActivityCharakterselectionBinding
+import com.example.tobias.werwolf_v1.CardsToPlayerMatching
+import com.example.tobias.werwolf_v1.DatabaseHelper
+import com.example.tobias.werwolf_v1.R
 import com.example.tobias.werwolf_v1.databinding.FragmentAddPlayersBinding
 import maes.tech.intentanim.CustomIntent
 
@@ -22,21 +24,7 @@ class AddPlayersFragment : Fragment(), View.OnClickListener {
     private var weiter: Button? = null
     private var customAdapter: CustomAdapter? = null
     private var data: Cursor? = null
-    private var anzahlAmor = 0
-    private var anzahlWerwolf = 0
-    private var anzahlHexe = 0
-    private var anzahlDieb = 0
-    private var anzahlSeher = 0
-    private var anzahlJunges = 0
-    private var anzahlJaeger = 0
-    private var anzahlBuerger = 0
-    private var anzahlWaechter = 0
-    private var anzahlWeisserWerwolf = 0
-    private var anzahlMaedchen = 0
-    private var anzahlFloetenspieler = 0
-    private var anzahlUrwolf = 0
-    private var anzahlRitter = 0
-    private var anzahlFreunde = 0
+
     private var gesamtPer = 0
 
     // private String karten;

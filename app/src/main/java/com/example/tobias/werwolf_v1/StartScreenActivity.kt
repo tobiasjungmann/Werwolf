@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.tobias.werwolf_v1.databinding.ActivityStartscreenBinding
 import com.example.tobias.werwolf_v1.multipleDevices.PlayerConnectToHost
+import com.example.tobias.werwolf_v1.pregame.PreGameActivity
 import maes.tech.intentanim.CustomIntent
 
 class StartScreenActivity : AppCompatActivity(), View.OnClickListener {
@@ -60,7 +61,7 @@ class StartScreenActivity : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun openCharacterSelection(oneDevice: Boolean) {
-        val intent = Intent(this, CharacterSelection::class.java)
+        val intent = Intent(this, PreGameActivity::class.java)
         intent.putExtra("EinGeraet", oneDevice)
         startActivity(intent)
         CustomIntent.customType(this, "left-to-right")

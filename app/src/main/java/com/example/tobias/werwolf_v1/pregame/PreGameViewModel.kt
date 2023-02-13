@@ -1,7 +1,8 @@
-package com.example.tobias.werwolf_v1
+package com.example.tobias.werwolf_v1.pregame
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import com.example.tobias.werwolf_v1.R
 
 class PreGameViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -10,7 +11,7 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
     fun generateCharacters(): ArrayList<Character> {
         if (characters==null){
             characters=arrayListOf(
-                Character("Werwolf", "blabla",R.color.grau)
+                Character("Werwolf", "blabla", R.color.grau)
             )
         }
         return characters!!
