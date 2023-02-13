@@ -42,7 +42,8 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_marginBottom="24dp"
-            android:background="@drawable/knopf_grau">
+            android:background="@drawable/button_rounded_corners"
+            android:backgroundTint="@color/grau">
 
             <TextView
                 android:id="@+id/textView7"
@@ -61,7 +62,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/knopf_hellgruen"
+                android:background="@drawable/button_rounded_corners"
+                android:backgroundTint="@color/gruen"
                 android:gravity="center"
                 android:text="@string/spielleiter"
                 android:layout_marginRight="16dp"
@@ -74,7 +76,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:background="@drawable/knopf_grau">
+            android:background="@drawable/button_rounded_corners"
+            android:backgroundTint="@color/grau">
 
             <TextView
                 android:id="@+id/textView5"
@@ -93,7 +96,7 @@
                 android:id="@+id/spielleiterServer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/knopf_orange"
+                android:background="@drawable/button_rounded_corners"
                 android:gravity="center"
                 android:text="@string/spielleiter"
                 android:textSize="20sp"
@@ -106,7 +109,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/knopf_gelb"
+                android:background="@drawable/button_rounded_corners"
+                android:backgroundTint="@color/gelb"
                 android:gravity="center"
                 android:text="@string/spieler"
                 android:textSize="20sp"
@@ -128,7 +132,8 @@
         android:text="@string/anleitung"
         android:gravity="center"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/buttonblue"
+        android:background="@drawable/button_rounded_corners"
+        android:backgroundTint="@color/blau"
         android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginBottom="16dp"/>

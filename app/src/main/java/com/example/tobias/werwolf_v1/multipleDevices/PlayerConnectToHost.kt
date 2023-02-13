@@ -230,7 +230,7 @@ class PlayerConnectToHost : AppCompatActivity(), View.OnClickListener {
             Log.e("D", "bereit gedrückt$ipAdresseHost")
             if (nameEingeben!!.text.toString().compareTo("") == 0) {
                 statusVerbindung!!.text = "Du musst erst einen Namen eingeben."
-                nameLayout!!.setBackgroundResource(R.drawable.knopf_orange)
+                nameLayout!!.setBackgroundResource(R.drawable.button_rounded_corners)
                 statusVerbindung!!.visibility = View.VISIBLE
             } else {
                 nameEingeben!!.text.toString()
@@ -269,11 +269,11 @@ class PlayerConnectToHost : AppCompatActivity(), View.OnClickListener {
                                     einmalGedrueckt = true
                                 }
                             } else if (statusBereit == 0) {
-                                nameLayout!!.setBackgroundResource(R.drawable.knopf_orange)
+                                nameLayout!!.setBackgroundResource(R.drawable.button_rounded_corners)
                                 statusVerbindung!!.text =
                                     "Der Name " + nameEingeben!!.text.toString() + " wird bereits von einem deiner Mitspieler verwendet."
                             } else {
-                                nameLayout!!.setBackgroundResource(R.drawable.knopf_orange)
+                                nameLayout!!.setBackgroundResource(R.drawable.button_rounded_corners)
                                 statusVerbindung!!.text =
                                     "Verbindung fehlgeschlagen. Überprüfe die Internetverbindung beider Geräte."
                             }

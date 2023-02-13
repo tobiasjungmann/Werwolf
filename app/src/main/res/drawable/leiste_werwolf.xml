@@ -3,7 +3,7 @@
     android:shape="rectangle"
     >
 
-    <solid android:color="@color/farbe_werwolf"/>
+    <solid android:color="@color/werwolf"/>
     <corners android:bottomLeftRadius="25dp"
         android:bottomRightRadius="25dp"/>
 

@@ -58,7 +58,7 @@ class PlayerCard : AppCompatActivity(), OnTouchListener {
         if (v.id == R.id.charakterKarte) {
             return if (event.action == MotionEvent.ACTION_UP) {
                 charakterKarte!!.text = ""
-                charakterKarte!!.background = resources.getDrawable(R.drawable.knopf_orange)
+                charakterKarte!!.background = resources.getDrawable(R.drawable.button_rounded_corners)
                 super.onTouchEvent(event)
             } else if (event.action == MotionEvent.ACTION_DOWN) {
                 charakterKarte!!.text = rolle

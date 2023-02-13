@@ -17,7 +17,8 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/leiste_hellgruen">
+            android:background="@drawable/button_rounded_corners"
+            android:backgroundTint="@color/gruen">
 
             <TextView
                 android:id="@+id/textModus"

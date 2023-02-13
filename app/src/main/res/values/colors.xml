@@ -12,20 +12,20 @@
 
     <color name="grau">#979696</color>
 
-    <color name="farbe_werwolf">#777070</color>
-    <color name="farbe_buerger">#22C02A</color>
-    <color name="farbe_amor">#FF0000</color>
-    <color name="farbe_hexe">#FAC706</color>
-    <color name="farbe_waechter">#F57C00</color>
-    <color name="farbe_maedchen">#D48EF1</color>
-    <color name="farbe_seher">#AEEEBD44</color>
-    <color name="farbe_dieb">#7B1FA2</color>
-    <color name="farbe_jaeger">#235825</color>
-    <color name="farbe_ritter">#A3310D</color>
-    <color name="farbe_floetenspieler">#1976D2</color>
-    <color name="farbe_freunde">#689F38</color>
-    <color name="farbe_junges">#607D81</color>
-    <color name="farbe_weisserwolf">#D5D5D5</color>
-    <color name="farbe_urwolf">#343642</color>
+    <color name="werwolf">#777070</color>
+    <color name="citizen">#22C02A</color>
+    <color name="amor">#FF0000</color>
+    <color name="witch">#FAC706</color>
+    <color name="guradian">#F57C00</color>
+    <color name="girl">#D48EF1</color>
+    <color name="seher">#AEEEBD44</color>
+    <color name="thief">#7B1FA2</color>
+    <color name="hunter">#235825</color>
+    <color name="knight">#A3310D</color>
+    <color name="flute">#1976D2</color>
+    <color name="friends">#689F38</color>
+    <color name="wchild">#607D81</color>
+    <color name="wwolf">#D5D5D5</color>
+    <color name="urwolf">#343642</color>
 
 </resources>

@@ -44,14 +44,14 @@
         <shape android:shape="rectangle">
             <size android:width="16dp"
                 android:height="48dp"/>
-            <solid android:color="@color/farbe_amor"/>
+            <solid android:color="@color/amor"/>
         </shape>
     </item>
     <item android:top="24dp" android:left="8dp" android:bottom="24dp" android:right="8dp" >
         <shape android:shape="rectangle">
             <size android:width="48dp"
                 android:height="16dp"/>
-            <solid android:color="@color/farbe_amor"/>
+            <solid android:color="@color/amor"/>
         </shape>
     </item>
 

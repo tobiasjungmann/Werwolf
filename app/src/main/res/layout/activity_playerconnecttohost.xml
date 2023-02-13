@@ -14,7 +14,8 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/leiste_gelb">
+        android:background="@drawable/button_rounded_corners"
+        android:backgroundTint="@color/gelb">
 
         <TextView
             android:id="@+id/textModus"
@@ -38,7 +39,8 @@
         android:orientation="vertical"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:background="@drawable/knopf_grau"
+        android:background="@drawable/button_rounded_corners"
+        android:backgroundTint="@color/grau"
         android:layout_below="@id/layoutModus"
         android:visibility="gone">
 
@@ -63,7 +65,8 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/buttonblue"
+            android:background="@drawable/button_rounded_corners"
+            android:backgroundTint="@color/blau"
             android:gravity="center"
             android:text="Bereit"
             android:textSize="20dp"
@@ -96,7 +99,8 @@
         android:layout_marginRight="16dp"
         android:layout_below="@id/statusVerbindung"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/knopf_grau"
+        android:background="@drawable/button_rounded_corners"
+        android:backgroundTint="@color/grau"
         android:visibility="gone">
 
         <TextView
@@ -114,7 +118,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
-            android:background="@drawable/buttonblue"
+            android:background="@drawable/button_rounded_corners"
+            android:backgroundTint="@color/blau"
             android:orientation="vertical"
             android:layout_marginBottom="16dp">
 

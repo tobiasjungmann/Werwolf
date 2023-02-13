@@ -20,7 +20,8 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/leiste_orange"
+            android:background="@drawable/button_rounded_corners"
+            android:backgroundTint="@color/orange"
             android:orientation="vertical">
 
             <TextView
@@ -42,7 +43,8 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/knopf_grau"
+            android:background="@drawable/button_rounded_corners"
+            android:backgroundTint="@color/grau"
             android:orientation="vertical">
 
             <TextView
@@ -64,7 +66,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
-                android:background="@drawable/buttonblue"
+                android:background="@drawable/button_rounded_corners"
+                android:backgroundTint="@color/blau"
                 android:gravity="center"
                 android:text="@string/weiter"
                 android:textSize="20sp" />
@@ -81,7 +84,8 @@
             android:paddingTop="16dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:background="@drawable/knopf_grau"
+            android:background="@drawable/button_rounded_corners"
+            android:backgroundTint="@color/grau"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView
