@@ -169,8 +169,8 @@ class AddPlayersFragment : Fragment(), View.OnClickListener {
             }
             if (gesamtPer == anzahlPersonen) {
                 if (lastPersonAdded) {
-                    val intent: Intent
-                    intent = Intent(requireContext(), CardsToPlayerMatching::class.java)
+                    //val intent: Intent
+                   // intent = Intent(requireContext(), CardsToPlayerMatching::class.java)
                     /*   intent.putExtra("anzahlAmor", anzahlAmor)
                        intent.putExtra("anzahlBuerger", anzahlBuerger)
                        intent.putExtra("anzahlWaechter", anzahlWaechter)
@@ -187,8 +187,13 @@ class AddPlayersFragment : Fragment(), View.OnClickListener {
                        intent.putExtra("anzahlMaedchen", anzahlMaedchen)
                        intent.putExtra("anzahlUrwolf", anzahlUrwolf)
                        intent.putExtra("gesamtPer", gesamtPer)*/
-                    startActivity(intent)
-                    CustomIntent.customType(requireContext(), "left-to-right")
+                   // startActivity(intent)
+                    //CustomIntent.customType(requireContext(), "left-to-right")
+                    val nextFrag = CardsPlayerMatchingFragment()
+                    requireActivity().supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container_view_pregame, nextFrag, "findThisFragment")
+                        .addToBackStack(null)
+                        .commit()
                 } else {
                     lastPersonAdded = true
                     weiter!!.setText(R.string.weiter)

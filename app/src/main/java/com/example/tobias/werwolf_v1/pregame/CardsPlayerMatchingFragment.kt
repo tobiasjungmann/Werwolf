@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.tobias.werwolf_v1.DatabaseHelper
 import com.example.tobias.werwolf_v1.ListNight
@@ -220,7 +221,12 @@ class CardsPlayerMatchingFragment : Fragment() {
                 convertView.findViewById<LinearLayout>(R.id.layoutcharakterRolle)
           //todo  if (position == WaechterId) {
                 charakter.setText(R.string.waechter)
-                layoutcharakterRolle.setBackgroundColor(resources.getColor(R.color.farbe_waechter))
+                layoutcharakterRolle.background?.setTint(
+                    ContextCompat.getColor(
+                        requireContext(),
+                        R.color.guradian
+                    )
+                )
            /* } else if (position == WerwolfId) {
                 charakter.setText(R.string.werwolf)
                 layoutcharakterRolle.setBackgroundColor(resources.getColor(R.color.farbe_werwolf))

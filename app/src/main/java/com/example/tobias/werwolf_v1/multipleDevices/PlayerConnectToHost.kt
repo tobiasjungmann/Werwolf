@@ -14,6 +14,7 @@ import android.view.*
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.example.tobias.werwolf_v1.R
 import com.example.tobias.werwolf_v1.StartScreenActivity
 import com.google.android.gms.vision.CameraSource
@@ -263,7 +264,12 @@ class PlayerConnectToHost : AppCompatActivity(), View.OnClickListener {
                                 } else {
                                     bereit!!.text = "Namen Ändern"
                                     statusVerbindung!!.text = ""
-                                    nameLayout!!.setBackgroundResource(R.drawable.knopf_hellgruen)
+                                    nameLayout!!.background?.setTint(
+                                        ContextCompat.getColor(
+                                            this,
+                                            R.color.gruen
+                                        )
+                                    )
                                     //  threadWarten.start();
                                     wartenLayout!!.visibility = View.VISIBLE
                                     einmalGedrueckt = true

@@ -10,6 +10,7 @@ import android.view.WindowManager
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.tobias.werwolf_v1.R
 import com.example.tobias.werwolf_v1.StartScreenActivity
 
@@ -58,11 +59,21 @@ class PlayerCard : AppCompatActivity(), OnTouchListener {
         if (v.id == R.id.charakterKarte) {
             return if (event.action == MotionEvent.ACTION_UP) {
                 charakterKarte!!.text = ""
-                charakterKarte!!.background = resources.getDrawable(R.drawable.button_rounded_corners)
+                charakterKarte!!.background?.setTint(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.hellgrau
+                    )
+                )
                 super.onTouchEvent(event)
             } else if (event.action == MotionEvent.ACTION_DOWN) {
                 charakterKarte!!.text = rolle
-                charakterKarte!!.background = resources.getDrawable(R.drawable.knopf_grau)
+                charakterKarte!!.background?.setTint(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.grau
+                    )
+                )
                 super.onTouchEvent(event)
             } else {
                 false

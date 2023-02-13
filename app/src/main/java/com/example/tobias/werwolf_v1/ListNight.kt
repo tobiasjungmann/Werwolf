@@ -14,6 +14,7 @@ import android.view.WindowManager
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 
 class ListNight : AppCompatActivity(), View.OnClickListener {
     private var beschreibung: TextView? = null
@@ -212,7 +213,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                             liebenderZweiID = itemID
                             CharakterpositionErstInkementieren = true
                             weiterNacht?.setClickable(true)
-                            weiterNacht?.setBackground(resources.getDrawable(R.drawable.buttonblue))
+                            weiterNacht?.background?.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.blau
+                            )
+                        )
                             listeAuswahlGenuegend = 1
                         }
                     } else {
@@ -234,19 +240,40 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         schlafplatzDiebID = itemID
                         CharakterpositionErstInkementieren = true
                         weiterNacht?.setClickable(true)
-                        weiterNacht?.setBackground(resources.getDrawable(R.drawable.buttonblue))
+                        weiterNacht?.background?.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.blau
+                            )
+                        )
+                        weiterNacht?.background?.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.blau
+                            )
+                        )
                     }
                     3 -> {
                         schlafplatzWaechterID = itemID
                         CharakterpositionErstInkementieren = true
                         weiterNacht?.setClickable(true)
-                        weiterNacht?.setBackground(resources.getDrawable(R.drawable.buttonblue))
+                        weiterNacht?.background?.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.blau
+                            )
+                        )
                     }
                     4 -> {
                         vorbildID = itemID
                         CharakterpositionErstInkementieren = true
                         weiterNacht?.setClickable(true)
-                        weiterNacht?.setBackground(resources.getDrawable(R.drawable.buttonblue))
+                        weiterNacht?.background?.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.blau
+                            )
+                        )
                     }
                     6 -> {
                         verzaubertAktuell = itemID
@@ -254,36 +281,66 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         verzaubertName = name
                         CharakterpositionErstInkementieren = true
                         weiterNacht?.setClickable(true)
-                        weiterNacht?.setBackground(resources.getDrawable(R.drawable.buttonblue))
+                        weiterNacht?.background?.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.blau
+                            )
+                        )
                     }
                     7 -> {
                         werwolfOpferID = itemID
                         CharakterpositionErstInkementieren = true
                         weiterNacht?.setClickable(true)
-                        weiterNacht?.setBackground(resources.getDrawable(R.drawable.buttonblue))
+                        weiterNacht?.background?.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.blau
+                            )
+                        )
                     }
                     8 -> {
                         weisserWerwolfOpferID = itemID
                         CharakterpositionErstInkementieren = true
                         weiterNacht?.setClickable(true)
-                        weiterNacht?.setBackground(resources.getDrawable(R.drawable.buttonblue))
+                        weiterNacht?.background?.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.blau
+                            )
+                        )
                     }
                     10 -> {
                         hexeOpferID = itemID
                         CharakterpositionErstInkementieren = true
                         weiterNacht?.setClickable(true)
-                        weiterNacht?.setBackground(resources.getDrawable(R.drawable.buttonblue))
+                        weiterNacht?.background?.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.blau
+                            )
+                        )
                     }
                     12 -> {
                         buergerOpfer = itemID
                         CharakterpositionErstInkementieren = true
                         weiterNacht?.setClickable(true)
-                        weiterNacht?.setBackground(resources.getDrawable(R.drawable.buttonblue))
+                        weiterNacht?.background?.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.blau
+                            )
+                        )
                     }
                     20 -> {
                         jaegerOpfer = itemID
                         weiterNacht?.setClickable(true)
-                        weiterNacht?.setBackground(resources.getDrawable(R.drawable.buttonblue))
+                        weiterNacht?.background?.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.blau
+                            )
+                        )
                     }
                     21 -> {
                         ritterOpfer = itemID
@@ -291,7 +348,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         charakterRitterOpfer = charakter
                         //ritterDialogToeten();
                         weiterNacht?.setClickable(true)
-                        weiterNacht?.setBackground(resources.getDrawable(R.drawable.buttonblue))
+                        weiterNacht?.background?.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.blau
+                            )
+                        )
                     }
                 }
                 customAdapter!!.notifyDataSetChanged()
@@ -325,7 +387,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
         when (charakterPosition) {
             0 -> if (anzahlAmor > 0) {
                 textSpielstand!!.setText(R.string.amor)
-                layoutSpielstand!!.setBackgroundResource(R.drawable.leiste_amor)
+                layoutSpielstand!!.background.setTint(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.amor
+                    )
+                )
                 if (langerText) {
                     beschreibung!!.text =
                         "Als erstes erwacht der Amor und zeigt auf zwei Personen, die sich augenblicklich unsterblich ineinander verlieben. - Der Amor schläft wieder ein. Ich tippe die beiden verliebten jetzt an un sie schauen sich tief in die Augen. - Auch sie schlafen jetzt wieder ein."
@@ -334,7 +401,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         "Als erstes erwacht der Amor und zeigt auf zwei Personen..."
                 }
                 weiterNacht!!.isClickable = false
-                weiterNacht!!.background = resources.getDrawable(R.drawable.knopf_blau_unclickable)
+                weiterNacht!!.background.setTint(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.blau_unclickable
+                    )
+                )
                 customAdapter!!.notifyDataSetChanged()
                 personen!!.visibility = View.VISIBLE
                 anzahlAmor = 0
@@ -345,7 +417,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
             }
             1 -> if (anzahlFreunde > 0) {
                 textSpielstand!!.setText(R.string.freunde)
-                layoutSpielstand!!.setBackgroundResource(R.drawable.leiste_freunde)
+                layoutSpielstand!!.background?.setTint(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.friends
+                    )
+                )
                 if (langerText) {
                     beschreibung!!.text =
                         "Ich tippe alle Freunde kurz an. - Jetzt erwachen die Freunde und schauen sich an, um sich später wiederzuerkennen. - Die Freunde schlafen beruhigt wieder ein, da sie wisssen, dass sie nicht alleine sind."
@@ -363,7 +440,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
             }
             2 -> if (anzahlDieb > 0) {
                 textSpielstand!!.setText(R.string.dieb)
-                layoutSpielstand!!.setBackgroundResource(R.drawable.leiste_dieb)
+                layoutSpielstand!!.background?.setTint(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.thief
+                    )
+                )
                 if (langerText) {
                     beschreibung!!.text =
                         "Jetzt erwacht der Dieb und sucht sich eine Person aus, bei der er oder sie die Nacht verbringen möchten. - Er zeigt auf diese Person und schläft danach wieder ein."
@@ -371,7 +453,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     beschreibung!!.text = "Jetzt erwacht der Dieb und sucht sich eine Person aus..."
                 }
                 weiterNacht!!.isClickable = false
-                weiterNacht!!.background = resources.getDrawable(R.drawable.knopf_blau_unclickable)
+                weiterNacht!!.background.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.blau_unclickable
+                            )
+                        )
                 customAdapter!!.notifyDataSetChanged()
                 personen!!.visibility = View.VISIBLE
             } else {
@@ -380,7 +467,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
             }
             3 -> if (anzahlWaechter > 0) {
                 textSpielstand!!.setText(R.string.waechter)
-                layoutSpielstand!!.setBackgroundResource(R.drawable.leiste_waechter)
+                layoutSpielstand!!.background?.setTint(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.guradian
+                    )
+                )
                 if (langerText) {
                     beschreibung!!.text =
                         "Der Wächter wählt eine Person, die er diese Nacht beschützen möchte. - Der Wächter schläft wieder ein."
@@ -389,7 +481,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         "Der Wächter wählt eine Person, die er diese Nacht beschützen..."
                 }
                 weiterNacht!!.isClickable = false
-                weiterNacht!!.background = resources.getDrawable(R.drawable.knopf_blau_unclickable)
+                weiterNacht!!.background.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.blau_unclickable
+                            )
+                        )
                 customAdapter!!.notifyDataSetChanged()
                 personen!!.visibility = View.VISIBLE
             } else {
@@ -398,7 +495,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
             }
             4 -> if (anzahlJunges > 0) {
                 textSpielstand!!.setText(R.string.junges)
-                layoutSpielstand!!.setBackgroundResource(R.drawable.leiste_junges)
+                layoutSpielstand!!.background?.setTint(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.wchild
+                    )
+                )
                 if (langerText) {
                     beschreibung!!.text =
                         "Das Werwolfjunge erwacht und sucht sich ein Vorbild aus. Sollte dieses Vorbild sterben, wirst du auch ein Werwolf und wachst gemeinsam mit ihnen auf. -\n Das Junge schläft wieder."
@@ -409,7 +511,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 anzahlBuerger = anzahlBuerger + anzahlJunges
                 anzahlJunges = 0
                 weiterNacht!!.isClickable = false
-                weiterNacht!!.background = resources.getDrawable(R.drawable.knopf_blau_unclickable)
+                weiterNacht!!.background.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.blau_unclickable
+                            )
+                        )
                 customAdapter!!.notifyDataSetChanged()
                 personen!!.visibility = View.VISIBLE
             } else {
@@ -418,7 +525,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
             }
             5 -> if (anzahlSeher > 0) {
                 textSpielstand!!.setText(R.string.seher)
-                layoutSpielstand!!.setBackgroundResource(R.drawable.leiste_seher)
+                layoutSpielstand!!.background?.setTint(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.seher
+                    )
+                )
                 if (langerText) {
                     beschreibung!!.text =
                         "Als nächstes wacht der Seher auf und zeigt auf eine Person, deren Karte er sehen möchte. Wenn er sie gesehen hat schläft er wieder ein."
@@ -434,7 +546,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
             }
             6 -> if (anzahlFloetenspieler > 0) {
                 textSpielstand!!.setText(R.string.floetenspieler)
-                layoutSpielstand!!.setBackgroundResource(R.drawable.leiste_floetenspieler)
+                layoutSpielstand!!.background?.setTint(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.flute
+                    )
+                )
                 if (langerText) {
                     beschreibung!!.text =
                         "Zuletzt erwacht der bezaubernde Flötenspieler und darf eine Person seiner Wahl verzaubern. Hat er alle Mitspieler verzaubert gewinnt er."
@@ -443,7 +560,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         "Zuletzt erwacht der bezaubernde Flötenspieler und darf..."
                 }
                 weiterNacht!!.isClickable = false
-                weiterNacht!!.background = resources.getDrawable(R.drawable.knopf_blau_unclickable)
+                weiterNacht!!.background.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.blau_unclickable
+                            )
+                        )
                 customAdapter!!.notifyDataSetChanged()
                 personen!!.visibility = View.VISIBLE
             } else {
@@ -464,8 +586,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                             "Jetzt wachen die Werwölfe auf und suchen sich ihr Opfer..."
                     }
                     weiterNacht!!.isClickable = false
-                    weiterNacht!!.background =
-                        resources.getDrawable(R.drawable.knopf_blau_unclickable)
+                    weiterNacht!!.background?.setTint(
+                        ContextCompat.getColor(
+                            this,
+                            R.color.blau_unclickable
+                        )
+                    )
                     customAdapter!!.notifyDataSetChanged()
                     personen!!.visibility = View.VISIBLE
                 } else {
@@ -474,14 +600,24 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
             }
             8 -> if (anzahlWeisserWerwolf > 0 && !wwletzteRundeAktiv) {
                 textSpielstand!!.setText(R.string.weisser_werwolf)
-                layoutSpielstand!!.setBackgroundResource(R.drawable.leiste_weisserwerwolf)
+                layoutSpielstand!!.background?.setTint(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.wwolf
+                    )
+                )
                 if (langerText) {
                     beschreibung!!.text = "Text Weißer Werwolf"
                 } else {
                     beschreibung!!.text = "Text Weißer Werwolf..."
                 }
                 weiterNacht!!.isClickable = false
-                weiterNacht!!.background = resources.getDrawable(R.drawable.knopf_blau_unclickable)
+                weiterNacht!!.background.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.blau_unclickable
+                            )
+                        )
                 customAdapter!!.notifyDataSetChanged()
                 personen!!.visibility = View.VISIBLE
                 wwletzteRundeAktiv = true
@@ -494,7 +630,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 personen!!.visibility = View.GONE
                 layoutUrwolf!!.visibility = View.VISIBLE
                 textSpielstand!!.setText(R.string.urwolf)
-                layoutSpielstand!!.setBackgroundResource(R.drawable.leiste_urwolf)
+                layoutSpielstand!!.background?.setTint(
+                    ContextCompat.getColor(
+                        this,
+                        R.color.urwolf
+                    )
+                )
                 if (langerText) {
                     beschreibung!!.text = "Text Urwolf"
                 } else {
@@ -511,7 +652,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     if (trankLebenEinsetzbar || trankTodEinsetzbar) {
                         textSpielstand!!.setText(R.string.hexe)
                         werwolfOpferIDBackupHexe = werwolfOpferID
-                        layoutSpielstand!!.setBackgroundResource(R.drawable.leiste_hexe)
+                        layoutSpielstand!!.background?.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.witch
+                            )
+                        )
                         if (langerText) {
                             beschreibung!!.text =
                                 "Als nächstes wacht die Hexe auf. Sie kann das Opfer -auf Opfer zeigen- retten, nichtstun, oder  eine weitere Person mit in den Tod reißen. -Dabei die drei Handzeichen für die Hexe sichtbar vormachen."
@@ -585,10 +731,20 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 if (!jaegerAktiv) {
                     layoutHexeNacht!!.visibility = View.GONE
                     weiterNacht!!.isClickable = true
-                    weiterNacht!!.background = resources.getDrawable(R.drawable.buttonblue)
+                    weiterNacht!!.background?.setTint(
+                        ContextCompat.getColor(
+                            this,
+                            R.color.blau
+                        )
+                    )
                     personen!!.visibility = View.INVISIBLE
                     textSpielstand!!.setText(R.string.village)
-                    layoutSpielstand!!.setBackgroundResource(R.drawable.leiste_hellgruen)
+                    layoutSpielstand!!.background?.setTint(
+                        ContextCompat.getColor(
+                            this,
+                            R.color.gruen
+                        )
+                    )
                     charakterPosition++
                 } else {
                     val s = beschreibung!!.text.toString()
@@ -606,7 +762,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 beschreibung!!.text = "Abstimmphase, wen wählt das Dorf als Schuldigen aus? "
                 //todo: Möglichkeit keinen zu töten, weiter immer klickbar, aber dann dialog der nachfrägt
                 weiterNacht!!.isClickable = false
-                weiterNacht!!.background = resources.getDrawable(R.drawable.knopf_blau_unclickable)
+                weiterNacht!!.background.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.blau_unclickable
+                            )
+                        )
                 customAdapter!!.notifyDataSetChanged()
                 personen!!.visibility = View.VISIBLE
 
@@ -1231,9 +1392,19 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
         beschreibung!!.text =
             "Der Ritter ist letzte Nacht gestorben. Wähle jetzt den nächsten Werwolf zur rechten das verstorbenen Jägers aus."
         textSpielstand!!.text = "Ritter"
-        layoutSpielstand!!.setBackgroundResource(R.drawable.leiste_ritter)
+        layoutSpielstand!!.background?.setTint(
+            ContextCompat.getColor(
+                this,
+                R.color.knight
+            )
+        )
         weiterNacht!!.isClickable = false
-        weiterNacht!!.background = resources.getDrawable(R.drawable.knopf_blau_unclickable)
+        weiterNacht!!.background.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.blau_unclickable
+                            )
+                        )
         customAdapter!!.notifyDataSetChanged()
         personen!!.visibility = View.VISIBLE
     }
@@ -1250,9 +1421,19 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
         jaegerAktiv = true
         beschreibung!!.text = "Der Jäger ist gestorben. Er darf eine weitere Person töten:"
         textSpielstand!!.text = "Jäger"
-        layoutSpielstand!!.setBackgroundResource(R.drawable.leiste_jaeger)
+        layoutSpielstand!!.background?.setTint(
+            ContextCompat.getColor(
+                this,
+                R.color.hunter
+            )
+        )
         weiterNacht!!.isClickable = false
-        weiterNacht!!.background = resources.getDrawable(R.drawable.knopf_blau_unclickable)
+        weiterNacht!!.background.setTint(
+                            ContextCompat.getColor(
+                                this,
+                                R.color.blau_unclickable
+                            )
+                        )
         customAdapter!!.notifyDataSetChanged()
         personen!!.visibility = View.VISIBLE
     }
@@ -1379,8 +1560,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     personen!!.visibility = View.VISIBLE
                     customAdapter!!.notifyDataSetChanged()
                     weiterNacht!!.isClickable = false
-                    weiterNacht!!.background =
-                        resources.getDrawable(R.drawable.knopf_blau_unclickable)
+                    weiterNacht!!.background?.setTint(
+                        ContextCompat.getColor(
+                            this,
+                            R.color.blau_unclickable
+                        )
+                    )
                     trankTodEinsetzbar = false
                     CharakterpositionErstInkementieren = true
                     charakterPosition--
@@ -1388,7 +1573,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     personen!!.visibility = View.INVISIBLE
                     customAdapter!!.notifyDataSetChanged()
                     weiterNacht!!.isClickable = true
-                    weiterNacht!!.background = resources.getDrawable(R.drawable.buttonblue)
+                    weiterNacht!!.background?.setTint(
+                        ContextCompat.getColor(
+                            this,
+                            R.color.blau
+                        )
+                    )
                     trankTodEinsetzbar = true
                     CharakterpositionErstInkementieren = false
                     charakterPosition++
