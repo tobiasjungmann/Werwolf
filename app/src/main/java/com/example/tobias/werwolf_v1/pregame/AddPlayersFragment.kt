@@ -169,26 +169,6 @@ class AddPlayersFragment : Fragment(), View.OnClickListener {
             }
             if (gesamtPer == anzahlPersonen) {
                 if (lastPersonAdded) {
-                    //val intent: Intent
-                   // intent = Intent(requireContext(), CardsToPlayerMatching::class.java)
-                    /*   intent.putExtra("anzahlAmor", anzahlAmor)
-                       intent.putExtra("anzahlBuerger", anzahlBuerger)
-                       intent.putExtra("anzahlWaechter", anzahlWaechter)
-                       intent.putExtra("anzahlDieb", anzahlDieb)
-                       intent.putExtra("anzahlHexe", anzahlHexe)
-                       intent.putExtra("anzahlJaeger", anzahlJaeger)
-                       intent.putExtra("anzahlJunges", anzahlJunges)
-                       intent.putExtra("anzahlSeher", anzahlSeher)
-                       intent.putExtra("anzahlWerwolf", anzahlWerwolf)
-                       intent.putExtra("anzahlWeisserWerwolf", anzahlWeisserWerwolf)
-                       intent.putExtra("anzahlRitter", anzahlRitter)
-                       intent.putExtra("anzahlFloetenspieler", anzahlFloetenspieler)
-                       intent.putExtra("anzahlFreunde", anzahlFreunde)
-                       intent.putExtra("anzahlMaedchen", anzahlMaedchen)
-                       intent.putExtra("anzahlUrwolf", anzahlUrwolf)
-                       intent.putExtra("gesamtPer", gesamtPer)*/
-                   // startActivity(intent)
-                    //CustomIntent.customType(requireContext(), "left-to-right")
                     val nextFrag = CardsPlayerMatchingFragment()
                     requireActivity().supportFragmentManager.beginTransaction()
                         .replace(R.id.fragment_container_view_pregame, nextFrag, "findThisFragment")
@@ -202,6 +182,7 @@ class AddPlayersFragment : Fragment(), View.OnClickListener {
             }
         }
     }
+    // todo informationen zu den Charakteren büdeln und in der Klasse miit abspeichern.
 
     internal inner class CustomAdapter : BaseAdapter() {
         override fun getCount(): Int {

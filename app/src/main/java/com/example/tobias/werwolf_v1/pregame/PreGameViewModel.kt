@@ -11,7 +11,21 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
     fun generateCharacters(): ArrayList<Character> {
         if (characters==null){
             characters=arrayListOf(
-                Character("Werwolf", "blabla", R.color.grau)
+                Character("Werwolf", "blabla", R.color.werwolf),
+                Character("Bürger", "blabla", R.color.citizen),
+                Character("Amor", "blabla", R.color.amor),
+                Character("Hexe", "blabla", R.color.witch),
+                Character("Wächter", "blabla", R.color.guradian),
+                Character("Mädchen", "blabla", R.color.girl),
+                Character("Seher", "blabla", R.color.seher),
+                Character("Dieb", "blabla", R.color.thief),
+                Character("Jäger", "blabla", R.color.hunter),
+                Character("Ritter", "blabla", R.color.knight),
+                Character("Flötenspieler", "blabla", R.color.flute),
+                Character("Freunde", "blabla", R.color.friends),
+                Character("Weißer Werwolf", "blabla", R.color.wwolf),
+                Character("Junges", "blabla", R.color.wchild),
+                Character("Urwolf", "blabla", R.color.urwolf),
             )
         }
         return characters!!

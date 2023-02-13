@@ -38,6 +38,7 @@
             android:layout_weight="1.5"
             android:gravity="center"
             android:text="@string/zahl_0"
+            android:textColor="@color/weiss"
             android:textSize="38sp" />
 
         <LinearLayout

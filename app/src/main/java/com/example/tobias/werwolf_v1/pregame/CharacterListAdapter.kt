@@ -1,9 +1,13 @@
 package com.example.tobias.werwolf_v1.pregame
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tobias.werwolf_v1.R
 import com.example.tobias.werwolf_v1.databinding.ItemCharacterSelectionBinding
 
 
@@ -20,12 +24,12 @@ class CharacterListAdapter(
                 parent,
                 false
             )
-        return CharacterHolder(binding, preGameViewModel)
+        return CharacterHolder(parent.context, binding, preGameViewModel)
     }
 
     override fun onBindViewHolder(holder: CharacterHolder, position: Int) {
         val currentItem = characters[position]
-
+        holder.setColor(currentItem.color,currentItem.name)
     }
 
     override fun getItemCount(): Int {
@@ -34,10 +38,22 @@ class CharacterListAdapter(
 
 
     class CharacterHolder(
+        private val context: Context,
         private val binding: ItemCharacterSelectionBinding,
         private val preGameViewModel: PreGameViewModel
     ) : RecyclerView.ViewHolder(binding.root) {
+        fun setColor(color: Int, label: String) {
+            binding.textviewCharacterName.background.setTint(
+                ContextCompat.getColor(
+                    context,
+                    color
+                )
+            )
+            binding.textviewCharacterName.text = label
+        }
+
         init {
+
             binding.imageAddCharacter.setOnClickListener {
                 binding.textviewAmountCharacter.text =
                     preGameViewModel.addToCharacterByPosition(bindingAdapterPosition).toString()
