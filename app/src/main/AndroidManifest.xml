@@ -30,9 +30,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CardsToPlayerMatching"
-            android:exported="false" />
-        <activity
             android:name=".ListNight"
             android:exported="false" />
         <activity

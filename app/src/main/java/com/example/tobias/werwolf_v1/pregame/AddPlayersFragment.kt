@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.tobias.werwolf_v1.CardsToPlayerMatching
 import com.example.tobias.werwolf_v1.DatabaseHelper
 import com.example.tobias.werwolf_v1.R
 import com.example.tobias.werwolf_v1.databinding.FragmentAddPlayersBinding

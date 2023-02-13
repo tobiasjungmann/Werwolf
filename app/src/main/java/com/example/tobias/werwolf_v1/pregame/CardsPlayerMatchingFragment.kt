@@ -1,141 +1,73 @@
-package com.example.tobias.werwolf_v1
+package com.example.tobias.werwolf_v1.pregame
 
 import android.content.Intent
 import android.database.Cursor
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
-import android.view.WindowManager
+import android.view.*
+import androidx.fragment.app.Fragment
 import android.widget.*
-import android.widget.AdapterView.OnItemClickListener
-import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
+import com.example.tobias.werwolf_v1.DatabaseHelper
+import com.example.tobias.werwolf_v1.ListNight
+import com.example.tobias.werwolf_v1.R
+import com.example.tobias.werwolf_v1.databinding.FragmentCardsPlayermatchingBinding
+import com.example.tobias.werwolf_v1.databinding.FragmentCharacterSelectionBinding
 import maes.tech.intentanim.CustomIntent
 
-class CardsToPlayerMatching : AppCompatActivity() {
-    private var anzahlAmor = 0
-    private var anzahlWerwolf = 0
-    private var anzahlHexe = 0
-    private var anzahlDieb = 0
-    private var anzahlSeher = 0
-    private var anzahlJunges = 0
-    private var anzahlJaeger = 0
-    private var anzahlBuerger = 0
-    private var anzahlWaechter = 0
-    private var anzahlWeisserWerwolf = 0
-    private var anzahlMaedchen = 0
-    private var anzahlFloetenspieler = 0
-    private var anzahlUrwolf = 0
-    private var anzahlRitter = 0
-    private var anzahlFreunde = 0
-    private var AmorId = 0
-    private var WerwolfId = 0
-    private var HexeId = 0
-    private var DiebId = 0
-    private var SeherId = 0
-    private var JungesId = 0
-    private var JaegerId = 0
-    private var BuergerId = 0
-    private var WaechterId = 0
-    private var WeisserWerwolfId = 0
-    private var MaedchenId = 0
-    private var FloetenspielerId = 0
-    private var UrwolfId = 0
-    private var RitterId = 0
-    private var FreundeId = 0
+
+class CardsPlayerMatchingFragment : Fragment() {
+
     private var nameAkt: String? = null
     private var mDatabaseHelper: DatabaseHelper? = null
     private var data: Cursor? = null
-    private var persTxt: TextView? = null
     private var customAdapter: CustomAdapter? = null
     private var intent: Intent? = null
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        requestWindowFeature(Window.FEATURE_NO_TITLE)
-        this.window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
-        setContentView(R.layout.activity_cardstoplayermatching)
-        anzahlAmor = getIntent().extras!!.getInt("anzahlAmor")
-        anzahlBuerger = getIntent().extras!!.getInt("anzahlBuerger")
-        anzahlWaechter = getIntent().extras!!.getInt("anzahlWaechter")
-        anzahlDieb = getIntent().extras!!.getInt("anzahlDieb")
-        anzahlHexe = getIntent().extras!!.getInt("anzahlHexe")
-        anzahlJaeger = getIntent().extras!!.getInt("anzahlJaeger")
-        anzahlJunges = getIntent().extras!!.getInt("anzahlJunges")
-        anzahlSeher = getIntent().extras!!.getInt("anzahlSeher")
-        anzahlWerwolf = getIntent().extras!!.getInt("anzahlWerwolf")
-        anzahlWeisserWerwolf = getIntent().extras!!.getInt("anzahlWeisserWerwolf")
-        anzahlRitter = getIntent().extras!!.getInt("anzahlRitter")
-        anzahlFloetenspieler = getIntent().extras!!.getInt("anzahlFloetenspieler")
-        anzahlFreunde = getIntent().extras!!.getInt("anzahlFreunde")
-        anzahlMaedchen = getIntent().extras!!.getInt("anzahlMaedchen")
-        anzahlUrwolf = getIntent().extras!!.getInt("anzahlUrwolf")
-        intent = Intent(this, ListNight::class.java)
-        intent!!.putExtra("anzahlAmor", anzahlAmor)
-        intent!!.putExtra("anzahlBuerger", anzahlBuerger)
-        intent!!.putExtra("anzahlWaechter", anzahlWaechter)
-        intent!!.putExtra("anzahlDieb", anzahlDieb)
-        intent!!.putExtra("anzahlHexe", anzahlHexe)
-        intent!!.putExtra("anzahlJaeger", anzahlJaeger)
-        intent!!.putExtra("anzahlJunges", anzahlJunges)
-        intent!!.putExtra("anzahlSeher", anzahlSeher)
-        intent!!.putExtra("anzahlWerwolf", anzahlWerwolf)
-        intent!!.putExtra("anzahlWeisserWerwolf", anzahlWeisserWerwolf)
-        intent!!.putExtra("anzahlRitter", anzahlRitter)
-        intent!!.putExtra("anzahlFloetenspieler", anzahlFloetenspieler)
-        intent!!.putExtra("anzahlFreunde", anzahlFreunde)
-        intent!!.putExtra("anzahlMaedchen", anzahlMaedchen)
-        intent!!.putExtra("anzahlUrwolf", anzahlUrwolf)
-        AmorId = -1
-        WerwolfId = -1
-        HexeId = -1
-        DiebId = -1
-        SeherId = -1
-        JungesId = -1
-        JaegerId = -1
-        BuergerId = -1
-        WaechterId = -1
-        WeisserWerwolfId = -1
-        MaedchenId = -1
-        FloetenspielerId = -1
-        UrwolfId = -1
-        RitterId = -1
-        FreundeId = -1
-        mDatabaseHelper = DatabaseHelper(this)
+
+    private lateinit var binding: FragmentCardsPlayermatchingBinding
+    private lateinit var preGameViewModel: PreGameViewModel
+
+
+        override fun onCreateView(
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
+        ): View {
+            // Inflate the layout for this fragment
+            binding = FragmentCardsPlayermatchingBinding.inflate(layoutInflater)
+            preGameViewModel = ViewModelProvider(requireActivity()).get(PreGameViewModel::class.java)
+
+
+        mDatabaseHelper = DatabaseHelper(requireContext())      // todo move to viewmodel
         data = mDatabaseHelper!!.data
-        persTxt = findViewById(R.id.persTxt)
-        persTxt?.setTextColor(Color.WHITE)
+
         namenSchreiben()
-        bilderFeldErstellen()
-        val rollen = findViewById<ListView>(R.id.rollen)
-        customAdapter = CustomAdapter()
-        rollen.adapter = customAdapter
-        rollen.onItemClickListener =
-            OnItemClickListener { parent: AdapterView<*>?, view: View?, position: Int, id: Long ->
+    //    bilderFeldErstellen()
+       customAdapter = CustomAdapter()
+        binding.rollen.adapter = customAdapter
+        binding.rollen.onItemClickListener =
+            AdapterView.OnItemClickListener { parent: AdapterView<*>?, view: View?, position: Int, id: Long ->
                 val charakterHilfe = determineCharacter(position)
                 Log.e("D", "Name:    $nameAkt")
                 mDatabaseHelper!!.deleteOnlyName(nameAkt!!)
                 mDatabaseHelper!!.addCharakter(nameAkt!!, charakterHilfe)
                 namenSchreiben()
             }
+            return binding.root
     }
 
     fun namenSchreiben() {
         if (data!!.moveToNext()) {
             nameAkt = data!!.getString(1)
-            persTxt!!.text = getString(R.string.nameWrapper, nameAkt)
+            binding.persTxt.text = getString(R.string.nameWrapper, nameAkt)
         } else {
             startActivity(intent)
-            CustomIntent.customType(this, "left-to-right")
+            CustomIntent.customType(requireContext(), "left-to-right")
         }
     }
 
     fun determineCharacter(position: Int): String {
-        var retValue = ""
+       /* var retValue = ""
         if (position == WaechterId) {
             retValue = "waechter"
             anzahlWaechter--
@@ -182,12 +114,12 @@ class CardsToPlayerMatching : AppCompatActivity() {
             retValue = "freunde"
             anzahlFreunde--
         }
-        bilderFeldErstellen()
+        bilderFeldErstellen()*/
         customAdapter!!.notifyDataSetChanged()
-        return retValue
+        return "werwolf" // todo work with character classes
     }
 
-    fun bilderFeldErstellen() {
+   /* fun bilderFeldErstellen() {
         AmorId = -1
         WerwolfId = -1
         HexeId = -1
@@ -265,56 +197,10 @@ class CardsToPlayerMatching : AppCompatActivity() {
             position++
         }
     }
-
+*/
     internal inner class CustomAdapter : BaseAdapter() {
         override fun getCount(): Int {
-            var summe = 0
-            if (anzahlAmor > 0) {
-                summe++
-            }
-            if (anzahlWerwolf > 0) {
-                summe++
-            }
-            if (anzahlSeher > 0) {
-                summe++
-            }
-            if (anzahlJunges > 0) {
-                summe++
-            }
-            if (anzahlJaeger > 0) {
-                summe++
-            }
-            if (anzahlHexe > 0) {
-                summe++
-            }
-            if (anzahlDieb > 0) {
-                summe++
-            }
-            if (anzahlWaechter > 0) {
-                summe++
-            }
-            if (anzahlBuerger > 0) {
-                summe++
-            }
-            if (anzahlWeisserWerwolf > 0) {
-                summe++
-            }
-            if (anzahlMaedchen > 0) {
-                summe++
-            }
-            if (anzahlFloetenspieler > 0) {
-                summe++
-            }
-            if (anzahlUrwolf > 0) {
-                summe++
-            }
-            if (anzahlRitter > 0) {
-                summe++
-            }
-            if (anzahlFreunde > 0) {
-                summe++
-            }
-            return summe
+            return preGameViewModel.getNumberOfUnmatchedPlayers()
         }
 
         override fun getItem(position: Int): Any? {
@@ -326,15 +212,16 @@ class CardsToPlayerMatching : AppCompatActivity() {
         }
 
         override fun getView(position: Int, convertView: View, parent: ViewGroup): View {
+            // todo use dictionary again
             var convertView = convertView
             convertView = layoutInflater.inflate(R.layout.mylistitem, null)
             val charakter = convertView.findViewById<TextView>(R.id.charakter)
             val layoutcharakterRolle =
                 convertView.findViewById<LinearLayout>(R.id.layoutcharakterRolle)
-            if (position == WaechterId) {
+          //todo  if (position == WaechterId) {
                 charakter.setText(R.string.waechter)
                 layoutcharakterRolle.setBackgroundColor(resources.getColor(R.color.farbe_waechter))
-            } else if (position == WerwolfId) {
+           /* } else if (position == WerwolfId) {
                 charakter.setText(R.string.werwolf)
                 layoutcharakterRolle.setBackgroundColor(resources.getColor(R.color.farbe_werwolf))
             } else if (position == DiebId) {
@@ -376,13 +263,8 @@ class CardsToPlayerMatching : AppCompatActivity() {
             } else if (position == UrwolfId) {
                 charakter.setText(R.string.urwolf)
                 layoutcharakterRolle.setBackgroundColor(resources.getColor(R.color.farbe_urwolf))
-            }
+            }*/
             return convertView
         }
-    }
-
-    override fun finish() {
-        super.finish()
-        CustomIntent.customType(this, "right-to-left")
     }
 }

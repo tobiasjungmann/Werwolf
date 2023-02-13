@@ -25,7 +25,6 @@ class CharacterSelectionFragment : Fragment(), View.OnClickListener {
     private lateinit var binding: FragmentCharacterSelectionBinding
     private lateinit var preGameViewModel: PreGameViewModel
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }

@@ -29,6 +29,10 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
         return --(characters!![bindingAdapterPosition].amount)      // todo realism check
     }
 
+    fun getNumberOfUnmatchedPlayers(): Int {
+        TODO("Not yet implemented")
+    }
+
     private var anzahlAmor = 0
     private var anzahlWerwolf = 0
     private var anzahlHexe = 0
