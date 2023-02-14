@@ -151,7 +151,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
         beschreibung = findViewById(R.id.beschreibung)
         beschreibung?.setOnClickListener(this@ListNight)
         personen = findViewById(R.id.personen)
-        personen?.setVisibility(View.INVISIBLE)
+        personen?.visibility = View.INVISIBLE
 
 
         //Hexe
@@ -192,8 +192,8 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
 
         // arrayList = new ArrayList<String>();
         customAdapter = CustomAdapter()
-        personen?.setAdapter(customAdapter)
-        personen?.setOnItemClickListener(OnItemClickListener { parent, view, position, id ->
+        personen?.adapter = customAdapter
+        personen?.onItemClickListener = OnItemClickListener { parent, view, position, id ->
 
             //Hier kmmt eine Möglichkeit zum Löschen eines Eintrages
             var itemID = -1
@@ -212,13 +212,13 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         } else {
                             liebenderZweiID = itemID
                             CharakterpositionErstInkementieren = true
-                            weiterNacht?.setClickable(true)
+                            weiterNacht?.isClickable = true
                             weiterNacht?.background?.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.blau
+                                ContextCompat.getColor(
+                                    this,
+                                    R.color.blau
+                                )
                             )
-                        )
                             listeAuswahlGenuegend = 1
                         }
                     } else {
@@ -239,7 +239,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     2 -> {
                         schlafplatzDiebID = itemID
                         CharakterpositionErstInkementieren = true
-                        weiterNacht?.setClickable(true)
+                        weiterNacht?.isClickable = true
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
@@ -256,7 +256,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     3 -> {
                         schlafplatzWaechterID = itemID
                         CharakterpositionErstInkementieren = true
-                        weiterNacht?.setClickable(true)
+                        weiterNacht?.isClickable = true
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
@@ -267,7 +267,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     4 -> {
                         vorbildID = itemID
                         CharakterpositionErstInkementieren = true
-                        weiterNacht?.setClickable(true)
+                        weiterNacht?.isClickable = true
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
@@ -280,7 +280,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         verzaubertCharakter = charakter
                         verzaubertName = name
                         CharakterpositionErstInkementieren = true
-                        weiterNacht?.setClickable(true)
+                        weiterNacht?.isClickable = true
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
@@ -291,7 +291,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     7 -> {
                         werwolfOpferID = itemID
                         CharakterpositionErstInkementieren = true
-                        weiterNacht?.setClickable(true)
+                        weiterNacht?.isClickable = true
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
@@ -302,7 +302,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     8 -> {
                         weisserWerwolfOpferID = itemID
                         CharakterpositionErstInkementieren = true
-                        weiterNacht?.setClickable(true)
+                        weiterNacht?.isClickable = true
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
@@ -313,7 +313,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     10 -> {
                         hexeOpferID = itemID
                         CharakterpositionErstInkementieren = true
-                        weiterNacht?.setClickable(true)
+                        weiterNacht?.isClickable = true
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
@@ -324,7 +324,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     12 -> {
                         buergerOpfer = itemID
                         CharakterpositionErstInkementieren = true
-                        weiterNacht?.setClickable(true)
+                        weiterNacht?.isClickable = true
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
@@ -334,7 +334,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     }
                     20 -> {
                         jaegerOpfer = itemID
-                        weiterNacht?.setClickable(true)
+                        weiterNacht?.isClickable = true
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
@@ -347,7 +347,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         nameRitterOpfer = name
                         charakterRitterOpfer = charakter
                         //ritterDialogToeten();
-                        weiterNacht?.setClickable(true)
+                        weiterNacht?.isClickable = true
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
@@ -358,7 +358,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 }
                 customAdapter!!.notifyDataSetChanged()
             }
-        })
+        }
     }
 
     override fun onBackPressed() {
@@ -784,7 +784,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                             vorbildGefunden = true
                             vorbildID = data?.getInt(0)?:-1
                         }
-                        while (data?.moveToNext()?:false && !vorbildGefunden) {
+                        while (data?.moveToNext() == true && !vorbildGefunden) {
                             if (data?.getString(1)?.compareTo(verzaubertName!!) == 0) {
                                 vorbildGefunden = true
                                 vorbildID = data?.getInt(0)?:-1

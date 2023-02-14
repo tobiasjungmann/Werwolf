@@ -25,10 +25,6 @@ class CharacterSelectionFragment : Fragment(), View.OnClickListener {
     private lateinit var binding: FragmentCharacterSelectionBinding
     private lateinit var preGameViewModel: PreGameViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
-
     private fun initHeader() {
         einGeraet = requireActivity().intent.extras!!.getBoolean("EinGeraet", true)
         binding.textModus.setText(R.string.spielleiter)
@@ -87,8 +83,6 @@ class CharacterSelectionFragment : Fragment(), View.OnClickListener {
                 startActivity(intent)
                 CustomIntent.customType(requireContext(), "left-to-right")
             }
-
         }
     }
-
 }

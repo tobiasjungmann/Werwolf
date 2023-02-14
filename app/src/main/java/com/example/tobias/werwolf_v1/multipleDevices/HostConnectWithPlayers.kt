@@ -87,7 +87,7 @@ class HostConnectWithPlayers : AppCompatActivity() {
         }
         charakterDatenHolen()
         anzahlMitspielerText = findViewById(R.id.anzahlMitspielerText)
-        anzahlMitspielerText?.setText("Mitspieler: 0 von $gesamtPer")
+        anzahlMitspielerText?.text = "Mitspieler: 0 von $gesamtPer"
         qrImage = findViewById(R.id.imageQR)
         val manager = getSystemService(WINDOW_SERVICE) as WindowManager
         val display = manager.defaultDisplay
@@ -117,7 +117,7 @@ class HostConnectWithPlayers : AppCompatActivity() {
         clients = ArrayList()
         listViewPersonen = findViewById(R.id.listViewPersonen)
         adapter = CustomAdapter(ipAdressen!!, ipToName!!)
-        listViewPersonen?.setAdapter(adapter)
+        listViewPersonen?.adapter = adapter
         mDatabaseHelper = DatabaseHelper(this)
         mDatabaseHelper!!.clearDatabase()
         data = mDatabaseHelper!!.data

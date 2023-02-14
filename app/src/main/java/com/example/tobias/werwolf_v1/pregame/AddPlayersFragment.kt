@@ -82,7 +82,7 @@ class AddPlayersFragment : Fragment(), View.OnClickListener {
         if (gesamtPer == anzahlPersonen) {
             lastPersonAdded = true
             weiter?.setText(R.string.weiter)
-            nameText?.setClickable(false)
+            nameText?.isClickable = false
         }
     }
 

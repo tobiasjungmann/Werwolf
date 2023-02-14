@@ -129,11 +129,11 @@ class PlayerConnectToHost : AppCompatActivity(), View.OnClickListener {
                                 Log.e("D", "if: Thread$ipAdresseHost")
                                 runOnUiThread {
                                     Log.e("D", "if runonui $ipAdresseHost")
-                                    square!!.setVisibility(View.GONE)
-                                    infoText!!.setVisibility(View.GONE)
+                                    square!!.visibility = View.GONE
+                                    infoText!!.visibility = View.GONE
                                     //  bereit.setVisibility(View.VISIBLE);
-                                    nameLayout!!.setVisibility(View.VISIBLE)
-                                    statusVerbindung!!.setVisibility(View.VISIBLE)
+                                    nameLayout!!.visibility = View.VISIBLE
+                                    statusVerbindung!!.visibility = View.VISIBLE
                                     //todo refreshen der UI, damit die elemente angezeigt werden
                                     cameraSource!!.stop()
                                 }
