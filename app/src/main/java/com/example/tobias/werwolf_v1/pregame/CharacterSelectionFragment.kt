@@ -54,6 +54,10 @@ class CharacterSelectionFragment : Fragment(), View.OnClickListener {
         val adapter = CharacterListAdapter(preGameViewModel.generateCharacters(), preGameViewModel)
         binding.recyclerviewCharacterSelection.adapter = adapter
         binding.recyclerviewCharacterSelection.layoutManager = LinearLayoutManager(requireContext())
+
+        preGameViewModel.amountPers.observe(requireActivity()) { res ->
+            binding.gesamtTxt.text = "Gesamt: "+res.toString()
+        }
         return binding.root
     }
 

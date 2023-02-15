@@ -5,8 +5,8 @@ import androidx.lifecycle.LifecycleOwner
 class Character(
     val name: String,
     val info: String,
-    val color: Int
-
+    val color: Int,
+val multipleAllowed: Boolean
 ) {
     var amount:Int=0
 }
