@@ -6,7 +6,8 @@ class Character(
     val name: String,
     val info: String,
     val color: Int,
-val multipleAllowed: Boolean
+    val multipleAllowed: Boolean,
+    val isWolf: Boolean
 ) {
-    var amount:Int=0
+    var amount: Int = 0
 }
