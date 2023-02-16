@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.tobias.werwolf_v1.R
+import com.example.tobias.werwolf_v1.database.models.Character
 
 class PreGameViewModel(application: Application) : AndroidViewModel(application) {
 

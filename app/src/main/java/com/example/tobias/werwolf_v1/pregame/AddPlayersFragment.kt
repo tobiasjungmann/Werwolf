@@ -1,6 +1,5 @@
 package com.example.tobias.werwolf_v1.pregame
 
-import android.content.Intent
 import android.database.Cursor
 import android.graphics.Color
 import android.os.Bundle
@@ -10,10 +9,9 @@ import androidx.fragment.app.Fragment
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.tobias.werwolf_v1.DatabaseHelper
+import com.example.tobias.werwolf_v1.database.models.DatabaseHelper
 import com.example.tobias.werwolf_v1.R
 import com.example.tobias.werwolf_v1.databinding.FragmentAddPlayersBinding
-import maes.tech.intentanim.CustomIntent
 
 class AddPlayersFragment : Fragment(), View.OnClickListener {
     private var nameText: EditText? = null

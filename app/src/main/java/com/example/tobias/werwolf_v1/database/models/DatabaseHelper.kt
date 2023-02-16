@@ -1,4 +1,4 @@
-package com.example.tobias.werwolf_v1
+package com.example.tobias.werwolf_v1.database.models
 
 import android.content.ContentValues
 import android.content.Context
@@ -10,6 +10,7 @@ import android.util.Log
 /**
  * Created by Tobias on 19.01.2018.
  */
+@Deprecated("Replaced by new Database")
 class DatabaseHelper(context: Context?) : SQLiteOpenHelper(context, DATABASE_NAME, null, 1) {
     init {
         val db = this.writableDatabase

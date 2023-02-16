@@ -10,13 +10,12 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.text.format.Formatter
-import android.util.Log
 import android.view.*
 import android.widget.*
 import androidmads.library.qrgenearator.QRGContents
 import androidmads.library.qrgenearator.QRGEncoder
 import androidx.appcompat.app.AppCompatActivity
-import com.example.tobias.werwolf_v1.DatabaseHelper
+import com.example.tobias.werwolf_v1.database.models.DatabaseHelper
 import com.example.tobias.werwolf_v1.ListNight
 import com.example.tobias.werwolf_v1.R
 //import com.google.zxing.WriterException

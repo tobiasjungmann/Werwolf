@@ -4,10 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tobias.werwolf_v1.R
+import com.example.tobias.werwolf_v1.database.models.Character
 import com.example.tobias.werwolf_v1.databinding.ItemCharacterSelectionBinding
 
 

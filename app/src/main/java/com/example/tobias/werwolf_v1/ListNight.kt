@@ -15,6 +15,7 @@ import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.tobias.werwolf_v1.database.models.DatabaseHelper
 
 class ListNight : AppCompatActivity(), View.OnClickListener {
     private var description: TextView? = null
