@@ -3,14 +3,16 @@
     <color name="colorPrimary">#A53B3B</color>
     <color name="colorPrimaryDark">#494949</color>
     <color name="colorAccent">#c9a34246</color>
-    <color name="blau"> #2874a6 </color>
-    <color name="blau_unclickable">#486375</color>
+    <color name="blue"> #2874a6 </color>
+    <color name="blue_unclickable">#486375</color>
     <color name="orange">#D3442B</color>
-    <color name="gruen"> #DAF7A6 </color>
-    <color name="gelb"> #FFC300  </color>
-    <color name="schwarz">#000000</color>
+    <color name="green"> #DAF7A6 </color>
+    <color name="yellow"> #FFC300  </color>
+    <color name="black">#000000</color>
 
-    <color name="grau">#979696</color>
+    <color name="gray">#979696</color>
+    <color name="background_gray">#696969</color>
+    <color name="white">#ffffff</color>
 
     <color name="werwolf">#777070</color>
     <color name="citizen">#22C02A</color>

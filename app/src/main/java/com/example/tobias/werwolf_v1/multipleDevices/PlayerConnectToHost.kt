@@ -267,7 +267,7 @@ class PlayerConnectToHost : AppCompatActivity(), View.OnClickListener {
                                     nameLayout!!.background?.setTint(
                                         ContextCompat.getColor(
                                             this,
-                                            R.color.gruen
+                                            R.color.green
                                         )
                                     )
                                     //  threadWarten.start();

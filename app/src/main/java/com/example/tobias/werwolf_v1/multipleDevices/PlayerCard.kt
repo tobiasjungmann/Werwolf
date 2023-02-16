@@ -62,7 +62,7 @@ class PlayerCard : AppCompatActivity(), OnTouchListener {
                 charakterKarte!!.background?.setTint(
                     ContextCompat.getColor(
                         this,
-                        R.color.hellgrau
+                        R.color.gray
                     )
                 )
                 super.onTouchEvent(event)
@@ -71,7 +71,7 @@ class PlayerCard : AppCompatActivity(), OnTouchListener {
                 charakterKarte!!.background?.setTint(
                     ContextCompat.getColor(
                         this,
-                        R.color.grau
+                        R.color.gray
                     )
                 )
                 super.onTouchEvent(event)

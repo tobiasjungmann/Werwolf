@@ -30,7 +30,7 @@ class CharacterSelectionFragment : Fragment(), View.OnClickListener {
         binding.textModus.setText(R.string.spielleiter)
         var color = R.color.orange
         if (einGeraet) {
-            color = R.color.gruen
+            color = R.color.green
         }
         binding.layoutModus.background.setTint(
             ContextCompat.getColor(

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey">
+    android:background="@color/background_gray">
 
     <LinearLayout
         android:id="@+id/layoutModus"
@@ -15,7 +15,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_rounded_corners"
-        android:backgroundTint="@color/gelb">
+        android:backgroundTint="@color/yellow">
 
         <TextView
             android:id="@+id/textModus"
@@ -26,7 +26,7 @@
             android:textStyle="bold"
             android:gravity="center"
             android:text="@string/spieler"
-            android:textColor="@color/schwarz"
+            android:textColor="@color/black"
             android:textSize="21sp" />
     </LinearLayout>
 
@@ -40,7 +40,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:background="@drawable/button_rounded_corners"
-        android:backgroundTint="@color/grau"
+        android:backgroundTint="@color/gray"
         android:layout_below="@id/layoutModus"
         android:visibility="gone">
 
@@ -66,7 +66,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/button_rounded_corners"
-            android:backgroundTint="@color/blau"
+            android:backgroundTint="@color/blue"
             android:gravity="center"
             android:text="Bereit"
             android:textSize="20dp"
@@ -86,7 +86,7 @@
         android:layout_marginTop="16dp"
         android:layout_below="@id/nameLayout"
         android:text="Verbunden\nWähle deinen Spielernamen und bestätige mit BEREIT."
-        android:textColor="@color/weiss"
+        android:textColor="@color/white"
         android:textSize="25dp"
         android:visibility="gone" />
 
@@ -100,7 +100,7 @@
         android:layout_below="@id/statusVerbindung"
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_rounded_corners"
-        android:backgroundTint="@color/grau"
+        android:backgroundTint="@color/gray"
         android:visibility="gone">
 
         <TextView
@@ -119,7 +119,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:background="@drawable/button_rounded_corners"
-            android:backgroundTint="@color/blau"
+            android:backgroundTint="@color/blue"
             android:orientation="vertical"
             android:layout_marginBottom="16dp">
 
@@ -175,7 +175,7 @@
     android:text="Scanne den QR-Code des Spielleiters um dich zu Verbinden."
     android:gravity="center"
     android:textSize="25dp"
-    android:textColor="@color/weiss"
+    android:textColor="@color/white"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="24dp"
     android:layout_below="@+id/square"

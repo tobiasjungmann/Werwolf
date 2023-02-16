@@ -5,7 +5,7 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/grey"
+    android:background="@color/background_gray"
     tools:context="com.example.tobias.werwolf_v1.ListNight">
 
     <LinearLayout
@@ -16,7 +16,7 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_rounded_corners"
-        android:backgroundTint="@color/gruen"
+        android:backgroundTint="@color/green"
         android:orientation="vertical">
 
         <TextView
@@ -27,7 +27,7 @@
             android:layout_marginBottom="8dp"
             android:gravity="center"
             android:text="@string/dorf"
-            android:textColor="@color/schwarz"
+            android:textColor="@color/black"
             android:textSize="21sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -47,20 +47,20 @@
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/button_rounded_corners"
-            android:backgroundTint="@color/blau"
+            android:backgroundTint="@color/blue"
             android:gravity="center"
             android:text="@string/weiter"
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/beschreibung"
+            android:id="@+id/description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
             android:layout_marginRight="16dp"
             android:text="@string/einschlafen"
-            android:textColor="@color/weiss"
+            android:textColor="@color/white"
             android:textSize="25sp" />
 
 
@@ -85,7 +85,7 @@
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
-                android:buttonTint="@color/blau"
+                android:buttonTint="@color/blue"
                 android:text=""
                 tools:ignore="UnusedAttribute" />
 
@@ -98,7 +98,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/opfer_verwandeln"
-                android:textColor="@color/schwarz"
+                android:textColor="@color/black"
                 android:textSize="25sp" />
 
         </LinearLayout>
@@ -111,7 +111,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginRight="16dp"
             android:background="@drawable/button_rounded_corners"
-            android:backgroundTint="@color/grau"
+            android:backgroundTint="@color/gray"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -124,7 +124,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/button_rounded_corners"
-                android:backgroundTint="@color/grau"
+                android:backgroundTint="@color/gray"
                 android:orientation="horizontal"
                 android:text="@string/opfer_retten"
                 android:id="@+id/layoutRettenHexe">
@@ -138,7 +138,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
-                    android:buttonTint="@color/blau"
+                    android:buttonTint="@color/blue"
                     android:text="" />
 
 
@@ -150,7 +150,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="8dp"
                     android:text="@string/opfer_retten"
-                    android:textColor="@color/schwarz"
+                    android:textColor="@color/black"
                     android:textSize="25sp" />
 
             </LinearLayout>
@@ -176,7 +176,7 @@
                     android:layout_marginTop="4dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
-                    android:buttonTint="@color/blau"
+                    android:buttonTint="@color/blue"
                     android:text="" />
 
 
@@ -188,7 +188,7 @@
                     android:layout_marginEnd="16dp"
                     android:layout_marginBottom="8dp"
                     android:text="@string/weitere_person_t_ten"
-                    android:textColor="@color/schwarz"
+                    android:textColor="@color/black"
                     android:textSize="25sp" />
 
             </LinearLayout>

@@ -23,10 +23,10 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/rund_amor"
-            android:backgroundTint="@color/grau"
+            android:backgroundTint="@color/gray"
             android:gravity="center"
             android:text="@string/werwolf"
-            android:textColor="@color/weiss"
+            android:textColor="@color/white"
             android:textSize="30sp" />
 
         <TextView
@@ -38,7 +38,7 @@
             android:layout_weight="1.5"
             android:gravity="center"
             android:text="@string/zahl_0"
-            android:textColor="@color/weiss"
+            android:textColor="@color/white"
             android:textSize="38sp" />
 
         <LinearLayout
@@ -70,8 +70,8 @@
         android:layout_height="0dp"
         android:layout_marginBottom="16dp"
         android:layout_weight="1"
-        android:text="@string/beschreibungWerwolf"
-        android:textColor="@color/weiss"
+        android:text="@string/descriptionWerwolf"
+        android:textColor="@color/white"
         android:textSize="20sp"
         android:visibility="gone" />
 </LinearLayout>

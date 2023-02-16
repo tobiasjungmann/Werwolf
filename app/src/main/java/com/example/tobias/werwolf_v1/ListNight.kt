@@ -17,7 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 
 class ListNight : AppCompatActivity(), View.OnClickListener {
-    private var beschreibung: TextView? = null
+    private var description: TextView? = null
     private var personen: ListView? = null
 
     //  private ArrayList<String> arrayList;
@@ -148,8 +148,8 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
         //UI Allgemein
         weiterNacht = findViewById(R.id.weiterNacht)
         weiterNacht?.setOnClickListener(this@ListNight)
-        beschreibung = findViewById(R.id.beschreibung)
-        beschreibung?.setOnClickListener(this@ListNight)
+        description = findViewById(R.id.description)
+        description?.setOnClickListener(this@ListNight)
         personen = findViewById(R.id.personen)
         personen?.visibility = View.INVISIBLE
 
@@ -216,7 +216,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                             weiterNacht?.background?.setTint(
                                 ContextCompat.getColor(
                                     this,
-                                    R.color.blau
+                                    R.color.blue
                                 )
                             )
                             listeAuswahlGenuegend = 1
@@ -243,13 +243,13 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
-                                R.color.blau
+                                R.color.blue
                             )
                         )
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
-                                R.color.blau
+                                R.color.blue
                             )
                         )
                     }
@@ -260,7 +260,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
-                                R.color.blau
+                                R.color.blue
                             )
                         )
                     }
@@ -271,7 +271,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
-                                R.color.blau
+                                R.color.blue
                             )
                         )
                     }
@@ -284,7 +284,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
-                                R.color.blau
+                                R.color.blue
                             )
                         )
                     }
@@ -295,7 +295,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
-                                R.color.blau
+                                R.color.blue
                             )
                         )
                     }
@@ -306,7 +306,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
-                                R.color.blau
+                                R.color.blue
                             )
                         )
                     }
@@ -317,7 +317,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
-                                R.color.blau
+                                R.color.blue
                             )
                         )
                     }
@@ -328,7 +328,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
-                                R.color.blau
+                                R.color.blue
                             )
                         )
                     }
@@ -338,7 +338,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
-                                R.color.blau
+                                R.color.blue
                             )
                         )
                     }
@@ -351,7 +351,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         weiterNacht?.background?.setTint(
                             ContextCompat.getColor(
                                 this,
-                                R.color.blau
+                                R.color.blue
                             )
                         )
                     }
@@ -394,17 +394,17 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     )
                 )
                 if (langerText) {
-                    beschreibung!!.text =
+                    description!!.text =
                         "Als erstes erwacht der Amor und zeigt auf zwei Personen, die sich augenblicklich unsterblich ineinander verlieben. - Der Amor schläft wieder ein. Ich tippe die beiden verliebten jetzt an un sie schauen sich tief in die Augen. - Auch sie schlafen jetzt wieder ein."
                 } else {
-                    beschreibung!!.text =
+                    description!!.text =
                         "Als erstes erwacht der Amor und zeigt auf zwei Personen..."
                 }
                 weiterNacht!!.isClickable = false
                 weiterNacht!!.background.setTint(
                     ContextCompat.getColor(
                         this,
-                        R.color.blau_unclickable
+                        R.color.blue_unclickable
                     )
                 )
                 customAdapter!!.notifyDataSetChanged()
@@ -424,10 +424,10 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     )
                 )
                 if (langerText) {
-                    beschreibung!!.text =
+                    description!!.text =
                         "Ich tippe alle Freunde kurz an. - Jetzt erwachen die Freunde und schauen sich an, um sich später wiederzuerkennen. - Die Freunde schlafen beruhigt wieder ein, da sie wisssen, dass sie nicht alleine sind."
                 } else {
-                    beschreibung!!.text =
+                    description!!.text =
                         "Ich tippe alle Freunde kurz an. - Jetzt erwachen die Freunde..."
                 }
                 anzahlBuerger = anzahlBuerger + anzahlFreunde
@@ -447,16 +447,16 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     )
                 )
                 if (langerText) {
-                    beschreibung!!.text =
+                    description!!.text =
                         "Jetzt erwacht der Dieb und sucht sich eine Person aus, bei der er oder sie die Nacht verbringen möchten. - Er zeigt auf diese Person und schläft danach wieder ein."
                 } else {
-                    beschreibung!!.text = "Jetzt erwacht der Dieb und sucht sich eine Person aus..."
+                    description!!.text = "Jetzt erwacht der Dieb und sucht sich eine Person aus..."
                 }
                 weiterNacht!!.isClickable = false
                 weiterNacht!!.background.setTint(
                             ContextCompat.getColor(
                                 this,
-                                R.color.blau_unclickable
+                                R.color.blue_unclickable
                             )
                         )
                 customAdapter!!.notifyDataSetChanged()
@@ -474,17 +474,17 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     )
                 )
                 if (langerText) {
-                    beschreibung!!.text =
+                    description!!.text =
                         "Der Wächter wählt eine Person, die er diese Nacht beschützen möchte. - Der Wächter schläft wieder ein."
                 } else {
-                    beschreibung!!.text =
+                    description!!.text =
                         "Der Wächter wählt eine Person, die er diese Nacht beschützen..."
                 }
                 weiterNacht!!.isClickable = false
                 weiterNacht!!.background.setTint(
                             ContextCompat.getColor(
                                 this,
-                                R.color.blau_unclickable
+                                R.color.blue_unclickable
                             )
                         )
                 customAdapter!!.notifyDataSetChanged()
@@ -502,10 +502,10 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     )
                 )
                 if (langerText) {
-                    beschreibung!!.text =
+                    description!!.text =
                         "Das Werwolfjunge erwacht und sucht sich ein Vorbild aus. Sollte dieses Vorbild sterben, wirst du auch ein Werwolf und wachst gemeinsam mit ihnen auf. -\n Das Junge schläft wieder."
                 } else {
-                    beschreibung!!.text =
+                    description!!.text =
                         "Das Werwolfjunge erwacht und sucht sich ein Vorbild aus..."
                 }
                 anzahlBuerger = anzahlBuerger + anzahlJunges
@@ -514,7 +514,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 weiterNacht!!.background.setTint(
                             ContextCompat.getColor(
                                 this,
-                                R.color.blau_unclickable
+                                R.color.blue_unclickable
                             )
                         )
                 customAdapter!!.notifyDataSetChanged()
@@ -532,10 +532,10 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     )
                 )
                 if (langerText) {
-                    beschreibung!!.text =
+                    description!!.text =
                         "Als nächstes wacht der Seher auf und zeigt auf eine Person, deren Karte er sehen möchte. Wenn er sie gesehen hat schläft er wieder ein."
                 } else {
-                    beschreibung!!.text =
+                    description!!.text =
                         "Als nächstes wacht der Seher auf und zeigt auf eine Person..."
                 }
                 charakterPosition++
@@ -553,17 +553,17 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     )
                 )
                 if (langerText) {
-                    beschreibung!!.text =
+                    description!!.text =
                         "Zuletzt erwacht der bezaubernde Flötenspieler und darf eine Person seiner Wahl verzaubern. Hat er alle Mitspieler verzaubert gewinnt er."
                 } else {
-                    beschreibung!!.text =
+                    description!!.text =
                         "Zuletzt erwacht der bezaubernde Flötenspieler und darf..."
                 }
                 weiterNacht!!.isClickable = false
                 weiterNacht!!.background.setTint(
                             ContextCompat.getColor(
                                 this,
-                                R.color.blau_unclickable
+                                R.color.blue_unclickable
                             )
                         )
                 customAdapter!!.notifyDataSetChanged()
@@ -579,23 +579,23 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     textSpielstand!!.setText(R.string.werwolf)
                     layoutSpielstand!!.setBackgroundResource(R.drawable.leiste_werwolf)
                     if (langerText) {
-                        beschreibung!!.text =
+                        description!!.text =
                             "Jetzt wachen die Werwölfe auf und suchen sich ihr Opfer für diese Nacht aus. Haben sie sich entschieden schlafen sie auch schon wieder ein."
                     } else {
-                        beschreibung!!.text =
+                        description!!.text =
                             "Jetzt wachen die Werwölfe auf und suchen sich ihr Opfer..."
                     }
                     weiterNacht!!.isClickable = false
                     weiterNacht!!.background?.setTint(
                         ContextCompat.getColor(
                             this,
-                            R.color.blau_unclickable
+                            R.color.blue_unclickable
                         )
                     )
                     customAdapter!!.notifyDataSetChanged()
                     personen!!.visibility = View.VISIBLE
                 } else {
-                    beschreibung!!.text = "Fehler: Es sind keine Werwölfe mehr im Spiel!"
+                    description!!.text = "Fehler: Es sind keine Werwölfe mehr im Spiel!"
                 }
             }
             8 -> if (anzahlWeisserWerwolf > 0 && !wwletzteRundeAktiv) {
@@ -607,15 +607,15 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     )
                 )
                 if (langerText) {
-                    beschreibung!!.text = "Text Weißer Werwolf"
+                    description!!.text = "Text Weißer Werwolf"
                 } else {
-                    beschreibung!!.text = "Text Weißer Werwolf..."
+                    description!!.text = "Text Weißer Werwolf..."
                 }
                 weiterNacht!!.isClickable = false
                 weiterNacht!!.background.setTint(
                             ContextCompat.getColor(
                                 this,
-                                R.color.blau_unclickable
+                                R.color.blue_unclickable
                             )
                         )
                 customAdapter!!.notifyDataSetChanged()
@@ -637,9 +637,9 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     )
                 )
                 if (langerText) {
-                    beschreibung!!.text = "Text Urwolf"
+                    description!!.text = "Text Urwolf"
                 } else {
-                    beschreibung!!.text = "Text Urwolf..."
+                    description!!.text = "Text Urwolf..."
                 }
                 charakterPosition++
             } else {
@@ -659,10 +659,10 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                             )
                         )
                         if (langerText) {
-                            beschreibung!!.text =
+                            description!!.text =
                                 "Als nächstes wacht die Hexe auf. Sie kann das Opfer -auf Opfer zeigen- retten, nichtstun, oder  eine weitere Person mit in den Tod reißen. -Dabei die drei Handzeichen für die Hexe sichtbar vormachen."
                         } else {
-                            beschreibung!!.text =
+                            description!!.text =
                                 "Als nächstes wacht die Hexe auf. Sie kann das Opfer..."
                         }
                         personen!!.visibility = View.INVISIBLE
@@ -710,8 +710,8 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 if (ritterOpfer != -1) {
                     tot = ""
                     sicherToeten(ritterOpfer, nameRitterOpfer, charakterRitterOpfer)
-                    val s = beschreibung!!.text.toString()
-                    beschreibung!!.text = """
+                    val s = description!!.text.toString()
+                    description!!.text = """
                         $s
                         $tot
                         """.trimIndent()
@@ -721,9 +721,9 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 }
                 auswerten()
                 if (tot!!.compareTo("") == 0) {
-                    beschreibung!!.text = "Das ganze Dorf erwacht, alle haben überlebt"
+                    description!!.text = "Das ganze Dorf erwacht, alle haben überlebt"
                 } else {
-                    beschreibung!!.text = "Das ganze Dorf erwacht außer: $tot"
+                    description!!.text = "Das ganze Dorf erwacht außer: $tot"
                 }
                 tot = ""
 
@@ -734,7 +734,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     weiterNacht!!.background?.setTint(
                         ContextCompat.getColor(
                             this,
-                            R.color.blau
+                            R.color.blue
                         )
                     )
                     personen!!.visibility = View.INVISIBLE
@@ -742,30 +742,30 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     layoutSpielstand!!.background?.setTint(
                         ContextCompat.getColor(
                             this,
-                            R.color.gruen
+                            R.color.green
                         )
                     )
                     charakterPosition++
                 } else {
-                    val s = beschreibung!!.text.toString()
-                    beschreibung!!.text =
+                    val s = description!!.text.toString()
+                    description!!.text =
                         s + "Der Jäger ist gestorben. Er darf eine weitere Person töten:"
                 }
                 if (ritterAktiv) {
-                    val s = beschreibung!!.text.toString()
-                    beschreibung!!.text =
+                    val s = description!!.text.toString()
+                    description!!.text =
                         "$s\n\nDer Ritter ist verstorben. In der nächsten Nacht stirbt der Nächste Werwolf zur Rechten des Ritters."
                 }
             }
             12 -> {
                 auswerten()
-                beschreibung!!.text = "Abstimmphase, wen wählt das Dorf als Schuldigen aus? "
+                description!!.text = "Abstimmphase, wen wählt das Dorf als Schuldigen aus? "
                 //todo: Möglichkeit keinen zu töten, weiter immer klickbar, aber dann dialog der nachfrägt
                 weiterNacht!!.isClickable = false
                 weiterNacht!!.background.setTint(
                             ContextCompat.getColor(
                                 this,
-                                R.color.blau_unclickable
+                                R.color.blue_unclickable
                             )
                         )
                 customAdapter!!.notifyDataSetChanged()
@@ -828,7 +828,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 buergeropferToeten()
                 if (!jaegerAktiv) {
                     personen!!.visibility = View.GONE
-                    beschreibung!!.text =
+                    description!!.text =
                         "Das ganze Dorf schläft ein.\n\nHinweis: Die Reihenfolge der Personen in der Liste hat sich geändert."
                     charakterPosition = 1
                     werwolfOpferID = -1
@@ -838,8 +838,8 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     tot = ""
                     // totErweiterungWW = "";
                 } else {
-                    val s = beschreibung!!.text.toString()
-                    beschreibung!!.text =
+                    val s = description!!.text.toString()
+                    description!!.text =
                         "$s\n\nDer Jäger ist gestorben. Er darf eine weitere Person töten:"
                 }
             }
@@ -1389,7 +1389,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
 
     private fun ritterDialogVorbereiten() {
         charakterPosition = 21
-        beschreibung!!.text =
+        description!!.text =
             "Der Ritter ist letzte Nacht gestorben. Wähle jetzt den nächsten Werwolf zur rechten das verstorbenen Jägers aus."
         textSpielstand!!.text = "Ritter"
         layoutSpielstand!!.background?.setTint(
@@ -1402,7 +1402,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
         weiterNacht!!.background.setTint(
                             ContextCompat.getColor(
                                 this,
-                                R.color.blau_unclickable
+                                R.color.blue_unclickable
                             )
                         )
         customAdapter!!.notifyDataSetChanged()
@@ -1419,7 +1419,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
         charakterPositionJaegerBackup = charakterPosition
         charakterPosition = 20
         jaegerAktiv = true
-        beschreibung!!.text = "Der Jäger ist gestorben. Er darf eine weitere Person töten:"
+        description!!.text = "Der Jäger ist gestorben. Er darf eine weitere Person töten:"
         textSpielstand!!.text = "Jäger"
         layoutSpielstand!!.background?.setTint(
             ContextCompat.getColor(
@@ -1431,7 +1431,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
         weiterNacht!!.background.setTint(
                             ContextCompat.getColor(
                                 this,
-                                R.color.blau_unclickable
+                                R.color.blue_unclickable
                             )
                         )
         customAdapter!!.notifyDataSetChanged()
@@ -1463,8 +1463,8 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun vorbildGestorbenDialog() {
-        val s = beschreibung!!.text.toString()
-        beschreibung!!.text =
+        val s = description!!.text.toString()
+        description!!.text =
             """
             ${s}Das Vorbild ist verstorben. Ab der nächsten Nacht wacht das Junge mit den Werwölfen gemeinsam auf.
             
@@ -1563,7 +1563,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     weiterNacht!!.background?.setTint(
                         ContextCompat.getColor(
                             this,
-                            R.color.blau_unclickable
+                            R.color.blue_unclickable
                         )
                     )
                     trankTodEinsetzbar = false
@@ -1576,7 +1576,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     weiterNacht!!.background?.setTint(
                         ContextCompat.getColor(
                             this,
-                            R.color.blau
+                            R.color.blue
                         )
                     )
                     trankTodEinsetzbar = true
@@ -1617,86 +1617,86 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 checkboxUrwolfVeto!!.isChecked = true
                 urwolfVeto = 1
             }
-            R.id.beschreibung -> {
+            R.id.description -> {
                 langerText = !langerText
                 when (charakterPosition) {
                     0 -> if (personen!!.visibility == View.VISIBLE) {
                         if (langerText) {
-                            beschreibung!!.text =
+                            description!!.text =
                                 "Als erstes erwacht der Amor und zeigt auf zwei Personen, die sich augenblicklich unsterblich ineinander verlieben. - Amor schläft wieder ein. Ich tippe die beiden verliebten jetzt an un sie schauen sich tief in die Augen. - Auch sie schlafen jetzt wieder ein."
                         } else {
-                            beschreibung!!.text =
+                            description!!.text =
                                 "Als erstes erwacht der Amor und zeigt auf zwei Personen..."
                         }
                     } else {
-                        beschreibung!!.text = "Das ganze Dorf schläft ein."
+                        description!!.text = "Das ganze Dorf schläft ein."
                         langerText = !langerText
                     }
                     1 -> if (langerText) {
-                        beschreibung!!.text =
+                        description!!.text =
                             "Ich tippe alle Freunde kurz an. - Jetzt erwachen die Freunde und schauen sich an, um sich später wiederzuerkennen. - Die Freunde schlafen beruhigt wieder ein, da sie wisssen, dass sie nicht alleine sind."
                     } else {
-                        beschreibung!!.text =
+                        description!!.text =
                             "Ich tippe alle Freunde kurz an. - Jetzt erwachen die Freunde..."
                     }
                     2 -> if (personen!!.visibility == View.VISIBLE) {
                         if (langerText) {
-                            beschreibung!!.text =
+                            description!!.text =
                                 "Jetzt erwacht der Dieb und sucht sich eine Person aus, bei der er oder sie die Nacht verbringen möchten. - Er zeigt auf diese Person und schläft danach wieder ein."
                         } else {
-                            beschreibung!!.text =
+                            description!!.text =
                                 "Jetzt erwacht der Dieb und sucht sich eine Person aus..."
                         }
                     } else {
                         if (langerText) {
-                            beschreibung!!.text =
+                            description!!.text =
                                 "Ich tippe alle Freunde kurz an. - Jetzt erwachen die Freunde und schauen sich an, um sich später wiederzuerkennen. - Die Freunde schlafen beruhigt wieder ein, da sie wisssen, dass sie nicht alleine sind."
                         } else {
-                            beschreibung!!.text =
+                            description!!.text =
                                 "Ich tippe alle Freunde kurz an. - Jetzt erwachen die Freunde..."
                         }
                     }
                     3 -> if (langerText) {
-                        beschreibung!!.text =
+                        description!!.text =
                             "Der Wächter wählt eine Person, die er diese Nacht beschützen möchte. - Der Wächter schläft wieder ein."
                     } else {
-                        beschreibung!!.text =
+                        description!!.text =
                             "Der Wächter wählt eine Person, die er diese Nacht beschützen..."
                     }
                     4 -> if (langerText) {
-                        beschreibung!!.text =
+                        description!!.text =
                             "Das Werwolfjunge erwacht und sucht sich ein Vorbild aus. Sollte dieses Vorbild sterben, wirst du auch ein Werwolf und wachst gemeinsam mit ihnen auf. -\n Das Junge schläft wieder."
                     } else {
-                        beschreibung!!.text =
+                        description!!.text =
                             "Das Werwolfjunge erwacht und sucht sich ein Vorbild aus..."
                     }
                     5 -> if (langerText) {
-                        beschreibung!!.text =
+                        description!!.text =
                             "Als nächstes wacht der Seher auf und zeigt auf eine Person, deren Karte er sehen möchte. Wenn er sie gesehen hat schläft er wieder ein."
                     } else {
-                        beschreibung!!.text =
+                        description!!.text =
                             "Als nächstes wacht der Seher auf und zeigt auf eine Person..."
                     }
                     6 -> if (langerText) {
-                        beschreibung!!.text =
+                        description!!.text =
                             "Zuletzt erwacht der bezaubernde Flötenspieler und darf eine Person seiner Wahl verzaubern. Hat er alle Mitspieler verzaubert gewinnt er."
                     } else {
-                        beschreibung!!.text =
+                        description!!.text =
                             "Zuletzt erwacht der bezaubernde Flötenspieler und darf..."
                     }
                     7 -> if (langerText) {
-                        beschreibung!!.text =
+                        description!!.text =
                             "Jetzt wachen die Werwölfe auf und suchen sich ihr Opfer für diese Nacht aus. Haben sie sich entschieden schlafen sie auch schon wieder ein."
                     } else {
-                        beschreibung!!.text =
+                        description!!.text =
                             "Jetzt wachen die Werwölfe auf und suchen sich ihr Opfer..."
                     }
                     8, 9 -> {}
                     10 -> if (langerText) {
-                        beschreibung!!.text =
+                        description!!.text =
                             "Als nächstes wacht die Hexe auf. Sie kann das Opfer -auf Opfer zeigen- retten, nichtstun, oder  eine weitere Person mit in den Tod reißen. -Dabei die drei Handzeichen für die Hexe sichtbar vormachen."
                     } else {
-                        beschreibung!!.text =
+                        description!!.text =
                             "Als nächstes wacht die Hexe auf. Sie kann das Opfer..."
                     }
                     20 -> {}

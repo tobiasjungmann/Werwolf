@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.tobias.werwolf_v1.VictoryActivity"
-    android:background="@color/grey">
+    android:background="@color/background_gray">
 
 
     <ImageView
@@ -27,7 +27,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:gravity="center"
-        android:textColor="@color/weiss"
+        android:textColor="@color/white"
         android:textSize="25sp"
         app:layout_constraintBottom_toTopOf="@+id/victoryStartScreenButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,7 +43,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/button_rounded_corners"
-        android:backgroundTint="@color/blau"
+        android:backgroundTint="@color/blue"
         android:gravity="center"
         android:text="@string/startbildschirm"
         android:textSize="20sp"

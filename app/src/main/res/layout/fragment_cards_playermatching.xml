@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="@color/grey">
+        android:background="@color/background_gray">
 
         <LinearLayout
             android:id="@+id/layoutModus"
@@ -18,7 +18,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/button_rounded_corners"
-            android:backgroundTint="@color/gruen">
+            android:backgroundTint="@color/green">
 
             <TextView
                 android:id="@+id/textModus"
@@ -29,7 +29,7 @@
                 android:textStyle="bold"
                 android:gravity="center"
                 android:text="@string/spielleiter"
-                android:textColor="@color/schwarz"
+                android:textColor="@color/black"
                 android:textSize="21sp" />
         </LinearLayout>
 

@@ -5,12 +5,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.tobias.werwolf_v1.ManualActivity"
-    android:background="@color/grey">
+    android:background="@color/background_gray">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey"
+        android:background="@color/background_gray"
         android:orientation="vertical">
 
 
@@ -25,7 +25,7 @@
             android:text="Zurück"
             android:gravity="center"
             android:background="@drawable/button_rounded_corners"
-            android:backgroundTint="@color/blau"
+            android:backgroundTint="@color/blue"
             android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"/>
@@ -53,7 +53,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="Anleitung\n\n"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="25dp" />
 
                 <TextView
@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="I. Charaktere"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="25dp"
                     android:clickable="true"/>
 
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="II. Mit Karten"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="25dp"
                     android:clickable="true"/>
 
@@ -82,7 +82,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="III. Ohne Karten"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="25dp"
                     android:clickable="true"/>
 
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="IV. Spielphase\n\n\n"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="25dp"
                     android:clickable="true"/>
 
@@ -102,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="I. Charaktere"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="25dp" />
 
                 <TextView
@@ -111,7 +111,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:text="1.Werwolf"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="20dp" />
 
                 <TextView
@@ -120,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:text="Die Werwölfe wachen jede Nacht auf und bestimmen gemeinsam ein Opfer, welches daraufhn stirbt.\n"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="17dp" />
 
 
@@ -130,7 +130,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:text="2. Bürger"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="20dp" />
 
                 <TextView
@@ -139,7 +139,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:text="Der Bürger schläft die ganze Nacht.\n"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="17dp" />
 
 
@@ -149,7 +149,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:text="3. Amor"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="20dp" />
 
                 <TextView
@@ -158,7 +158,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:text="Der Amor darf einmal zu Beginn des Spieles ein Liebespaar bestimmen, welches das restliche Spiel zusammenarbeiten. Stirbt einer der beiden Partner stirbt auch der andere.\n"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="17dp" />
 
 
@@ -168,7 +168,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:text="4.Hexe"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="20dp" />
 
                 <TextView
@@ -177,7 +177,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:text="Die Hexe besitzt zwei Tränke, die sie jeweils einmal pro Spiel einsetzen kann. Einer rettet dem, von den Werwölfen ausgewählten Opfer das Leben, der andere tötet eine von der Hexe wählbare Person.\n"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="17dp" />
 
 
@@ -187,7 +187,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:text="5. Wächter"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="20dp" />
 
                 <TextView
@@ -196,7 +196,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:text="Der Wächter wählt jede Nacht eine Person aus, die er beschützt. Er kann dann nur sterben, wenn die Person, die er beschützt getötet wird. Die zu beschützende Person überlebt.\n"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="17dp" />
 
 
@@ -206,7 +206,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:text="6. Mädchen"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="20dp" />
 
                 <TextView
@@ -215,7 +215,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:text="Das Mädchen darf während die Werwölfe wach sind versuchen diese zu sehen. Es sollte sich nicht erwischen lassen.\n"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="17dp" />
 
 
@@ -225,7 +225,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:text="7. Seher"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="20dp" />
 
                 <TextView
@@ -234,7 +234,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:text="Der Seher wacht jede Nacht auf und wählt eine Person aus, deren Karte er sehen möchte. Der Spielleiter zeigt dem Seher diese Karte.\n"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="17dp" />
 
 
@@ -244,7 +244,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:text="8. Dieb"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="20dp" />
 
                 <TextView
@@ -253,7 +253,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:text="Der Dieb wählt jede Nacht eine Person aus bei der er selbige verbringt. Er kann dann nur sterben, wenn die Person, bei der er übernachtet getötet wird.\n"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="17dp" />
 
 
@@ -263,7 +263,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:text="9. Jäger"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="20dp" />
 
                 <TextView
@@ -272,7 +272,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:text="Stirbt der Jaeger kann er eine weitere Person mit in den Tot reißen.\n"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="17dp" />
 
 
@@ -282,7 +282,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:text="10. Ritter"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="20dp" />
 
                 <TextView
@@ -291,7 +291,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:text="Stirbt der Ritter, so stirbt in der nächsten Runde der nächste Werwolf rechts des Ritters.\n"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="17dp" />
 
 
@@ -301,7 +301,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:text="11. Flötenspieler"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="20dp" />
 
                 <TextView
@@ -310,7 +310,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:text="Der bezaubernde Flötenspieler wacht jede Nacht auf und darf einen Spieler verzaubern. Hat er alle Mitspieler verzaubert gewinnt er.\n!!!Der Flötenspieler ist der Beste!!!\n"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="17dp" />
 
 
@@ -320,7 +320,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:text="12. Freunde"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="20dp" />
 
                 <TextView
@@ -329,7 +329,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:text="Die Freunde sehen sich in der ersten Runde. So wissen sie, das sie unschuldig sind. Stirbt einer der Freunde, leben die anderen weiter.\n"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="17dp" />
 
 
@@ -339,7 +339,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:text="13. Junges"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="20dp" />
 
                 <TextView
@@ -348,7 +348,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:text="Das Werwolf-Junge wählt zu Beginn der Runde ein Vorbild aus. Solange dieses Vorbild lebt ist das Werwolf-Junge ein normaler Bürger. wird das Vorbild getötet wird das Junge zum Werwolf und wacht ab sofort mit diesen in der Nacht auf.\n"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="17dp" />
 
 
@@ -358,7 +358,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:text="14. Weißer Werwolf"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="20dp" />
 
                 <TextView
@@ -367,7 +367,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:text="Der weiße Werwolf wacht jede zweite Nacht auf darf einen der Werwölfe töten. Sein Ziel ist es alleiniger Überlebender zu sein.\n"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="17dp" />
 
 
@@ -377,7 +377,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="16dp"
                     android:text="15. Ur-Wolf"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="20dp" />
 
                 <TextView
@@ -386,7 +386,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:text="Der Urwolf handelt wie ein normaler Werwolf. Zusätzlich kann er einmal pro Spiel ein Opfer in einen Werwolf verwandeln. Das Opfer stirbt dann nicht und wacht ab sofort mit den Werwölfen zusammen auf."
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="17dp" />
 
                 <TextView
@@ -395,7 +395,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="\nII. Mit Karten"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="25dp" />
 
                 <TextView
@@ -404,7 +404,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:text="Zuerst muss die Anzahl der einzelnen Charaktere festgelegt werden. Dafür kann mit dem + und - hinter dem Charaktersymbol die jeweilige Anzahl erhöht/erniedrigt werden.\nIst die gewünscht Anzahl eingegeben \n-> weiter-Knopf drücken.\n\nDaraufhin müssen die Namen aller mitspielenden Personen eingegeben werden.\nEs kann jeden Namen nur einmal geben.\nEs müssen genau so viele Personen eingegeben werden, wie Charaktere ausgewählt wurden.\nDurch Drücken eines Namens in der untenstehenden Liste löscht man diese Person. Sind alle Personen eingegeben:\n->weiter-Knopf drücken.\n\nDanach wird immer ein Name ausgegeben. Der Spielleiter bittet diese Person, ihm ihre Karte zu zeigen. Der entsprechende Charakter muss angeklickt werden.\nDieser Prozess wird so lange wiederholt, bis alle Charaktere zugeordnet wurden.\nDanach beginnt automatisch die Spielphase."
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="17dp" />
 
                 <TextView
@@ -413,7 +413,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="\nIII. Ohne Karten"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="25dp" />
 
                 <TextView
@@ -422,7 +422,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="32dp"
                     android:text="@string/manual_text_without_cards"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="17dp" />
 
 
@@ -432,7 +432,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:text="\nIV. Quellen"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="25dp" />
 
                 <TextView
@@ -449,7 +449,7 @@ Magic icons created by Freepik - Flaticon: https://www.flaticon.com/free-icons/m
 Dog icons created by Freepik - Flaticon: https://www.flaticon.com/free-icons/dog\n
 Hacker icons created by Andy Horvath - Flaticon: https://www.flaticon.com/free-icons/hacker\n
 Target icons created by Uniconlabs - Flaticon: https://www.flaticon.com/free-icons/target"
-                    android:textColor="@color/weiss"
+                    android:textColor="@color/white"
                     android:textSize="17dp"
                     android:autoLink="web"/>
             </LinearLayout>

@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/grey"
+        android:background="@color/background_gray"
         android:orientation="vertical">
 
 
@@ -32,7 +32,7 @@
                 android:layout_marginBottom="8dp"
                 android:gravity="center"
                 android:text="@string/mit_karten"
-                android:textColor="@color/schwarz"
+                android:textColor="@color/black"
                 android:textSize="21sp"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -44,7 +44,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginBottom="16dp"
             android:background="@drawable/button_rounded_corners"
-            android:backgroundTint="@color/grau"
+            android:backgroundTint="@color/gray"
             android:orientation="vertical">
 
             <TextView
@@ -55,7 +55,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="8dp"
                 android:text="@string/gesamt_standartwert"
-                android:textColor="@color/weiss"
+                android:textColor="@color/white"
                 android:textSize="38sp" />
 
 
@@ -67,7 +67,7 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/button_rounded_corners"
-                android:backgroundTint="@color/blau"
+                android:backgroundTint="@color/blue"
                 android:gravity="center"
                 android:text="@string/weiter"
                 android:textSize="20sp" />
@@ -83,7 +83,7 @@
             android:layout_marginBottom="16dp"
             android:padding="16dp"
             android:background="@drawable/button_rounded_corners"
-            android:backgroundTint="@color/grau"
+            android:backgroundTint="@color/gray"
             android:orientation="vertical">
 
             <androidx.recyclerview.widget.RecyclerView

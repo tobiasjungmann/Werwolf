@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.tobias.werwolf_v1.StartScreenActivity"
-    android:background="@color/grey"
+    android:background="@color/background_gray"
     >
 
     <TextView
@@ -43,7 +43,7 @@
             android:orientation="vertical"
             android:layout_marginBottom="24dp"
             android:background="@drawable/button_rounded_corners"
-            android:backgroundTint="@color/grau">
+            android:backgroundTint="@color/gray">
 
             <TextView
                 android:id="@+id/textView7"
@@ -55,7 +55,7 @@
                 android:textSize="25sp"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/weiss"/>
+                android:textColor="@color/white"/>
 
             <Button
                 android:id="@+id/spielleiterEinzeln"
@@ -63,7 +63,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/button_rounded_corners"
-                android:backgroundTint="@color/gruen"
+                android:backgroundTint="@color/green"
                 android:gravity="center"
                 android:text="@string/spielleiter"
                 android:layout_marginRight="16dp"
@@ -77,7 +77,7 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:background="@drawable/button_rounded_corners"
-            android:backgroundTint="@color/grau">
+            android:backgroundTint="@color/gray">
 
             <TextView
                 android:id="@+id/textView5"
@@ -85,7 +85,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/ohne_karten"
                 android:gravity="center"
-                android:textColor="@color/weiss"
+                android:textColor="@color/white"
                 android:textSize="25sp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"/>
@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/button_rounded_corners"
-                android:backgroundTint="@color/gelb"
+                android:backgroundTint="@color/yellow"
                 android:gravity="center"
                 android:text="@string/spieler"
                 android:textSize="20sp"
@@ -133,7 +133,7 @@
         android:gravity="center"
         android:layout_alignParentBottom="true"
         android:background="@drawable/button_rounded_corners"
-        android:backgroundTint="@color/blau"
+        android:backgroundTint="@color/blue"
         android:layout_marginRight="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginBottom="16dp"/>
