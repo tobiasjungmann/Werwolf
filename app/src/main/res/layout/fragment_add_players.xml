@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -32,58 +31,57 @@
     </LinearLayout>
 
 
-
     <LinearLayout
         android:id="@+id/llo"
-        android:layout_below="@id/layoutModusPerson"
-        android:layout_marginBottom="16dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginRight="16dp"
+        android:layout_below="@id/layoutModusPerson"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/button_rounded_corners"
-        android:backgroundTint="@color/gray">
+        android:backgroundTint="@color/gray"
+        android:orientation="vertical">
 
         <EditText
             android:id="@+id/nameText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:hint="@string/name_eingeben"
-            android:layout_marginRight="16dp"
             android:layout_marginLeft="16dp"
             android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
             android:layout_marginBottom="8dp"
+            android:hint="@string/name_eingeben"
+            android:importantForAutofill="no"
             android:inputType="textVisiblePassword"
-            android:importantForAutofill="no" />
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/weiter"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:text="@string/person_einf_gen"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
             android:background="@drawable/button_rounded_corners"
             android:backgroundTint="@color/blue"
-            android:layout_marginRight="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginBottom="16dp"/>
+            android:text="@string/person_einf_gen"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
 
     <TextView
-        android:layout_below="@id/llo"
         android:id="@+id/anzahlPersoenenText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textColor="@color/white"
-        android:textSize="20dp"
+        android:layout_below="@id/llo"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="8dp"
+        android:text="TextView"
+        android:textColor="@color/white"
+        android:textSize="20dp" />
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -92,7 +90,7 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp">
 
-        <ListView
+        <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listePers"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

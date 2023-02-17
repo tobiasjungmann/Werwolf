@@ -364,11 +364,8 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
 
     override fun onBackPressed() {
         val builder: AlertDialog.Builder
-        builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        builder =
             AlertDialog.Builder(this@ListNight, android.R.style.Theme_Material_Dialog_Alert)
-        } else {
-            AlertDialog.Builder(this@ListNight)
-        }
         builder.setTitle("Warnung")
             .setMessage("Möchtest du die App wirklich verlassen? Der gesamte Spielstand geht verloren.")
             .setNegativeButton("Ja, App verlassen") { dialog, which ->

@@ -1,33 +1,17 @@
 package com.example.tobias.werwolf_v1.pregame
 
-import android.database.Cursor
-import android.graphics.Color
 import android.os.Bundle
-import android.os.Vibrator
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.tobias.werwolf_v1.database.models.DatabaseHelper
 import com.example.tobias.werwolf_v1.R
 import com.example.tobias.werwolf_v1.databinding.FragmentAddPlayersBinding
 
 class AddPlayersFragment : Fragment(), View.OnClickListener {
-    private var nameText: EditText? = null
-    private var anzahlPersoenenText: TextView? = null
-    private var anzahlPersonen = 0
-    private var mDatabaseHelper: DatabaseHelper? = null
-    private var weiter: Button? = null
-    private var customAdapter: CustomAdapter? = null
-    private var data: Cursor? = null
 
-    private var gesamtPer = 0
+    private var playerAdapter: PlayerAdapter? = null
 
-    // private String karten;
-    private var vibrator: Vibrator? = null
-    private var vibrationsdauer = 0
-    private var lastPersonAdded = false
     private lateinit var binding: FragmentAddPlayersBinding
     private lateinit var preGameViewModel: PreGameViewModel
 
@@ -37,171 +21,52 @@ class AddPlayersFragment : Fragment(), View.OnClickListener {
         binding = FragmentAddPlayersBinding.inflate(layoutInflater)
         preGameViewModel = ViewModelProvider(requireActivity()).get(PreGameViewModel::class.java)
 
-        //setContentView(R.layout.activity_playermanagement)
-        mDatabaseHelper = DatabaseHelper(requireContext())
-        data = mDatabaseHelper!!.data
-        anzahlPersonen = 0
-        // val listePers = findViewById<ListView>(R.id.listePers)
-        customAdapter = CustomAdapter()
-        binding.listePers.adapter = customAdapter
-        binding.listePers.onItemClickListener =
-            AdapterView.OnItemClickListener { parent: AdapterView<*>?, view: View?, position: Int, id: Long ->
-                vibrator!!.vibrate(vibrationsdauer.toLong())
-                data?.moveToPosition(position)
-                val name = data?.getString(1)
-                val hilfedata = mDatabaseHelper!!.getItemID(name ?: "invalid")
-                var itemID = -1
-                while (hilfedata.moveToNext()) {
-                    itemID = hilfedata.getInt(0)
-                }
-                if (itemID > -1) {
-                    mDatabaseHelper!!.deleteName("" + itemID)
-                }
-                listeAktualisieren()
-                anzahlAktualisieren()
-                if (gesamtPer == anzahlPersonen) {
-                    lastPersonAdded = true
-                    weiter!!.setText(R.string.weiter)
-                    nameText!!.isClickable = false
-                } else {
-                    lastPersonAdded = false
-                    weiter!!.text = "Person einfügen"
-                    nameText!!.isClickable = true
-                }
-            }
-        vibrationsdauer = 8
-        vibrator =
-            requireActivity().getSystemService(AppCompatActivity.VIBRATOR_SERVICE) as Vibrator
+        playerAdapter = PlayerAdapter(preGameViewModel)
+        binding.listePers.adapter = playerAdapter
+
         binding.weiter.setOnClickListener(this)
-        binding.nameText.setTextColor(Color.WHITE)
-        //  charakterDatenHolen()
-        listeAktualisieren()
-        anzahlAktualisieren()
-        if (gesamtPer == anzahlPersonen) {
-            lastPersonAdded = true
-            weiter?.setText(R.string.weiter)
-            nameText?.isClickable = false
+
+        preGameViewModel.amountPlayers.observe(this) { players ->
+            binding.anzahlPersoenenText.text =
+                "Personen: " + players + " von " + preGameViewModel.getAmountOfPlayers()
+            if (preGameViewModel.differenceCharactersCurrentPlayers() == 0) {
+                binding.weiter.setText(R.string.weiter)
+                binding.nameText.isClickable = false
+            }
         }
     }
 
-    /* private fun charakterDatenHolen() {
-         anzahlAmor = intent.extras!!.getInt("anzahlAmor")
-         anzahlBuerger = intent.extras!!.getInt("anzahlBuerger")
-         anzahlWaechter = intent.extras!!.getInt("anzahlWaechter")
-         anzahlDieb = intent.extras!!.getInt("anzahlDieb")
-         anzahlHexe = intent.extras!!.getInt("anzahlHexe")
-         anzahlJaeger = intent.extras!!.getInt("anzahlJaeger")
-         anzahlJunges = intent.extras!!.getInt("anzahlJunges")
-         anzahlSeher = intent.extras!!.getInt("anzahlSeher")
-         anzahlWerwolf = intent.extras!!.getInt("anzahlWerwolf")
-         anzahlWeisserWerwolf = intent.extras!!.getInt("anzahlWeisserWerwolf")
-         anzahlRitter = intent.extras!!.getInt("anzahlRitter")
-         anzahlFloetenspieler = intent.extras!!.getInt("anzahlFloetenspieler")
-         anzahlFreunde = intent.extras!!.getInt("anzahlFreunde")
-         anzahlMaedchen = intent.extras!!.getInt("anzahlMaedchen")
-         anzahlUrwolf = intent.extras!!.getInt("anzahlUrwolf")
-         gesamtPer = intent.extras!!.getInt("gesamtPer")
-     }*/
-
-    private fun listeAktualisieren() {
-        data = mDatabaseHelper!!.data
-        customAdapter!!.notifyDataSetChanged()
-    }
-
-    fun anzahlAktualisieren() {
-        data!!.moveToFirst()
-        var anzahl = 1
-        while (data!!.moveToNext()) {
-            anzahl++
-        }
-        anzahlPersonen = anzahl
-        anzahlPersoenenText!!.text = "Personen: $anzahl von $gesamtPer"
-    }
 
     override fun onClick(v: View) {
-        if (v.id == R.id.weiter) {
-            anzahlAktualisieren()
-            if (gesamtPer > anzahlPersonen) {
-                val name = nameText!!.text.toString()
-                if (name.length == 0) {
-                    Toast.makeText(requireContext(), "Namen eingegeben", Toast.LENGTH_SHORT)
-                        .show()
-                    vibrator!!.vibrate(vibrationsdauer.toLong())
-                } else {
-                    nameText!!.setText("")
-                    data = mDatabaseHelper!!.data
-                    var nameDoppelt = false
-                    while (data?.moveToNext() == true && !nameDoppelt) {
-                        val hilfe = data?.getString(1)
-                        if (0 == hilfe?.compareTo(name)) {
-                            nameDoppelt = true
-                        }
-                    }
-                    if (nameDoppelt) {
-                        Toast.makeText(
-                            requireContext(),
-                            "Dieser Name ist schon vergeben",
-                            Toast.LENGTH_LONG
-                        ).show()
-                        vibrator!!.vibrate(vibrationsdauer.toLong())
-                    } else {
-                        val insertData = mDatabaseHelper!!.addData(name)
-                        if (!insertData) {
-                            Toast.makeText(
-                                requireContext(),
-                                "unbekannter Fehler, Person konnte nicht eingfügt werden.",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-                    }
-                    listeAktualisieren()
-                    anzahlAktualisieren()
-                }
-            } else if (gesamtPer < anzahlPersonen) {
-                vibrator!!.vibrate(vibrationsdauer.toLong())
-                Toast.makeText(
-                    requireContext(),
-                    "Mehr Charakterkarten als Personen",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            if (gesamtPer == anzahlPersonen) {
-                if (lastPersonAdded) {
-                    val nextFrag = CardsPlayerMatchingFragment()
-                    requireActivity().supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container_view_pregame, nextFrag, "findThisFragment")
-                        .addToBackStack(null)
-                        .commit()
-                } else {
-                    lastPersonAdded = true
-                    weiter!!.setText(R.string.weiter)
-                    nameText!!.isClickable = false
+        val charactersMinusPlayers = preGameViewModel.differenceCharactersCurrentPlayers()
+        if (charactersMinusPlayers > 0) {
+            val name = binding.nameText.text.toString()
+            if (name.isEmpty()) {
+                Toast.makeText(requireContext(), "Namen eingegeben", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                binding.nameText.setText("")
+                if (!preGameViewModel.insertPlayer(binding.nameText.text.toString())) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Dieser Name ist schon vergeben",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
             }
-        }
-    }
-    // todo informationen zu den Charakteren büdeln und in der Klasse miit abspeichern.
+        } else if (charactersMinusPlayers < 0) {
+            Toast.makeText(
+                requireContext(),
+                "Mehr Charakterkarten als Personen",
+                Toast.LENGTH_SHORT
+            ).show()
+        } else {
+            val nextFrag = CardsPlayerMatchingFragment()
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container_view_pregame, nextFrag, "findThisFragment")
+                .addToBackStack(null)
+                .commit()
 
-    internal inner class CustomAdapter : BaseAdapter() {
-        override fun getCount(): Int {
-            return data!!.count
-        }
-
-        override fun getItem(position: Int): Any? {
-            return null
-        }
-
-        override fun getItemId(position: Int): Long {
-            return 0
-        }
-
-        override fun getView(position: Int, convertView: View, parent: ViewGroup): View {
-            var convertView = convertView
-            convertView = layoutInflater.inflate(R.layout.mylistitemwhitetext, null)
-            val pers = convertView.findViewById<TextView>(R.id.textPer)
-            data!!.moveToPosition(position)
-            pers.text = "" + data!!.getString(1)
-            return convertView
         }
     }
 }

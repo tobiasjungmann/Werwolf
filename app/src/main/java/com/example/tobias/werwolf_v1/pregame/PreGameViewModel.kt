@@ -10,6 +10,12 @@ import com.example.tobias.werwolf_v1.database.models.Character
 class PreGameViewModel(application: Application) : AndroidViewModel(application) {
 
     private var totalWolfes = 0
+    private val totalCharacters = MutableLiveData(0)
+    val amountCharacters: LiveData<Int> get() = totalCharacters
+
+    private val totalPlayers = MutableLiveData(0)
+    val amountPlayers: LiveData<Int> get() = totalPlayers
+
     private val totalPers = MutableLiveData(0)
     val amountPers: LiveData<Int> get() = totalPers
     private var characters: ArrayList<Character>? = null
@@ -39,7 +45,7 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun invalidConfiguration(): Boolean {
-        return totalWolfes== 0 || totalWolfes > totalPers.value!!/2
+        return totalWolfes == 0 || totalWolfes > totalCharacters.value!! / 2
     }
 
     fun addToCharacterByPosition(bindingAdapterPosition: Int): Int {
@@ -47,7 +53,7 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
         if (!current.multipleAllowed && 1 == current.amount) {
             return current.amount
         }
-        totalPers.value = totalPers.value?.plus(1)
+        totalCharacters.value = totalCharacters.value?.plus(1)
         if (current.isWolf) {
             totalWolfes++
         }
@@ -59,7 +65,7 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
         if (0 >= current.amount) {
             return current.amount
         }
-        totalPers.value = totalPers.value?.minus(1)
+        totalCharacters.value = totalCharacters.value?.minus(1)
         if (current.isWolf) {
             totalWolfes--
         }
@@ -69,4 +75,20 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
     fun getNumberOfUnmatchedPlayers(): Int {
         TODO("Not yet implemented")
     }
+
+    fun getAmountOfPlayers(): Int {
+        return totalCharacters.value!!
+    }
+
+    /**
+     * @return false if this exact name is already part of the list
+     */
+    fun insertPlayer(nameText: String): Boolean {
+        return true
+    }
+
+    fun differenceCharactersCurrentPlayers(): Int {
+        return totalCharacters.value!!-totalPlayers.value!!
+    }
+
 }
