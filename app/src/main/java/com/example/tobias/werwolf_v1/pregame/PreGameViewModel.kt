@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.tobias.werwolf_v1.R
 import com.example.tobias.werwolf_v1.database.models.Character
+import com.example.tobias.werwolf_v1.database.models.WerwolfRepository
 
 class PreGameViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -80,15 +81,22 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
         return totalCharacters.value!!
     }
 
+    // todo einfügen und löschen einrichten
+
     /**
      * @return false if this exact name is already part of the list
      */
-    fun insertPlayer(nameText: String): Boolean {
+    fun insertPlayer(name: String): Boolean {
+        // todo check if exists
+        repository.insert(name);
         return true
     }
 
     fun differenceCharactersCurrentPlayers(): Int {
         return totalCharacters.value!!-totalPlayers.value!!
     }
-
+    private val repository: WerwolfRepository
+    init {
+        repository = WerwolfRepository(application)
+    }
 }
