@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.tobias.werwolf_v1.R
 import com.example.tobias.werwolf_v1.database.models.Character
+import com.example.tobias.werwolf_v1.database.models.Player
 import com.example.tobias.werwolf_v1.database.models.WerwolfRepository
 
 class PreGameViewModel(application: Application) : AndroidViewModel(application) {
@@ -88,8 +89,12 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
      */
     fun insertPlayer(name: String): Boolean {
         // todo check if exists
-        repository.insert(name);
+        repository.insert(name)
         return true
+    }
+
+    fun getPlayerList(): LiveData<List<Player>> {
+        return repository.allPlayers
     }
 
     fun differenceCharactersCurrentPlayers(): Int {

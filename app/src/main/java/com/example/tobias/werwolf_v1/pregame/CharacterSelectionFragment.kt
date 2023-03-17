@@ -47,7 +47,7 @@ class CharacterSelectionFragment : Fragment(), View.OnClickListener {
         // Inflate the layout for this fragment
         binding = FragmentCharacterSelectionBinding.inflate(layoutInflater)
         initHeader()
-        preGameViewModel = ViewModelProvider(requireActivity()).get(PreGameViewModel::class.java)
+        preGameViewModel = ViewModelProvider(requireActivity())[PreGameViewModel::class.java]
         vibrator =
             requireActivity().getSystemService(AppCompatActivity.VIBRATOR_SERVICE) as Vibrator
         binding.spielStarten.setOnClickListener(this)

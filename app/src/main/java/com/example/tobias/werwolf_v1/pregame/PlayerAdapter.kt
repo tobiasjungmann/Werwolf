@@ -11,15 +11,13 @@ import com.example.tobias.werwolf_v1.R
 import com.example.tobias.werwolf_v1.database.models.Player
 import com.example.tobias.werwolf_v1.databinding.MylistitemBinding
 
-class PlayerAdapter(
-    private val plantViewModel: PreGameViewModel//,
-    //private val players: List<Player>
-) : RecyclerView.Adapter<PlayerAdapter.PlayerHolder>() {
-    //   private var players: List<Player>=ArrayList()
-    private var players: List<Player> = ArrayList()
+class PlayerAdapter() : RecyclerView.Adapter<PlayerAdapter.PlayerHolder>() {
+
+    private var players: ArrayList<Player> = ArrayList()
 
 
-    fun setPlayerList(playerlist: List<Player>) {
+    fun updatePlayerList(playerlist: ArrayList<Player>) {
+        this.players.clear()
         this.players = playerlist
         notifyItemRangeInserted(0, playerlist.size)
     }

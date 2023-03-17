@@ -10,15 +10,13 @@ import com.example.tobias.werwolf_v1.database.models.WerwolfDatabase.Companion.g
 class WerwolfRepository(application: Application?) {
 
     private val werwolfDao: WerwolfDao
-    private val allPlayers: LiveData<List<Player>>
+     val allPlayers: LiveData<List<Player>>
 
     fun insert(name: String) {
         InsertNameThread(
             werwolfDao,
             name
         ).start()
-
-
     }
 
    private class InsertNameThread(private val werwolfDao: WerwolfDao,private val name: String) :

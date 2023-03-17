@@ -5,7 +5,9 @@ import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.*
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tobias.werwolf_v1.R
+import com.example.tobias.werwolf_v1.database.models.Player
 import com.example.tobias.werwolf_v1.databinding.FragmentAddPlayersBinding
 
 class AddPlayersFragment : Fragment(), View.OnClickListener {
@@ -15,25 +17,37 @@ class AddPlayersFragment : Fragment(), View.OnClickListener {
     private lateinit var binding: FragmentAddPlayersBinding
     private lateinit var preGameViewModel: PreGameViewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        binding = FragmentAddPlayersBinding.inflate(layoutInflater)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+               binding = FragmentAddPlayersBinding.inflate(layoutInflater)
         preGameViewModel = ViewModelProvider(requireActivity()).get(PreGameViewModel::class.java)
 
-        playerAdapter = PlayerAdapter(preGameViewModel)
+        playerAdapter = PlayerAdapter()
+        playerAdapter!!.updatePlayerList(arrayListOf())//emptyAList<Player>() as ArrayList<Player>)
         binding.listePers.adapter = playerAdapter
+        binding.listePers.layoutManager = LinearLayoutManager(context)
 
         binding.weiter.setOnClickListener(this)
+/*
+        preGameViewModel.amountPlayers.observe(requireActivity()) { players ->
 
-        preGameViewModel.amountPlayers.observe(this) { players ->
+        }*/
+
+        preGameViewModel.getPlayerList().observe(requireActivity()) { players ->
+            playerAdapter?.updatePlayerList(players as ArrayList<Player>)
             binding.anzahlPersoenenText.text =
-                "Personen: " + players + " von " + preGameViewModel.getAmountOfPlayers()
+                "Personen: " + players.size + " von " + preGameViewModel.getAmountOfPlayers()
             if (preGameViewModel.differenceCharactersCurrentPlayers() == 0) {
                 binding.weiter.setText(R.string.weiter)
                 binding.nameText.isClickable = false
             }
         }
+
+
+        return binding.root
     }
 
 
@@ -46,7 +60,7 @@ class AddPlayersFragment : Fragment(), View.OnClickListener {
                     .show()
             } else {
                 binding.nameText.setText("")
-                if (!preGameViewModel.insertPlayer(binding.nameText.text.toString())) {
+                if (!preGameViewModel.insertPlayer(name)) {
                     Toast.makeText(
                         requireContext(),
                         "Dieser Name ist schon vergeben",
