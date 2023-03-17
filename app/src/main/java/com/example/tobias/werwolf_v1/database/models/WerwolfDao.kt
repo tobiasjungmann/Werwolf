@@ -12,5 +12,5 @@ interface WerwolfDao {
 
 
     @Insert
-    fun insert(player: Player): List<Long>
+    fun insert(player: Player): Long
 }
