@@ -138,9 +138,13 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
 
     fun clickedCharacter(bindingAdapterPosition: Int) {
         currentPlayer.characterClass = availableCharacters[bindingAdapterPosition].id
-        availableCharacters[bindingAdapterPosition].amount--        // todo auf die echte liste anwenden
+        availableCharacters[bindingAdapterPosition].amount--
         repository.updatePlayer(currentPlayer)
-        prepareNextPlayerMatching()
+        if (_currentPlayerIndex.value == 1 || _currentPlayerIndex.value == 0) {
+            _currentPlayerIndex.value = 0
+        } else {
+            prepareNextPlayerMatching()
+        }
     }
 
     init {

@@ -1,5 +1,6 @@
 package com.example.tobias.werwolf_v1.pregame
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -7,9 +8,11 @@ import androidx.fragment.app.Fragment
 import android.widget.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.tobias.werwolf_v1.ListNight
 import com.example.tobias.werwolf_v1.R
 import com.example.tobias.werwolf_v1.database.models.Player
 import com.example.tobias.werwolf_v1.databinding.FragmentCardsPlayermatchingBinding
+import com.example.tobias.werwolf_v1.multipleDevices.PlayerConnectToHost
 import maes.tech.intentanim.CustomIntent
 
 
@@ -43,8 +46,9 @@ class CardsPlayerMatchingFragment : Fragment() {
         preGameViewModel.prepareNextPlayerMatching()
         preGameViewModel.currentPlayerIndex.observe(requireActivity()) { index ->
             if (index == 0) {
-                // todo change to next actifity
-                binding.persTxt.text = "fertig"
+                val intent = Intent(context, ListNight::class.java)
+                startActivity(intent)
+                CustomIntent.customType(context, "left-to-right")
             } else {
                 characterCardAdapter.updateCardsList(preGameViewModel.getCharactersForMatching())
                 binding.persTxt.text = preGameViewModel.getNextPlayerName()
