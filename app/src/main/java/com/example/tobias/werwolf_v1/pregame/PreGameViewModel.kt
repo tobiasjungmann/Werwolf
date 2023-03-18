@@ -12,20 +12,14 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class PreGameViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var totalWolfes = 0
+    private var totalWolfs = 0
     private val totalCharacters = MutableLiveData(0)
     val amountCharacters: LiveData<Int> get() = totalCharacters
 
-    //private val totalPlayers = MutableLiveData(0)
-    //val amountPlayers: LiveData<Int> get() = totalPlayers
-
     private val repository: WerwolfRepository
-    val amountPlayers = AtomicInteger()
+    private val amountPlayers = AtomicInteger()
 
-    private val totalPers = MutableLiveData(0)
-    val amountPers: LiveData<Int> get() = totalPers
     private var characters: ArrayList<Character>? = null
-    //private var gesamtPer = 0
 
     fun generateCharacters(): ArrayList<Character> {
         if (characters == null) {
@@ -51,7 +45,7 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun invalidConfiguration(): Boolean {
-        return totalWolfes == 0 || totalWolfes > totalCharacters.value!! / 2
+        return totalWolfs == 0 || totalWolfs > totalCharacters.value!! / 2
     }
 
     fun addToCharacterByPosition(bindingAdapterPosition: Int): Int {
@@ -61,7 +55,7 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
         }
         totalCharacters.value = totalCharacters.value?.plus(1)
         if (current.isWolf) {
-            totalWolfes++
+            totalWolfs++
         }
         return ++(current.amount)
     }
@@ -73,7 +67,7 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
         }
         totalCharacters.value = totalCharacters.value?.minus(1)
         if (current.isWolf) {
-            totalWolfes--
+            totalWolfs--
         }
         return --(current.amount)
     }
@@ -97,11 +91,9 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
         return true
     }
 
-    fun removePlayer(position: Int): Boolean {
-        // todo check if exists
-        //repository.insert(name)
-        amountPlayers.getAndDecrement()
-        return true
+    fun insertPlayer(player: Player) {
+        repository.insert(player)
+        amountPlayers.getAndIncrement()
     }
 
 
@@ -115,8 +107,8 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
 
     fun deletePlayer(player: Player) {
         repository.delete(player)
+        amountPlayers.getAndDecrement()
     }
-
 
     init {
         repository = WerwolfRepository(application)

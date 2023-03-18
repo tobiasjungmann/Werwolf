@@ -80,7 +80,7 @@ class AddPlayersFragment : Fragment(), View.OnClickListener {
                     .setAction(
                         "Revert"
                     ) {
-                        preGameViewModel.insertPlayer(lastDeleted.name)
+                        preGameViewModel.insertPlayer(lastDeleted)
                     }
                 snackbar.show()
             }

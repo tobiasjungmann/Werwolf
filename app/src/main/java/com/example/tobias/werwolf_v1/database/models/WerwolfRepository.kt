@@ -22,6 +22,13 @@ class WerwolfRepository(application: Application?) {
         ).start()
     }
 
+    fun insert(player: Player) {
+        InsertNameThreadPlayer(
+            werwolfDao,
+            player
+        ).start()
+    }
+
     fun delete(player: Player) {
         DeleteByIdThread(
             werwolfDao,
@@ -38,6 +45,17 @@ class WerwolfRepository(application: Application?) {
                Log.e(TAG, "run: add Player", null)
            }
        }
+    }
+
+    private class InsertNameThreadPlayer(private val werwolfDao: WerwolfDao,private val player: Player) :
+        Thread() {
+        override fun run() {
+            try {
+                werwolfDao.insert(player)
+            } catch (e: SQLiteConstraintException) {
+                Log.e(TAG, "run: add Player", null)
+            }
+        }
     }
 
     private class DeleteByIdThread(private val werwolfDao: WerwolfDao,private val player: Player) :
