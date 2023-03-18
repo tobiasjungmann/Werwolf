@@ -13,4 +13,7 @@ interface WerwolfDao {
 
     @Insert
     fun insert(player: Player): Long
+
+    @Query("SELECT COUNT(id) FROM player")
+    fun getCount(): Int
 }

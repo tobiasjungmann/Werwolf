@@ -12,6 +12,9 @@ class WerwolfRepository(application: Application?) {
     private val werwolfDao: WerwolfDao
      val allPlayers: LiveData<List<Player>>
 
+    fun getPlayerAmount(): Int {
+        return werwolfDao.getCount()
+    }
     fun insert(name: String) {
         InsertNameThread(
             werwolfDao,

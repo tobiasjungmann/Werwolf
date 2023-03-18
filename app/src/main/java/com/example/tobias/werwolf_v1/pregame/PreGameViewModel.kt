@@ -8,6 +8,7 @@ import com.example.tobias.werwolf_v1.R
 import com.example.tobias.werwolf_v1.database.models.Character
 import com.example.tobias.werwolf_v1.database.models.Player
 import com.example.tobias.werwolf_v1.database.models.WerwolfRepository
+import java.util.concurrent.atomic.AtomicInteger
 
 class PreGameViewModel(application: Application) : AndroidViewModel(application) {
 
@@ -15,8 +16,11 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
     private val totalCharacters = MutableLiveData(0)
     val amountCharacters: LiveData<Int> get() = totalCharacters
 
-    private val totalPlayers = MutableLiveData(0)
-    val amountPlayers: LiveData<Int> get() = totalPlayers
+    //private val totalPlayers = MutableLiveData(0)
+    //val amountPlayers: LiveData<Int> get() = totalPlayers
+
+    private val repository: WerwolfRepository
+    val amountPlayers = AtomicInteger()
 
     private val totalPers = MutableLiveData(0)
     val amountPers: LiveData<Int> get() = totalPers
@@ -82,7 +86,6 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
         return totalCharacters.value!!
     }
 
-    // todo einfügen und löschen einrichten
 
     /**
      * @return false if this exact name is already part of the list
@@ -90,18 +93,35 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
     fun insertPlayer(name: String): Boolean {
         // todo check if exists
         repository.insert(name)
+        amountPlayers.getAndIncrement()
         return true
     }
+
+    fun removePlayer(position: Int): Boolean {
+        // todo check if exists
+        //repository.insert(name)
+        amountPlayers.getAndDecrement()
+        return true
+    }
+
 
     fun getPlayerList(): LiveData<List<Player>> {
         return repository.allPlayers
     }
 
-    fun differenceCharactersCurrentPlayers(): Int {
-        return totalCharacters.value!!-totalPlayers.value!!
+    fun amountUnmatchedPlayers(): Int {
+        return totalCharacters.value!! - amountPlayers.get()// totalCharacters.value!!-totalPlayers.value!!
     }
-    private val repository: WerwolfRepository
+
+
     init {
         repository = WerwolfRepository(application)
+        val t = Thread {
+            val num: Int = repository.getPlayerAmount()
+            amountPlayers.set(num)
+        }
+        t.priority = 10
+        t.start()
+        t.join()
     }
 }

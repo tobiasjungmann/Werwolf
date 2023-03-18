@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tobias.werwolf_v1.R
@@ -22,7 +23,7 @@ class AddPlayersFragment : Fragment(), View.OnClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-               binding = FragmentAddPlayersBinding.inflate(layoutInflater)
+        binding = FragmentAddPlayersBinding.inflate(layoutInflater)
         preGameViewModel = ViewModelProvider(requireActivity()).get(PreGameViewModel::class.java)
 
         playerAdapter = PlayerAdapter()
@@ -31,18 +32,19 @@ class AddPlayersFragment : Fragment(), View.OnClickListener {
         binding.listePers.layoutManager = LinearLayoutManager(context)
 
         binding.weiter.setOnClickListener(this)
-/*
-        preGameViewModel.amountPlayers.observe(requireActivity()) { players ->
 
-        }*/
 
         preGameViewModel.getPlayerList().observe(requireActivity()) { players ->
             playerAdapter?.updatePlayerList(players as ArrayList<Player>)
             binding.anzahlPersoenenText.text =
                 "Personen: " + players.size + " von " + preGameViewModel.getAmountOfPlayers()
-            if (preGameViewModel.differenceCharactersCurrentPlayers() == 0) {
-                binding.weiter.setText(R.string.weiter)
+            if (players.size == preGameViewModel.getAmountOfPlayers()) {
+                prepareNextButton(true, R.string.weiter)
                 binding.nameText.isClickable = false
+            } else if (players.size > preGameViewModel.getAmountOfPlayers()) {
+                prepareNextButton(false, R.string.weiter)
+            }else{
+                prepareNextButton(true, R.string.person_einf_gen)
             }
         }
 
@@ -50,9 +52,24 @@ class AddPlayersFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
+    private fun prepareNextButton(clickable: Boolean, text: Int) {
+        binding.weiter.isClickable = clickable
+        binding.weiter.setText(text)
+        var buttoncolor = R.color.blue_unclickable
+        if (clickable) {
+            buttoncolor = R.color.blue
+        }
+        binding.weiter.background.setTint(
+            ContextCompat.getColor(
+                requireActivity(),
+                buttoncolor
+            )
+        )
+    }
+
 
     override fun onClick(v: View) {
-        val charactersMinusPlayers = preGameViewModel.differenceCharactersCurrentPlayers()
+        val charactersMinusPlayers = preGameViewModel.amountUnmatchedPlayers()
         if (charactersMinusPlayers > 0) {
             val name = binding.nameText.text.toString()
             if (name.isEmpty()) {
