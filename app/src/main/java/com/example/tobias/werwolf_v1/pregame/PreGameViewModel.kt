@@ -14,7 +14,11 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
 
     private lateinit var currentPlayer: Player
     private lateinit var availableCharacters: List<CharacterClass>
-    private var playersForMatching: MutableList<Player>?=null
+    private var playersForMatching: MutableList<Player>? = null
+
+    private val _currentPlayerIndex: MutableLiveData<Int> = MutableLiveData(-2)
+    val currentPlayerIndex: LiveData<Int> get() = _currentPlayerIndex
+
     private var totalWolfs = 0
     private val totalCharacters = MutableLiveData(0)
     val amountCharacters: LiveData<Int> get() = totalCharacters
@@ -109,14 +113,19 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
         amountPlayers.getAndDecrement()
     }
 
-    fun prepareNextPlayerMatching(){
-       availableCharacters= characterClasses?.filter { a -> a.amount>0 } ?: arrayListOf()
-        if (playersForMatching==null){
-            playersForMatching=repository.allPlayers.value?.toMutableList()
-        }else{
+    fun prepareNextPlayerMatching() {
+        // _curentindex anpassen
+
+        if (playersForMatching == null) {
+            availableCharacters = characterClasses?.filter { a -> a.amount > 0 } ?: arrayListOf()
+            playersForMatching = repository.allPlayers.value?.toMutableList()
+            _currentPlayerIndex.value = repository.allPlayers.value?.size
+        } else {
+            availableCharacters = availableCharacters.filter { a -> a.amount > 0 }
             playersForMatching!!.removeFirst()
+            _currentPlayerIndex.value = (_currentPlayerIndex.value ?: 0) - 1
         }
-        currentPlayer=playersForMatching!!.first()
+        currentPlayer = playersForMatching!!.first()
     }
 
     fun getCharactersForMatching(): List<CharacterClass> {
@@ -128,8 +137,10 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun clickedCharacter(bindingAdapterPosition: Int) {
-        currentPlayer.characterClass= availableCharacters[bindingAdapterPosition].id
+        currentPlayer.characterClass = availableCharacters[bindingAdapterPosition].id
+        availableCharacters[bindingAdapterPosition].amount--        // todo auf die echte liste anwenden
         repository.updatePlayer(currentPlayer)
+        prepareNextPlayerMatching()
     }
 
     init {

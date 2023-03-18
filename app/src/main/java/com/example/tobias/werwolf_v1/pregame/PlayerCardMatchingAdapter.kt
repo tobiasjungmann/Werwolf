@@ -43,7 +43,7 @@ private val preGameViewModel: PreGameViewModel) :
 
     class CardHolder(
         val binding: MylistitemBinding,
-        val preGameViewModel: PreGameViewModel
+        private val preGameViewModel: PreGameViewModel
     ) : RecyclerView.ViewHolder(binding.root) {
         init {
             binding.layoutcharakterRolle.setOnClickListener {

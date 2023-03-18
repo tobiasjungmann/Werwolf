@@ -8,6 +8,7 @@ import android.widget.*
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tobias.werwolf_v1.R
+import com.example.tobias.werwolf_v1.database.models.Player
 import com.example.tobias.werwolf_v1.databinding.FragmentCardsPlayermatchingBinding
 import maes.tech.intentanim.CustomIntent
 
@@ -33,20 +34,25 @@ class CardsPlayerMatchingFragment : Fragment() {
         binding = FragmentCardsPlayermatchingBinding.inflate(layoutInflater)
         preGameViewModel = ViewModelProvider(requireActivity()).get(PreGameViewModel::class.java)
 
-
-        getNextPlayer()
-        characterCardAdapter = PlayerCardMatchingAdapter(requireContext(),preGameViewModel)
-        characterCardAdapter.updateCardsList(preGameViewModel.getCharactersForMatching())       // todo everytime the rest was reloaded
+        characterCardAdapter = PlayerCardMatchingAdapter(requireContext(), preGameViewModel)
+     //   characterCardAdapter.updateCardsList(preGameViewModel.getCharactersForMatching())
         binding.rollen.layoutManager = LinearLayoutManager(context)
         binding.rollen.adapter = characterCardAdapter
 
 
-        return binding.root
-    }
-
-    private fun getNextPlayer() {
         preGameViewModel.prepareNextPlayerMatching()
-        binding.persTxt.text=preGameViewModel.getNextPlayerName()
+        preGameViewModel.currentPlayerIndex.observe(requireActivity()) { index ->
+            if (index == 0) {
+                // todo change to next actifity
+                binding.persTxt.text = "fertig"
+            } else {
+                characterCardAdapter.updateCardsList(preGameViewModel.getCharactersForMatching())
+                binding.persTxt.text = preGameViewModel.getNextPlayerName()
+            }
+        }
+
+
+        return binding.root
     }
 }
 
