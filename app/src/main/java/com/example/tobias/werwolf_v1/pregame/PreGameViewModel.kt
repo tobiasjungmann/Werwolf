@@ -113,6 +113,10 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
         return totalCharacters.value!! - amountPlayers.get()// totalCharacters.value!!-totalPlayers.value!!
     }
 
+    fun deletePlayer(player: Player) {
+        repository.delete(player)
+    }
+
 
     init {
         repository = WerwolfRepository(application)

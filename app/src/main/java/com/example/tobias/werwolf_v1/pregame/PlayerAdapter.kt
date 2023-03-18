@@ -19,7 +19,7 @@ class PlayerAdapter() : RecyclerView.Adapter<PlayerAdapter.PlayerHolder>() {
     fun updatePlayerList(playerlist: ArrayList<Player>) {
         this.players.clear()
         this.players = playerlist
-        notifyItemRangeInserted(0, playerlist.size)
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlayerHolder {
@@ -34,6 +34,10 @@ class PlayerAdapter() : RecyclerView.Adapter<PlayerAdapter.PlayerHolder>() {
 
     override fun getItemCount(): Int {
         return players.size
+    }
+
+    fun getPlayerAt(bindingAdapterPosition: Int): Player {
+        return players.get(bindingAdapterPosition)
     }
 
     class PlayerHolder(

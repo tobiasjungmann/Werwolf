@@ -6,10 +6,13 @@ import androidx.fragment.app.Fragment
 import android.widget.*
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.tobias.werwolf_v1.R
 import com.example.tobias.werwolf_v1.database.models.Player
 import com.example.tobias.werwolf_v1.databinding.FragmentAddPlayersBinding
+import com.google.android.material.snackbar.Snackbar
 
 class AddPlayersFragment : Fragment(), View.OnClickListener {
 
@@ -27,7 +30,8 @@ class AddPlayersFragment : Fragment(), View.OnClickListener {
         preGameViewModel = ViewModelProvider(requireActivity()).get(PreGameViewModel::class.java)
 
         playerAdapter = PlayerAdapter()
-        playerAdapter!!.updatePlayerList(arrayListOf())//emptyAList<Player>() as ArrayList<Player>)
+        playerAdapter!!.updatePlayerList(arrayListOf())
+        initItemTouchHelper(playerAdapter!!)
         binding.listePers.adapter = playerAdapter
         binding.listePers.layoutManager = LinearLayoutManager(context)
 
@@ -47,11 +51,47 @@ class AddPlayersFragment : Fragment(), View.OnClickListener {
                 prepareNextButton(true, R.string.person_einf_gen)
             }
         }
-
-
         return binding.root
     }
 
+    private fun initItemTouchHelper(adapter: PlayerAdapter) {
+        ItemTouchHelper(object : ItemTouchHelper.SimpleCallback(
+            0,
+            ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+        ) {
+            override fun onMove(
+                recyclerView: RecyclerView,
+                viewHolder: RecyclerView.ViewHolder,
+                target: RecyclerView.ViewHolder
+            ): Boolean {
+                return false
+            }
+
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                val lastDeleted = adapter.getPlayerAt(viewHolder.bindingAdapterPosition)
+                preGameViewModel.deletePlayer(lastDeleted)
+
+                val snackbar = Snackbar
+                    .make(
+                        binding.addplayerlayout,
+                        "Player deleted",
+                        Snackbar.LENGTH_LONG
+                    )
+                    .setAction(
+                        "Revert"
+                    ) {
+                        preGameViewModel.insertPlayer(lastDeleted.name)
+                    }
+                snackbar.show()
+            }
+        }).attachToRecyclerView(binding.listePers)
+    }
+
+    /*
+    Nächster schritt:
+    todo remove players
+    update recycler adapter successfully
+     */
     private fun prepareNextButton(clickable: Boolean, text: Int) {
         binding.weiter.isClickable = clickable
         binding.weiter.setText(text)

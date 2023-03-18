@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background_gray">
+    android:background="@color/background_gray"
+    android:id="@+id/addplayerlayout">
 
     <LinearLayout
         android:id="@+id/layoutModusPerson"
@@ -11,7 +12,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/button_rounded_corners"
+        android:background="@drawable/leiste_werwolf"
         android:backgroundTint="@color/green"
         android:orientation="vertical">
 
