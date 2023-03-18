@@ -7,4 +7,5 @@ import androidx.room.PrimaryKey
 class Player(val name:String) {
     @PrimaryKey(autoGenerate = true)
     var id = 0
+    var characterClass =-1
 }

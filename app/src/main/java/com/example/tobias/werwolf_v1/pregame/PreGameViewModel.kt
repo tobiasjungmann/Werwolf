@@ -12,6 +12,9 @@ import java.util.concurrent.atomic.AtomicInteger
 
 class PreGameViewModel(application: Application) : AndroidViewModel(application) {
 
+    private lateinit var currentPlayer: Player
+    private lateinit var availableCharacters: List<CharacterClass>
+    private var playersForMatching: MutableList<Player>?=null
     private var totalWolfs = 0
     private val totalCharacters = MutableLiveData(0)
     val amountCharacters: LiveData<Int> get() = totalCharacters
@@ -72,10 +75,6 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
         return --(current.amount)
     }
 
-    fun getNumberOfUnmatchedPlayers(): Int {
-        TODO("Not yet implemented")
-    }
-
     fun getAmountOfPlayers(): Int {
         return totalCharacters.value!!
     }
@@ -110,8 +109,27 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
         amountPlayers.getAndDecrement()
     }
 
+    fun prepareNextPlayerMatching(){
+       availableCharacters= characterClasses?.filter { a -> a.amount>0 } ?: arrayListOf()
+        if (playersForMatching==null){
+            playersForMatching=repository.allPlayers.value?.toMutableList()
+        }else{
+            playersForMatching!!.removeFirst()
+        }
+        currentPlayer=playersForMatching!!.first()
+    }
+
     fun getCharactersForMatching(): List<CharacterClass> {
-        return characterClasses?.filter { a -> a.amount>0 } ?: arrayListOf()
+        return availableCharacters
+    }
+
+    fun getNextPlayerName(): String {
+        return currentPlayer.name
+    }
+
+    fun clickedCharacter(bindingAdapterPosition: Int) {
+        currentPlayer.characterClass= availableCharacters[bindingAdapterPosition].id
+        repository.updatePlayer(currentPlayer)
     }
 
     init {

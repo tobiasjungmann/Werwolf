@@ -36,6 +36,13 @@ class WerwolfRepository(application: Application?) {
         ).start()
     }
 
+    fun updatePlayer(player: Player) {
+        UpdatePlayerThread(
+            werwolfDao,
+            player
+        ).start()
+    }
+
     private class InsertNameThread(private val werwolfDao: WerwolfDao,private val name: String) :
        Thread() {
        override fun run() {
@@ -54,6 +61,17 @@ class WerwolfRepository(application: Application?) {
                 werwolfDao.insert(player)
             } catch (e: SQLiteConstraintException) {
                 Log.e(TAG, "run: add Player", null)
+            }
+        }
+    }
+
+    private class UpdatePlayerThread(private val werwolfDao: WerwolfDao,private val player: Player) :
+        Thread() {
+        override fun run() {
+            try {
+                werwolfDao.update(player)
+            } catch (e: SQLiteConstraintException) {
+                Log.e(TAG, "run: update Player", null)
             }
         }
     }
