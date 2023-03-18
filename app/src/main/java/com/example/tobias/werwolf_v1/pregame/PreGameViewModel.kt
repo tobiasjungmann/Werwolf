@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.example.tobias.werwolf_v1.R
-import com.example.tobias.werwolf_v1.database.models.Character
+import com.example.tobias.werwolf_v1.database.models.CharacterClass
 import com.example.tobias.werwolf_v1.database.models.Player
 import com.example.tobias.werwolf_v1.database.models.WerwolfRepository
 import java.util.concurrent.atomic.AtomicInteger
@@ -19,29 +19,29 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
     private val repository: WerwolfRepository
     private val amountPlayers = AtomicInteger()
 
-    private var characters: ArrayList<Character>? = null
+    private var characterClasses: ArrayList<CharacterClass>? = null
 
-    fun generateCharacters(): ArrayList<Character> {
-        if (characters == null) {
-            characters = arrayListOf(
-                Character("Werwolf", "blabla", R.color.werwolf, true, true),
-                Character("Bürger", "blabla", R.color.citizen, true, false),
-                Character("Amor", "blabla", R.color.amor, false, false),
-                Character("Hexe", "blabla", R.color.witch, false, false),
-                Character("Wächter", "blabla", R.color.guradian, false, false),
-                Character("Mädchen", "blabla", R.color.girl, false, false),
-                Character("Seher", "blabla", R.color.seher, false, false),
-                Character("Dieb", "blabla", R.color.thief, false, false),
-                Character("Jäger", "blabla", R.color.hunter, false, false),
-                Character("Ritter", "blabla", R.color.knight, false, false),
-                Character("Flötenspieler", "blabla", R.color.flute, false, false),
-                Character("Freunde", "blabla", R.color.friends, true, false),
-                Character("Weißer Werwolf", "blabla", R.color.wwolf, false, true),
-                Character("Junges", "blabla", R.color.wchild, false, true),
-                Character("Urwolf", "blabla", R.color.urwolf, false, true)
+    fun generateCharacters(): ArrayList<CharacterClass> {
+        if (characterClasses == null) {
+            characterClasses = arrayListOf(
+                CharacterClass("Werwolf", "blabla", R.color.werwolf, true, true),
+                CharacterClass("Bürger", "blabla", R.color.citizen, true, false),
+                CharacterClass("Amor", "blabla", R.color.amor, false, false),
+                CharacterClass("Hexe", "blabla", R.color.witch, false, false),
+                CharacterClass("Wächter", "blabla", R.color.guradian, false, false),
+                CharacterClass("Mädchen", "blabla", R.color.girl, false, false),
+                CharacterClass("Seher", "blabla", R.color.seher, false, false),
+                CharacterClass("Dieb", "blabla", R.color.thief, false, false),
+                CharacterClass("Jäger", "blabla", R.color.hunter, false, false),
+                CharacterClass("Ritter", "blabla", R.color.knight, false, false),
+                CharacterClass("Flötenspieler", "blabla", R.color.flute, false, false),
+                CharacterClass("Freunde", "blabla", R.color.friends, true, false),
+                CharacterClass("Weißer Werwolf", "blabla", R.color.wwolf, false, true),
+                CharacterClass("Junges", "blabla", R.color.wchild, false, true),
+                CharacterClass("Urwolf", "blabla", R.color.urwolf, false, true)
             )
         }
-        return characters!!
+        return characterClasses!!
     }
 
     fun invalidConfiguration(): Boolean {
@@ -49,7 +49,7 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun addToCharacterByPosition(bindingAdapterPosition: Int): Int {
-        val current = characters!![bindingAdapterPosition]
+        val current = characterClasses!![bindingAdapterPosition]
         if (!current.multipleAllowed && 1 == current.amount) {
             return current.amount
         }
@@ -61,7 +61,7 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
     }
 
     fun removeCharacterByPosition(bindingAdapterPosition: Int): Int {
-        val current = characters!![bindingAdapterPosition]
+        val current = characterClasses!![bindingAdapterPosition]
         if (0 >= current.amount) {
             return current.amount
         }
@@ -108,6 +108,10 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
     fun deletePlayer(player: Player) {
         repository.delete(player)
         amountPlayers.getAndDecrement()
+    }
+
+    fun getCharactersForMatching(): List<CharacterClass> {
+        return characterClasses?.filter { a -> a.amount>0 } ?: arrayListOf()
     }
 
     init {

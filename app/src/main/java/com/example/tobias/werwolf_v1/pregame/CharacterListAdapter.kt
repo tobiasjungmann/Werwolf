@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tobias.werwolf_v1.database.models.Character
+import com.example.tobias.werwolf_v1.database.models.CharacterClass
 import com.example.tobias.werwolf_v1.databinding.ItemCharacterSelectionBinding
 
 
 class CharacterListAdapter(
-    private val characters: List<Character>,
+    private val characterClasses: List<CharacterClass>,
     private val preGameViewModel: PreGameViewModel
 ) :
     RecyclerView.Adapter<CharacterListAdapter.CharacterHolder>() {
@@ -27,12 +27,12 @@ class CharacterListAdapter(
     }
 
     override fun onBindViewHolder(holder: CharacterHolder, position: Int) {
-        val currentItem = characters[position]
+        val currentItem = characterClasses[position]
         holder.setColor(currentItem.color,currentItem.name)
     }
 
     override fun getItemCount(): Int {
-        return characters.size
+        return characterClasses.size
     }
 
 

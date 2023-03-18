@@ -42,9 +42,5 @@ class PlayerAdapter() : RecyclerView.Adapter<PlayerAdapter.PlayerHolder>() {
 
     class PlayerHolder(
         val binding: MylistitemBinding
-    ) : RecyclerView.ViewHolder(binding.root) {
-        init {
-// todo remove on swipe
-        }
-    }
+    ) : RecyclerView.ViewHolder(binding.root)
 }
