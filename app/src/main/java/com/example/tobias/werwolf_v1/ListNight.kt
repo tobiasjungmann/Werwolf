@@ -11,154 +11,35 @@ import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
 import com.example.tobias.werwolf_v1.database.models.DatabaseHelper
+import com.example.tobias.werwolf_v1.databinding.ActivityManualBinding
 import com.example.tobias.werwolf_v1.databinding.ActivityNightlistBinding
+import com.example.tobias.werwolf_v1.pregame.PreGameViewModel
 
 class ListNight : AppCompatActivity(), View.OnClickListener {
-  //  private var description: TextView? = null
-  //  private var personen: ListView? = null
 
-    //  private ArrayList<String> arrayList;
-    private var customAdapter: NightListAdapter? = null
+    private var nightListAdapter: NightListAdapter? = null
+    private lateinit var binding: ActivityNightlistBinding
+    private lateinit var nightListViewModel: NightListViewModel
+
+    //todo fixme remove
     private var mDatabaseHelper: DatabaseHelper? = null
     private var data: Cursor? = null
-   // private var textSpielstand: TextView? = null
-   // private var layoutSpielstand: LinearLayout? = null
-  //  private var weiterNacht: Button? = null
-    private var anzahlAmor = 0
-    private var anzahlWerwolf = 0
-    private var anzahlHexe = 0
-    private var anzahlDieb = 0
-    private var anzahlSeher = 0
-    private var anzahlJunges = 0
-    private var anzahlJaeger = 0
-    private var anzahlBuerger = 0
-    private var anzahlWaechter = 0
-    private var anzahlWeisserWerwolf = 0
-    private var anzahlMaedchen = 0
-    private var anzahlFloetenspieler = 0
-    private var anzahlUrwolf = 0
-    private var anzahlRitter = 0
-    private var anzahlFreunde = 0
-    private var liebenderEinsID = 0
-    private var liebenderZweiID = 0
-    private var schlafplatzDiebID = 0
-    private var schlafplatzWaechterID = 0
-    private var vorbildID = 0
-    private var werwolfOpferID = 0
-    private var weisserWerwolfOpferID = 0
-    private var hexeOpferID = 0
-    private var urwolfVeto = 0
-    private var buergerOpfer = 0
-    private var tot: String? = null
-    private var liebespaarEntdeckt = false
-    private var ritterletzteRundeGetoetet = false
-    private var CharakterpositionErstInkementieren = false
-    private var listeAuswahlGenuegend = 0
-    private var verzaubertAktuell = 0
-    private var verzaubertCharakter: String? = null
-    private var verzaubertName: String? = null
-    private var charakterPosition = 0
-    private var wwletzteRundeAktiv = false
-    private var langerText = false
-
-    //für Hexe
-  /*  private var opferRettenHexe: CheckBox? = null
-    private var personToetenHexe: CheckBox? = null
-    private var textViewOpferRetten: TextView? = null
-    private var textViewPersonToeten: TextView? = null
-    private var layoutHexeNacht: LinearLayout? = null
-    private var rettenLayoutHexe: LinearLayout? = null
-    private var toetenLayoutHexe: LinearLayout? = null*/
-    private var trankLebenEinsetzbar = false
-    private var trankTodEinsetzbar = false
-    private var hexeToetenGedrueckt = false
-    private var hexeRettenGedrueckt = false
-    private var werwolfOpferIDBackupHexe = -1
-
-    //Urwolf
-   // private var layoutUrwolf: LinearLayout? = null
-   // private var checkboxUrwolfVeto: CheckBox? = null
-    private var werwolfDurchUrwolfID = 0
-
-    //Jaeger
-    private var charakterPositionJaegerBackup = 0
-    private var jaegerOpfer = 0
-    private var jaegerAktiv = false
-
-    //Ritter
-    private var ritterAktiv = false
-    private var ritterOpfer = 0
-    private var nameRitterOpfer: String? = null
-    private var charakterRitterOpfer: String? = null
-
-
-    private lateinit var binding: ActivityNightlistBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNightlistBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        anzahlAmor = intent.extras!!.getInt("anzahlAmor")
-        anzahlBuerger = intent.extras!!.getInt("anzahlBuerger")
-        anzahlWaechter = intent.extras!!.getInt("anzahlWaechter")
-        anzahlDieb = intent.extras!!.getInt("anzahlDieb")
-        anzahlHexe = intent.extras!!.getInt("anzahlHexe")
-        anzahlJaeger = intent.extras!!.getInt("anzahlJaeger")
-        anzahlJunges = intent.extras!!.getInt("anzahlJunges")
-        anzahlSeher = intent.extras!!.getInt("anzahlSeher")
-        anzahlWerwolf = intent.extras!!.getInt("anzahlWerwolf")
-        anzahlWeisserWerwolf = intent.extras!!.getInt("anzahlWeisserWerwolf")
-        anzahlRitter = intent.extras!!.getInt("anzahlRitter")
-        anzahlFloetenspieler = intent.extras!!.getInt("anzahlFloetenspieler")
-        anzahlFreunde = intent.extras!!.getInt("anzahlFreunde")
-        anzahlMaedchen = intent.extras!!.getInt("anzahlMaedchen")
-        anzahlUrwolf = intent.extras!!.getInt("anzahlUrwolf")
-        
-        trankLebenEinsetzbar = true
-        trankTodEinsetzbar = true
-        liebenderEinsID = -1
-        liebenderZweiID = -1
-        schlafplatzDiebID = -1
-        schlafplatzWaechterID = -1
-        vorbildID = -1
-        werwolfOpferID = -1
-        weisserWerwolfOpferID = -1
-        hexeOpferID = -1
-        buergerOpfer = -1
-        liebespaarEntdeckt = false
-        ritterletzteRundeGetoetet = false
-        listeAuswahlGenuegend = 0
-        CharakterpositionErstInkementieren = false
-        verzaubertAktuell = -1
-        verzaubertCharakter = ""
-        verzaubertName = ""
-        wwletzteRundeAktiv = true
-        langerText = false
-        charakterPosition = 0
-        tot = ""
+        nightListViewModel =
+            ViewModelProvider(requireActivity()).get(NightListViewModel::class.java)
 
-
-        //Leiste oben
-      //  textSpielstand = findViewById(R.id.textSpielstand)
-      //  layoutSpielstand = findViewById(R.id.layoutSpielstand)
-
-        
         binding.weiterNacht.setOnClickListener(this@ListNight)
-        //description = findViewById(R.id.description)
         binding.description.setOnClickListener(this@ListNight)
-        //personen = findViewById(R.id.personen)
         binding.personen.visibility = View.INVISIBLE
 
 
-        //Hexe
-     /*   opferRettenHexe = findViewById(R.id.opferRettenHexe)
-        personToetenHexe = findViewById(R.id.personToetenHexe)
-        textViewOpferRetten = findViewById(R.id.textViewOpferRetten)
-        textViewPersonToeten = findViewById(R.id.textViewPersonToeten)
-        layoutHexeNacht = findViewById(R.id.layoutHexeNacht)
-        rettenLayoutHexe = findViewById(R.id.layoutRettenHexe)
-        toetenLayoutHexe = findViewById(R.id.toetenLayoutHexe)*/
+        //Witch
         binding.opferRettenHexe.setOnClickListener(this)
         binding.personToetenHexe.setOnClickListener(this)
         binding.textViewOpferRetten.setOnClickListener(this)
@@ -166,195 +47,27 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
 
 
         //Urwolf
-      //  layoutUrwolf = findViewById(R.id.layoutUrwolf)
-       // val textViewUrwolfVeto = findViewById<TextView>(R.id.textViewUrwolfVeto)
-        //checkboxUrwolfVeto = findViewById(R.id.checkboxUrwolfVeto)
         binding.textViewUrwolfVeto.setOnClickListener(this)
-        //checkboxUrwolfVeto?.setOnClickListener(this)
-        urwolfVeto = if (anzahlUrwolf > 0) 0 else -1
-        werwolfDurchUrwolfID = -1
 
-        //Jaeger
-        jaegerAktiv = false
-
-        //Ritter
-        ritterAktiv = false
-        ritterOpfer = -1
-        nameRitterOpfer = ""
-        charakterRitterOpfer = ""
 
         //Liste Initialisieren
         mDatabaseHelper = DatabaseHelper(this)
         data = mDatabaseHelper!!.data
 
         // arrayList = new ArrayList<String>();
-        customAdapter = NightListAdapter(data!!)
-        binding.personen.adapter = customAdapter
+        nightListAdapter = NightListAdapter(data!!)
+        binding.personen.adapter = nightListAdapter
         binding.personen.onItemClickListener = OnItemClickListener { parent, view, position, id ->
+            nightListViewmodel.handleClickAtPosition(position)
+            binding.weiterNacht.isClickable = true
+            binding.weiterNacht.background?.setTint(
+                ContextCompat.getColor(
+                    context,
+                    R.color.blue
+                )
+            )
+            nightListAdapter.notifyDataSetChanged()
 
-            //Hier kmmt eine Möglichkeit zum Löschen eines Eintrages
-            var itemID = -1
-            data?.moveToPosition(position)
-            val name = data?.getString(1)
-            val charakter = data?.getString(2)
-            val hilfedata = mDatabaseHelper!!.getItemID(name?:"invalid")
-            while (hilfedata.moveToNext()) {
-                itemID = hilfedata.getInt(0)
-            }
-            if (itemID > -1) {
-                when (charakterPosition) {
-                    0 -> if (listeAuswahlGenuegend == 0) {
-                        if (liebenderEinsID == -1) {
-                            liebenderEinsID = itemID
-                        } else {
-                            liebenderZweiID = itemID
-                            CharakterpositionErstInkementieren = true
-                            binding.weiterNacht.isClickable = true
-                            binding.weiterNacht.background?.setTint(
-                                ContextCompat.getColor(
-                                    this,
-                                    R.color.blue
-                                )
-                            )
-                            listeAuswahlGenuegend = 1
-                        }
-                    } else {
-                        if (listeAuswahlGenuegend % 2 == 1) {
-                            if (itemID != liebenderZweiID) {
-                                liebenderEinsID = itemID
-                                customAdapter!!.notifyDataSetChanged()
-                                listeAuswahlGenuegend++
-                            }
-                        } else {
-                            if (itemID != liebenderEinsID) {
-                                liebenderZweiID = itemID
-                                customAdapter!!.notifyDataSetChanged()
-                                listeAuswahlGenuegend++
-                            }
-                        }
-                    }
-                    2 -> {
-                        schlafplatzDiebID = itemID
-                        CharakterpositionErstInkementieren = true
-                        binding.weiterNacht.isClickable = true
-                        binding.weiterNacht.background?.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.blue
-                            )
-                        )
-                        binding.weiterNacht.background?.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.blue
-                            )
-                        )
-                    }
-                    3 -> {
-                        schlafplatzWaechterID = itemID
-                        CharakterpositionErstInkementieren = true
-                        binding.weiterNacht.isClickable = true
-                        binding.weiterNacht.background?.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.blue
-                            )
-                        )
-                    }
-                    4 -> {
-                        vorbildID = itemID
-                        CharakterpositionErstInkementieren = true
-                        binding.weiterNacht.isClickable = true
-                        binding.weiterNacht.background?.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.blue
-                            )
-                        )
-                    }
-                    6 -> {
-                        verzaubertAktuell = itemID
-                        verzaubertCharakter = charakter
-                        verzaubertName = name
-                        CharakterpositionErstInkementieren = true
-                        binding.weiterNacht.isClickable = true
-                        binding.weiterNacht.background?.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.blue
-                            )
-                        )
-                    }
-                    7 -> {
-                        werwolfOpferID = itemID
-                        CharakterpositionErstInkementieren = true
-                        binding.weiterNacht.isClickable = true
-                        binding.weiterNacht.background?.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.blue
-                            )
-                        )
-                    }
-                    8 -> {
-                        weisserWerwolfOpferID = itemID
-                        CharakterpositionErstInkementieren = true
-                        binding.weiterNacht.isClickable = true
-                        binding.weiterNacht.background?.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.blue
-                            )
-                        )
-                    }
-                    10 -> {
-                        hexeOpferID = itemID
-                        CharakterpositionErstInkementieren = true
-                        binding.weiterNacht.isClickable = true
-                        binding.weiterNacht.background?.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.blue
-                            )
-                        )
-                    }
-                    12 -> {
-                        buergerOpfer = itemID
-                        CharakterpositionErstInkementieren = true
-                        binding.weiterNacht.isClickable = true
-                        binding.weiterNacht.background?.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.blue
-                            )
-                        )
-                    }
-                    20 -> {
-                        jaegerOpfer = itemID
-                        binding.weiterNacht.isClickable = true
-                        binding.weiterNacht.background?.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.blue
-                            )
-                        )
-                    }
-                    21 -> {
-                        ritterOpfer = itemID
-                        nameRitterOpfer = name
-                        charakterRitterOpfer = charakter
-                        //ritterDialogToeten();
-                        binding.weiterNacht.isClickable = true
-                        binding.weiterNacht.background?.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.blue
-                            )
-                        )
-                    }
-                }
-                customAdapter!!.notifyDataSetChanged()
-            }
         }
     }
 
@@ -401,7 +114,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         R.color.blue_unclickable
                     )
                 )
-                customAdapter!!.notifyDataSetChanged()
+                nightListAdapter.notifyDataSetChanged()
                 binding.personen.visibility = View.VISIBLE
                 anzahlAmor = 0
                 anzahlBuerger++
@@ -444,16 +157,17 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     binding.description.text =
                         "Jetzt erwacht der Dieb und sucht sich eine Person aus, bei der er oder sie die Nacht verbringen möchten. - Er zeigt auf diese Person und schläft danach wieder ein."
                 } else {
-                    binding.description.text = "Jetzt erwacht der Dieb und sucht sich eine Person aus..."
+                    binding.description.text =
+                        "Jetzt erwacht der Dieb und sucht sich eine Person aus..."
                 }
                 binding.weiterNacht.isClickable = false
                 binding.weiterNacht.background.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.blue_unclickable
-                            )
-                        )
-                customAdapter!!.notifyDataSetChanged()
+                    ContextCompat.getColor(
+                        this,
+                        R.color.blue_unclickable
+                    )
+                )
+                nightListAdapter.notifyDataSetChanged()
                 binding.personen.visibility = View.VISIBLE
             } else {
                 charakterPosition++
@@ -476,12 +190,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 }
                 binding.weiterNacht.isClickable = false
                 binding.weiterNacht.background.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.blue_unclickable
-                            )
-                        )
-                customAdapter!!.notifyDataSetChanged()
+                    ContextCompat.getColor(
+                        this,
+                        R.color.blue_unclickable
+                    )
+                )
+                nightListAdapter.notifyDataSetChanged()
                 binding.personen.visibility = View.VISIBLE
             } else {
                 charakterPosition++
@@ -506,12 +220,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 anzahlJunges = 0
                 binding.weiterNacht.isClickable = false
                 binding.weiterNacht.background.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.blue_unclickable
-                            )
-                        )
-                customAdapter!!.notifyDataSetChanged()
+                    ContextCompat.getColor(
+                        this,
+                        R.color.blue_unclickable
+                    )
+                )
+                nightListAdapter.notifyDataSetChanged()
                 binding.personen.visibility = View.VISIBLE
             } else {
                 charakterPosition++
@@ -555,12 +269,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 }
                 binding.weiterNacht.isClickable = false
                 binding.weiterNacht.background.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.blue_unclickable
-                            )
-                        )
-                customAdapter!!.notifyDataSetChanged()
+                    ContextCompat.getColor(
+                        this,
+                        R.color.blue_unclickable
+                    )
+                )
+                nightListAdapter.notifyDataSetChanged()
                 binding.personen.visibility = View.VISIBLE
             } else {
                 charakterPosition++
@@ -586,7 +300,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                             R.color.blue_unclickable
                         )
                     )
-                    customAdapter!!.notifyDataSetChanged()
+                    nightListAdapter.notifyDataSetChanged()
                     binding.personen.visibility = View.VISIBLE
                 } else {
                     binding.description.text = "Fehler: Es sind keine Werwölfe mehr im Spiel!"
@@ -607,12 +321,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 }
                 binding.weiterNacht.isClickable = false
                 binding.weiterNacht.background.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.blue_unclickable
-                            )
-                        )
-                customAdapter!!.notifyDataSetChanged()
+                    ContextCompat.getColor(
+                        this,
+                        R.color.blue_unclickable
+                    )
+                )
+                nightListAdapter.notifyDataSetChanged()
                 binding.personen.visibility = View.VISIBLE
                 wwletzteRundeAktiv = true
             } else {
@@ -757,31 +471,34 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 //todo: Möglichkeit keinen zu töten, weiter immer klickbar, aber dann dialog der nachfrägt
                 binding.weiterNacht.isClickable = false
                 binding.weiterNacht.background.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.blue_unclickable
-                            )
-                        )
-                customAdapter!!.notifyDataSetChanged()
+                    ContextCompat.getColor(
+                        this,
+                        R.color.blue_unclickable
+                    )
+                )
+                nightListAdapter.notifyDataSetChanged()
                 binding.personen.visibility = View.VISIBLE
 
 
                 //was macht der folgende Abschnitt????
                 if (verzaubertAktuell != -1) {
                     mDatabaseHelper!!.deleteName("" + verzaubertAktuell)
-                    mDatabaseHelper!!.addVerzaubert(verzaubertName?:"Invalid", verzaubertCharakter)
+                    mDatabaseHelper!!.addVerzaubert(
+                        verzaubertName ?: "Invalid",
+                        verzaubertCharakter
+                    )
                     data = mDatabaseHelper!!.data
                     if (verzaubertAktuell == vorbildID) {
                         data?.moveToFirst()
                         var vorbildGefunden = false
                         if (data?.getString(1)?.compareTo(verzaubertName!!) == 0) {
                             vorbildGefunden = true
-                            vorbildID = data?.getInt(0)?:-1
+                            vorbildID = data?.getInt(0) ?: -1
                         }
                         while (data?.moveToNext() == true && !vorbildGefunden) {
                             if (data?.getString(1)?.compareTo(verzaubertName!!) == 0) {
                                 vorbildGefunden = true
-                                vorbildID = data?.getInt(0)?:-1
+                                vorbildID = data?.getInt(0) ?: -1
                             }
                         }
                     }
@@ -790,12 +507,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         var vorbildGefunden = false
                         if (data?.getString(1)?.compareTo(verzaubertName!!) == 0) {
                             vorbildGefunden = true
-                            liebenderEinsID = data?.getInt(0)?:-1
+                            liebenderEinsID = data?.getInt(0) ?: -1
                         }
                         while (data?.moveToNext() == true && !vorbildGefunden) {
                             if (data?.getString(1)?.compareTo(verzaubertName!!) == 0) {
                                 vorbildGefunden = true
-                                liebenderEinsID = data?.getInt(0)?:-1
+                                liebenderEinsID = data?.getInt(0) ?: -1
                             }
                         }
                     }
@@ -804,12 +521,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         var vorbildGefunden = false
                         if (data?.getString(1)?.compareTo(verzaubertName!!) == 0) {
                             vorbildGefunden = true
-                            liebenderZweiID = data?.getInt(0)?:-1
+                            liebenderZweiID = data?.getInt(0) ?: -1
                         }
-                        while (data?.moveToNext() ==true&& !vorbildGefunden) {
+                        while (data?.moveToNext() == true && !vorbildGefunden) {
                             if (data?.getString(1)?.compareTo(verzaubertName!!) == 0) {
                                 vorbildGefunden = true
-                                liebenderZweiID = data?.getInt(0)?:-1
+                                liebenderZweiID = data?.getInt(0) ?: -1
                             }
                         }
                     }
@@ -1169,7 +886,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
 
         //Liebespar lebt; nur noch drei persoenn übrig
         var verliebtGefundenAnzahl = 1
-        while (data?.moveToNext()==true) {
+        while (data?.moveToNext() == true) {
             verliebtGefundenAnzahl++
         }
         if (liebenderEinsID != -1) {
@@ -1199,7 +916,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
         if (data?.getString(4)?.compareTo("ja") != 0) {
             nichtverzaubertGefunden = true
         }
-        while (data?.moveToNext()==true && !nichtverzaubertGefunden) {
+        while (data?.moveToNext() == true && !nichtverzaubertGefunden) {
             if (data?.getString(4)?.compareTo("ja") != 0) {
                 nichtverzaubertGefunden = true
             }
@@ -1394,12 +1111,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
         )
         binding.weiterNacht.isClickable = false
         binding.weiterNacht.background.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.blue_unclickable
-                            )
-                        )
-        customAdapter!!.notifyDataSetChanged()
+            ContextCompat.getColor(
+                this,
+                R.color.blue_unclickable
+            )
+        )
+        nightListAdapter.notifyDataSetChanged()
         binding.personen.visibility = View.VISIBLE
     }
 
@@ -1423,12 +1140,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
         )
         binding.weiterNacht.isClickable = false
         binding.weiterNacht.background.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.blue_unclickable
-                            )
-                        )
-        customAdapter!!.notifyDataSetChanged()
+            ContextCompat.getColor(
+                this,
+                R.color.blue_unclickable
+            )
+        )
+        nightListAdapter.notifyDataSetChanged()
         binding.personen.visibility = View.VISIBLE
     }
 
@@ -1534,7 +1251,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
             charaktername = data?.getString(2)
             persname = data?.getString(1)
         }
-        while (data?.moveToNext()==true && !persGefunden) {
+        while (data?.moveToNext() == true && !persGefunden) {
             if (data?.getInt(0) == buergerOpfer) {
                 persGefunden = true
                 charaktername = data?.getString(2)
@@ -1552,7 +1269,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 hexeToetenGedrueckt = !hexeToetenGedrueckt
                 if (hexeToetenGedrueckt) {
                     binding.personen.visibility = View.VISIBLE
-                    customAdapter!!.notifyDataSetChanged()
+                    nightListAdapter.notifyDataSetChanged()
                     binding.weiterNacht.isClickable = false
                     binding.weiterNacht.background?.setTint(
                         ContextCompat.getColor(
@@ -1565,7 +1282,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     charakterPosition--
                 } else {
                     binding.personen.visibility = View.INVISIBLE
-                    customAdapter!!.notifyDataSetChanged()
+                    nightListAdapter.notifyDataSetChanged()
                     binding.weiterNacht.isClickable = true
                     binding.weiterNacht.background?.setTint(
                         ContextCompat.getColor(
