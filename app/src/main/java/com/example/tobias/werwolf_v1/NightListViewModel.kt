@@ -167,6 +167,21 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    fun nextButtonClicked(){
+        Log.d(ContentValues.TAG, "weiternacht Position: $charakterPosition")
+        if (charakterPosition == 20) {
+            jaegerToeten()
+        }
+        if (charakterPosition == 21) {
+            ritterDialogToeten()
+        } else {
+            if (CharakterpositionErstInkementieren) {
+                charakterPosition++
+                CharakterpositionErstInkementieren = false
+            }
+            charakterPositionBestimmen()
+        }
+    }
     private fun sicherToeten(ID: Int, nameOpfer: String?, charakterOpfer: String?) {
         val jaegerGefunden = false
         var charaktername = ""
@@ -844,9 +859,10 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
 
-    fun toggle descriptionLength(context: Context): String
-    {
-
+    var currentCharacter: CharacterClass? = null
+    fun toggleDescriptionLength(context: Context): String {
+        showLongTexts = !showLongTexts
+        return getDescToCharacter(currentCharacter, context)
     }
 
     private var showLongTexts = true
@@ -1001,7 +1017,5 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
 
         urwolfVeto = if (anzahlUrwolf > 0) 0 else -1
         generateCharacters()
-
-
     }
 }

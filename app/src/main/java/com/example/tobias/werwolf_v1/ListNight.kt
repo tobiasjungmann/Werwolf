@@ -33,7 +33,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
         setContentView(binding.root)
 
         nightListViewModel =
-            ViewModelProvider(requireActivity()).get(NightListViewModel::class.java)
+            ViewModelProvider(this)[NightListViewModel::class.java]
 
         binding.weiterNacht.setOnClickListener(this@ListNight)
         binding.description.setOnClickListener(this@ListNight)
@@ -56,6 +56,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
         data = mDatabaseHelper!!.data
 
         // arrayList = new ArrayList<String>();
+
         nightListAdapter = NightListAdapter(data!!)
         binding.personen.adapter = nightListAdapter
         binding.personen.onItemClickListener = OnItemClickListener { parent, view, position, id ->
@@ -87,7 +88,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
 
     fun setStatusNextButton(status: Boolean) {
         binding.weiterNacht.isClickable = status
-        var help= help = R.color.blue_unclickable
+        var help = R.color.blue_unclickable
         if (status) {
             help = R.color.blue
         }
@@ -115,7 +116,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 charakterPositionBestimmen()
             }
             1 -> if (anzahlFreunde > 0) {
-                changeUIToNewCharacter(nightListViewModel.generateCharacters()[0])
+                changeUIToNewCharacter(nightListViewModel.generateCharacters()[0])      // todo change to firends
 
                 anzahlBuerger = anzahlBuerger + anzahlFreunde
                 anzahlFreunde = 0 //todo Bürgerzahl +2
@@ -175,15 +176,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 ritterDialogVorbereiten()
             } else {
                 if (anzahlWerwolf + anzahlUrwolf + anzahlWeisserWerwolf > 0) {
-                    binding.textSpielstand.setText(R.string.werwolf)
-                    binding.layoutSpielstand.setBackgroundResource(R.drawable.leiste_werwolf)
-                    if (langerText) {
-                        binding.description.text =
-                            "Jetzt wachen die Werwölfe auf und suchen sich ihr Opfer für diese Nacht aus. Haben sie sich entschieden schlafen sie auch schon wieder ein."
-                    } else {
-                        binding.description.text =
-                            "Jetzt wachen die Werwölfe auf und suchen sich ihr Opfer..."
-                    }
+                    hangeUIToNewCharacter(nightListViewModel.generateCharacters()[0])      // todo change to wolf
                     setStatusNextButton(false)
                     nightListAdapter.notifyDataSetChanged()
                     binding.personen.visibility = View.VISIBLE
@@ -192,18 +185,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 }
             }
             8 -> if (anzahlWeisserWerwolf > 0 && !wwletzteRundeAktiv) {
-                binding.textSpielstand.setText(R.string.weisser_werwolf)
-                binding.layoutSpielstand.background?.setTint(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.wwolf
-                    )
-                )
-                if (langerText) {
-                    binding.description.text = "Text Weißer Werwolf"
-                } else {
-                    binding.description.text = "Text Weißer Werwolf..."
-                }
+                changeUIToNewCharacter(nightListViewModel.generateCharacters()[0]) // todo change to whiteWolf
                 setStatusNextButton(false)
                 nightListAdapter.notifyDataSetChanged()
                 binding.personen.visibility = View.VISIBLE
@@ -216,18 +198,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
             9 -> if (anzahlUrwolf > 0 && urwolfVeto != -1) {
                 binding.personen.visibility = View.GONE
                 binding.layoutUrwolf.visibility = View.VISIBLE
-                binding.textSpielstand.setText(R.string.urwolf)
-                binding.layoutSpielstand.background?.setTint(
-                    ContextCompat.getColor(
-                        this,
-                        R.color.urwolf
-                    )
-                )
-                if (langerText) {
-                    binding.description.text = "Text Urwolf"
-                } else {
-                    binding.description.text = "Text Urwolf..."
-                }
+                hangeUIToNewCharacter(nightListViewModel.generateCharacters()[0])      // todo change to urwolf
                 charakterPosition++
             } else {
                 charakterPosition++
@@ -237,21 +208,8 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 binding.layoutUrwolf.visibility = View.GONE
                 if (anzahlHexe > 0) {
                     if (trankLebenEinsetzbar || trankTodEinsetzbar) {
-                        binding.textSpielstand.setText(R.string.hexe)
                         werwolfOpferIDBackupHexe = werwolfOpferID
-                        binding.layoutSpielstand.background?.setTint(
-                            ContextCompat.getColor(
-                                this,
-                                R.color.witch
-                            )
-                        )
-                        if (langerText) {
-                            binding.description.text =
-                                "Als nächstes wacht die Hexe auf. Sie kann das Opfer -auf Opfer zeigen- retten, nichtstun, oder  eine weitere Person mit in den Tod reißen. -Dabei die drei Handzeichen für die Hexe sichtbar vormachen."
-                        } else {
-                            binding.description.text =
-                                "Als nächstes wacht die Hexe auf. Sie kann das Opfer..."
-                        }
+                        hangeUIToNewCharacter(nightListViewModel.generateCharacters()[0])      // todo change to witch
                         binding.personen.visibility = View.INVISIBLE
 
                         //todo, wenn nur eine Option übrig ist eien entsprechenden Rand einfügen
@@ -446,15 +404,8 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
 
     private fun ritterDialogVorbereiten() {
         charakterPosition = 21
-        binding.description.text =
-            "Der Ritter ist letzte Nacht gestorben. Wähle jetzt den nächsten Werwolf zur rechten das verstorbenen Jägers aus."
-        binding.textSpielstand.text = "Ritter"
-        binding.layoutSpielstand.background?.setTint(
-            ContextCompat.getColor(
-                this,
-                R.color.knight
-            )
-        )
+        changeUIToNewCharacter(nightListViewModel.generateCharacters()[0]) // todo change to knight
+
         setStatusNextButton(false)
         nightListAdapter.notifyDataSetChanged()
         binding.personen.visibility = View.VISIBLE
@@ -470,14 +421,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
         charakterPositionJaegerBackup = charakterPosition
         charakterPosition = 20
         jaegerAktiv = true
-        binding.description.text = "Der Jäger ist gestorben. Er darf eine weitere Person töten:"
-        binding.textSpielstand.text = "Jäger"
-        binding.layoutSpielstand.background?.setTint(
-            ContextCompat.getColor(
-                this,
-                R.color.hunter
-            )
-        )
+        changeUIToNewCharacter(nightListViewModel.generateCharacters()[0]) // todo change to hunter
         setStatusNextButton(false)
         nightListAdapter?.notifyDataSetChanged()
         binding.personen.visibility = View.VISIBLE
@@ -492,31 +436,20 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
 
                 if (executeWitchKill) {
                     binding.personen.visibility = View.VISIBLE
-                    nightListAdapter.notifyDataSetChanged()
                     setStatusNextButton(false)
                 } else {
                     binding.personen.visibility = View.INVISIBLE
-                    nightListAdapter.notifyDataSetChanged()
+
                     setStatusNextButton(true)
                 }
+                nightListAdapter?.notifyDataSetChanged()
             }
             R.id.opferRettenHexe, R.id.textViewOpferRetten -> {
                 binding.opferRettenHexe.isChecked = nightListViewModel.witchSaveVictim()
             }
             R.id.weiterNacht -> {
-                Log.d(ContentValues.TAG, "weiternacht Position: $charakterPosition")
-                if (charakterPosition == 20) {
-                    jaegerToeten()
-                }
-                if (charakterPosition == 21) {
-                    ritterDialogToeten()
-                } else {
-                    if (CharakterpositionErstInkementieren) {
-                        charakterPosition++
-                        CharakterpositionErstInkementieren = false
-                    }
-                    charakterPositionBestimmen()
-                }
+                nightListViewModel.nexButtonClicked()
+
             }
             R.id.textViewUrwolfVeto, R.id.checkboxUrwolfVeto -> if (urwolfVeto == 1) {
                 binding.checkboxUrwolfVeto.isChecked = false
@@ -526,7 +459,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 urwolfVeto = 1
             }
             R.id.description -> {
-                nightListViewModel.toggleDescriptionLength()
+                binding.description=nightListViewModel.toggleDescriptionLength(applicationContext)
             }
             else -> {}
         }
