@@ -69,4 +69,8 @@
     <string name="pressBackAgain">Um die App zu schließen Taste erneut drücken.</string>
     <string name="village">Dorf</string>
     <string name="manual_text_without_cards">Wie in II.Karten beschrieben muss die Anzahl der verschiedenen Charaktere sowie die Namen der mitspielenden Personen eingegeben werden.\n\nDie App lost jeder Person dann eine Rolle zu. Nacheinander wird je ein Namen, sowie dessen Karte ausgegeben. Der Spielleiter weckt die entsprechende Person und zeigt die Karte. Jeder Mitspieler muss sie sich merken. Sie kann nicht erneut gezeigt werden.</string>
+    <string name="witch_night_desc_short">Als nächstes wacht die Hexe auf. Sie kann das Opfer...</string>
+    <string name="witch_night_desc_long">Als nächstes wacht die Hexe auf. Sie kann das Opfer -auf Opfer zeigen- retten, nichtstun, oder  eine weitere Person mit in den Tod reißen. -Dabei die drei Handzeichen für die Hexe sichtbar vormachen.</string>
+    <string name="werwolf_night_desc_short">Jetzt wachen die Werwölfe auf und suchen sich ihr Opfer...</string>
+    <string name="werwolf_night_desc_long">Jetzt wachen die Werwölfe auf und suchen sich ihr Opfer für diese Nacht aus. Haben sie sich entschieden schlafen sie auch schon wieder ein.</string>
 </resources>

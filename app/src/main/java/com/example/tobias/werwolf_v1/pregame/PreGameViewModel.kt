@@ -31,21 +31,126 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
     fun generateCharacters(): ArrayList<CharacterClass> {
         if (characterClasses == null) {
             characterClasses = arrayListOf(
-                CharacterClass("Werwolf", "blabla", R.color.werwolf, true, true),
-                CharacterClass("Bürger", "blabla", R.color.citizen, true, false),
-                CharacterClass("Amor", "blabla", R.color.amor, false, false),
-                CharacterClass("Hexe", "blabla", R.color.witch, false, false),
-                CharacterClass("Wächter", "blabla", R.color.guradian, false, false),
-                CharacterClass("Mädchen", "blabla", R.color.girl, false, false),
-                CharacterClass("Seher", "blabla", R.color.seher, false, false),
-                CharacterClass("Dieb", "blabla", R.color.thief, false, false),
-                CharacterClass("Jäger", "blabla", R.color.hunter, false, false),
-                CharacterClass("Ritter", "blabla", R.color.knight, false, false),
-                CharacterClass("Flötenspieler", "blabla", R.color.flute, false, false),
-                CharacterClass("Freunde", "blabla", R.color.friends, true, false),
-                CharacterClass("Weißer Werwolf", "blabla", R.color.wwolf, false, true),
-                CharacterClass("Junges", "blabla", R.color.wchild, false, true),
-                CharacterClass("Urwolf", "blabla", R.color.urwolf, false, true)
+                CharacterClass(
+                    "Werwolf",
+                    "blabla",
+                    R.color.werwolf,
+                    true,
+                    true,
+                    R.string.witch_night_desc_short
+                ),
+                CharacterClass(
+                    "Bürger",
+                    "blabla",
+                    R.color.citizen,
+                    true,
+                    false,
+                    R.string.witch_night_desc_short
+                ),
+                CharacterClass(
+                    "Amor",
+                    "blabla",
+                    R.color.amor,
+                    false,
+                    false,
+                    R.string.witch_night_desc_short
+                ),
+                CharacterClass(
+                    "Hexe",
+                    "blabla",
+                    R.color.witch,
+                    false,
+                    false,
+                    R.string.witch_night_desc_short
+                ),
+                CharacterClass(
+                    "Wächter",
+                    "blabla",
+                    R.color.guradian,
+                    false,
+                    false,
+                    R.string.witch_night_desc_short
+                ),
+                CharacterClass(
+                    "Mädchen",
+                    "blabla",
+                    R.color.girl,
+                    false,
+                    false,
+                    R.string.witch_night_desc_short
+                ),
+                CharacterClass(
+                    "Seher",
+                    "blabla",
+                    R.color.seher,
+                    false,
+                    false,
+                    R.string.witch_night_desc_short
+                ),
+                CharacterClass(
+                    "Dieb",
+                    "blabla",
+                    R.color.thief,
+                    false,
+                    false,
+                    R.string.witch_night_desc_short
+                ),
+                CharacterClass(
+                    "Jäger",
+                    "blabla",
+                    R.color.hunter,
+                    false,
+                    false,
+                    R.string.witch_night_desc_short
+                ),
+                CharacterClass(
+                    "Ritter",
+                    "blabla",
+                    R.color.knight,
+                    false,
+                    false,
+                    R.string.witch_night_desc_short
+                ),
+                CharacterClass(
+                    "Flötenspieler",
+                    "blabla",
+                    R.color.flute,
+                    false,
+                    false,
+                    R.string.witch_night_desc_short
+                ),
+                CharacterClass(
+                    "Freunde",
+                    "blabla",
+                    R.color.friends,
+                    true,
+                    false,
+                    R.string.witch_night_desc_short
+                ),
+                CharacterClass(
+                    "Weißer Werwolf",
+                    "blabla",
+                    R.color.wwolf,
+                    false,
+                    true,
+                    R.string.witch_night_desc_short
+                ),
+                CharacterClass(
+                    "Junges",
+                    "blabla",
+                    R.color.wchild,
+                    false,
+                    true,
+                    R.string.witch_night_desc_short
+                ),
+                CharacterClass(
+                    "Urwolf",
+                    "blabla",
+                    R.color.urwolf,
+                    false,
+                    true,
+                    R.string.witch_night_desc_short
+                )
             )
         }
         return characterClasses!!
