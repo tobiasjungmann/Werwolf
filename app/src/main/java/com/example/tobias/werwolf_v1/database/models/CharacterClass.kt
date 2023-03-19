@@ -10,8 +10,7 @@ class CharacterClass(
     val color: Int,
     val multipleAllowed: Boolean,
     val isWolf: Boolean,
-    val shortDescStringId: Int,
-    val longDescStringId: Int,
+    val descStringId: Int
 ) {
     var amount: Int = 0
     @PrimaryKey(autoGenerate = true)
