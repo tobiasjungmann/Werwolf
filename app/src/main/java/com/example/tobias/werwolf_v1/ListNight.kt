@@ -1,11 +1,9 @@
 package com.example.tobias.werwolf_v1
 
 import android.app.AlertDialog
-import android.content.ContentValues
 import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
@@ -14,9 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.tobias.werwolf_v1.database.models.CharacterClass
 import com.example.tobias.werwolf_v1.database.models.DatabaseHelper
-import com.example.tobias.werwolf_v1.databinding.ActivityManualBinding
 import com.example.tobias.werwolf_v1.databinding.ActivityNightlistBinding
-import com.example.tobias.werwolf_v1.pregame.PreGameViewModel
 
 class ListNight : AppCompatActivity(), View.OnClickListener {
 
@@ -38,7 +34,6 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
         binding.weiterNacht.setOnClickListener(this@ListNight)
         binding.description.setOnClickListener(this@ListNight)
         binding.personen.visibility = View.INVISIBLE
-
 
         //Witch
         binding.opferRettenHexe.setOnClickListener(this)
@@ -63,7 +58,6 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
             nightListViewmodel.handleClickAtPosition(position)
             setStatusNextButton(true)
             nightListAdapter.notifyDataSetChanged()
-
         }
     }
 
@@ -101,9 +95,10 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
     }
 
     private fun charakterPositionBestimmen() {
+        val currentStage: NightStages=NightStages.AMOR
         // Log.d(ContentValues.TAG, "charakterposition  case $charakterPosition")
-        when (charakterPosition) {
-            0 -> if (anzahlAmor > 0) {
+        when (currentStage) {
+            NightStages.AMOR -> if (anzahlAmor > 0) {
                 changeUIToNewCharacter(nightListViewModel.generateCharacters()[0])      // todo change to amor
                 setStatusNextButton(false)
 
@@ -115,7 +110,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 charakterPosition++
                 charakterPositionBestimmen()
             }
-            1 -> if (anzahlFreunde > 0) {
+            NightStages.FRIENDS -> if (anzahlFreunde > 0) {
                 changeUIToNewCharacter(nightListViewModel.generateCharacters()[0])      // todo change to firends
 
                 anzahlBuerger = anzahlBuerger + anzahlFreunde
@@ -126,7 +121,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 charakterPosition++
                 charakterPositionBestimmen()
             }
-            2 -> if (anzahlDieb > 0) {
+            NightStages.THIEF -> if (anzahlDieb > 0) {
                 changeUIToNewCharacter(nightListViewModel.generateCharacters()[0])      // todo change to thief
                 setStatusNextButton(false)
                 nightListAdapter.notifyDataSetChanged()
@@ -135,7 +130,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 charakterPosition++
                 charakterPositionBestimmen()
             }
-            3 -> if (anzahlWaechter > 0) {
+            NightStages.GUARDIAN  -> if (anzahlWaechter > 0) {
                 changeUIToNewCharacter(nightListViewModel.generateCharacters()[0])      // todo change to guardian
                 setStatusNextButton(false)
                 nightListAdapter.notifyDataSetChanged()
@@ -144,7 +139,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 charakterPosition++
                 charakterPositionBestimmen()
             }
-            4 -> if (anzahlJunges > 0) {
+            NightStages.W_CHILD  -> if (anzahlJunges > 0) {
                 changeUIToNewCharacter(nightListViewModel.generateCharacters()[0])      // todo change to child
                 anzahlBuerger = anzahlBuerger + anzahlJunges
                 anzahlJunges = 0
@@ -155,7 +150,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 charakterPosition++
                 charakterPositionBestimmen()
             }
-            5 -> if (anzahlSeher > 0) {
+            NightStages.SEHER -> if (anzahlSeher > 0) {
                 changeUIToNewCharacter(nightListViewModel.generateCharacters()[0])      // todo change to seher
                 charakterPosition++
                 binding.personen.visibility = View.INVISIBLE
@@ -163,7 +158,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 charakterPosition++
                 charakterPositionBestimmen()
             }
-            6 -> if (anzahlFloetenspieler > 0) {
+            NightStages.FLUTE  -> if (anzahlFloetenspieler > 0) {
                 changeUIToNewCharacter(nightListViewModel.generateCharacters()[0])      // todo change to flute
                 setStatusNextButton(false)
                 nightListAdapter.notifyDataSetChanged()
@@ -172,7 +167,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 charakterPosition++
                 charakterPositionBestimmen()
             }
-            7 -> if (ritterAktiv) {
+            NightStages.KNIGHT -> if (ritterAktiv) {
                 ritterDialogVorbereiten()
             } else {
                 if (anzahlWerwolf + anzahlUrwolf + anzahlWeisserWerwolf > 0) {
@@ -184,7 +179,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     binding.description.text = "Fehler: Es sind keine Werwölfe mehr im Spiel!"
                 }
             }
-            8 -> if (anzahlWeisserWerwolf > 0 && !wwletzteRundeAktiv) {
+            NightStages.WHITE_WOLF -> if (anzahlWeisserWerwolf > 0 && !wwletzteRundeAktiv) {
                 changeUIToNewCharacter(nightListViewModel.generateCharacters()[0]) // todo change to whiteWolf
                 setStatusNextButton(false)
                 nightListAdapter.notifyDataSetChanged()
@@ -195,7 +190,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 charakterPosition++
                 charakterPositionBestimmen()
             }
-            9 -> if (anzahlUrwolf > 0 && urwolfVeto != -1) {
+            NightStages.URWOLF -> if (anzahlUrwolf > 0 && urwolfVeto != -1) {
                 binding.personen.visibility = View.GONE
                 binding.layoutUrwolf.visibility = View.VISIBLE
                 hangeUIToNewCharacter(nightListViewModel.generateCharacters()[0])      // todo change to urwolf
@@ -204,7 +199,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                 charakterPosition++
                 charakterPositionBestimmen()
             }
-            10 -> {
+            NightStages.WITCH  -> {
                 binding.layoutUrwolf.visibility = View.GONE
                 if (anzahlHexe > 0) {
                     if (trankLebenEinsetzbar || trankTodEinsetzbar) {
@@ -242,7 +237,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     charakterPositionBestimmen()
                 }
             }
-            11 -> {
+            NightStages.EVALUATE_NIGHT -> {
                 nachtAuswerten()
 
                 //Opfer des weißen werwolfes töten
@@ -296,7 +291,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                         "$s\n\nDer Ritter ist verstorben. In der nächsten Nacht stirbt der Nächste Werwolf zur Rechten des Ritters."
                 }
             }
-            12 -> {
+            NightStages.ELECTION_DAY -> {
                 auswerten()
                 binding.description.text = "Abstimmphase, wen wählt das Dorf als Schuldigen aus? "
                 //todo: Möglichkeit keinen zu töten, weiter immer klickbar, aber dann dialog der nachfrägt
@@ -360,7 +355,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
                     verzaubertName = ""
                 }
             }
-            13 -> {
+            NightStages.KILL_DAY -> {
                 buergeropferToeten()
                 if (!jaegerAktiv) {
                     binding.personen.visibility = View.GONE
@@ -447,20 +442,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener {
             R.id.opferRettenHexe, R.id.textViewOpferRetten -> {
                 binding.opferRettenHexe.isChecked = nightListViewModel.witchSaveVictim()
             }
-            R.id.weiterNacht -> {
-                nightListViewModel.nexButtonClicked()
+            R.id.weiterNacht -> nightListViewModel.nexButtonClicked()
+            R.id.textViewUrwolfVeto, R.id.checkboxUrwolfVeto -> binding.checkboxUrwolfVeto.isChecked =
+                nightListViewModel.urwolfClicked()
+            R.id.description ->
+                binding.description.text = nightListViewModel.toggleDescriptionLength(applicationContext)
 
-            }
-            R.id.textViewUrwolfVeto, R.id.checkboxUrwolfVeto -> if (urwolfVeto == 1) {
-                binding.checkboxUrwolfVeto.isChecked = false
-                urwolfVeto = 0
-            } else {
-                binding.checkboxUrwolfVeto.isChecked = true
-                urwolfVeto = 1
-            }
-            R.id.description -> {
-                binding.description=nightListViewModel.toggleDescriptionLength(applicationContext)
-            }
             else -> {}
         }
     }

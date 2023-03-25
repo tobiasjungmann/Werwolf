@@ -61,18 +61,18 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
     private var werwolfOpferIDBackupHexe = -1
 
     //Urwolf
-    private var werwolfDurchUrwolfID = 0
+    private var werwolfDurchUrwolfID = -1
 
     //Jaeger
     private var charakterPositionJaegerBackup = 0
-    private var jaegerOpfer = 0
+    private var jaegerOpfer = -1
     private var jaegerAktiv = false
 
     //Ritter
     private var ritterAktiv = false
-    private var ritterOpfer = 0
-    private var nameRitterOpfer: String? = null
-    private var charakterRitterOpfer: String? = null
+    private var ritterOpfer = -1
+    private var nameRitterOpfer: String = ""
+    private var charakterRitterOpfer: String = ""
 
     private lateinit var characterClasses: ArrayList<CharacterClass>
 
@@ -562,7 +562,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
         }
         sicherToeten(jaegerOpfer, jaegerOpferName, jaegerOpferCharakter)
         charakterPosition = charakterPositionJaegerBackup
-        // charakterPosition++;
+
         charakterPositionBestimmen()
     }
 
@@ -874,148 +874,17 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
         return desc
     }
 
-    fun generateCharacters(): ArrayList<CharacterClass> {       // todo load from db
-
-        if (characterClasses == null) {
-            characterClasses = arrayListOf(
-                CharacterClass(
-                    "Werwolf",
-                    "blabla",
-                    R.color.werwolf,
-                    true,
-                    true,
-                    R.string.night_desc_werwolf
-                ),
-                CharacterClass(
-                    "Bürger",
-                    "blabla",
-                    R.color.citizen,
-                    true,
-                    false,
-                    R.string.night_desc_citizen
-                ),
-                CharacterClass(
-                    "Amor",
-                    "blabla",
-                    R.color.amor,
-                    false,
-                    false,
-                    R.string.night_desc_armor
-                ),
-                CharacterClass(
-                    "Hexe",
-                    "blabla",
-                    R.color.witch,
-                    false,
-                    false,
-                    R.string.night_desc_witch
-                ),
-                CharacterClass(
-                    "Wächter",
-                    "blabla",
-                    R.color.guradian,
-                    false,
-                    false,
-                    R.string.night_desc_guardian
-                ),
-                CharacterClass(
-                    "Mädchen",
-                    "blabla",
-                    R.color.girl,
-                    false,
-                    false,
-                    R.string.night_desc_girl
-                ),
-                CharacterClass(
-                    "Seher",
-                    "blabla",
-                    R.color.seher,
-                    false,
-                    false,
-                    R.string.night_desc_seher
-                ),
-                CharacterClass(
-                    "Dieb",
-                    "blabla",
-                    R.color.thief,
-                    false,
-                    false,
-                    R.string.night_desc_thief
-                ),
-                CharacterClass(
-                    "Jäger",
-                    "blabla",
-                    R.color.hunter,
-                    false,
-                    false,
-                    R.string.night_desc_hunter
-                ),
-                CharacterClass(
-                    "Ritter",
-                    "blabla",
-                    R.color.knight,
-                    false,
-                    false,
-                    R.string.night_desc_knight
-                ),
-                CharacterClass(
-                    "Flötenspieler",
-                    "blabla",
-                    R.color.flute,
-                    false,
-                    false,
-                    R.string.night_desc_flute
-                ),
-                CharacterClass(
-                    "Freunde",
-                    "blabla",
-                    R.color.friends,
-                    true,
-                    false,
-                    R.string.night_desc_friends
-                ),
-                CharacterClass(
-                    "Weißer Werwolf",
-                    "blabla",
-                    R.color.wwolf,
-                    false,
-                    true,
-                    R.string.night_desc_wolf_child
-                ),
-                CharacterClass(
-                    "Junges",
-                    "blabla",
-                    R.color.wchild,
-                    false,
-                    true,
-                    R.string.night_desc_wolf_child
-                ),
-                CharacterClass(
-                    "Urwolf",
-                    "blabla",
-                    R.color.urwolf,
-                    false,
-                    true,
-                    R.string.night_desc_wolf_child
-                )
-            )
+    fun urwolfClicked():Boolean{
+        if (urwolfVeto == 1) {
+            urwolfVeto = 0
+        } else {
+            urwolfVeto = 1
         }
-        return characterClasses
+        return urwolfVeto==0
     }
 
     init {
-        werwolfDurchUrwolfID = -1
-
-        //Jaeger
-        jaegerAktiv = false
-
-        //Ritter
-        ritterAktiv = false
-        ritterOpfer = -1
-        nameRitterOpfer = ""
-        charakterRitterOpfer = ""
-
         urwolfVeto = if (anzahlUrwolf > 0) 0 else -1
-        generateCharacters()
+        repository.generateCharacters()
     }
 }
