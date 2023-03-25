@@ -9,14 +9,15 @@ enum class NightStages(val value: Int) {
     SEHER(5),
     FLUTE(6),
     KNIGHT(7),
-    WHITE_WOLF(8),
-    URWOLF(9),
-    WITCH(10),
-    EVALUATE_NIGHT(11),
-    ELECTION_DAY(12),
-    KILL_DAY(13),
-    GIRL(14),
-    HUNTER(15);
+    WOLF(8),
+    WHITE_WOLF(9),
+    URWOLF(10),
+    WITCH(11),
+    EVALUATE_NIGHT(12),
+    ELECTION_DAY(13),
+    KILL_DAY(14),
+    GIRL(15),
+    HUNTER(16);
 
     companion object {
         fun fromInt(value: Int) = NightStages.values().first { it.value == value }
