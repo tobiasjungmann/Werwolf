@@ -191,6 +191,12 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
         return true
     }
 
+    /*
+    Todo
+    nächster Schritt:
+    1. UI für jede Stage durchschalten können -> dann in den click listener gehen
+    2. Restliche UI Methoden via contract weiterleiten
+     */
     private var currentStage: NightStages = NightStages.AMOR
     private fun startNextStage() {
 
@@ -263,29 +269,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
                 if (anzahlHexe > 0) {
                     if (trankLebenEinsetzbar || trankTodEinsetzbar) {
                         werwolfOpferIDBackupHexe = werwolfOpferID
-                        hangeUIToNewCharacter(nightListViewModel.generateCharacters()[0])      // todo change to witch
-                        binding.personen.visibility = View.INVISIBLE
-
-                        //todo, wenn nur eine Option übrig ist eien entsprechenden Rand einfügen
-                        if (trankLebenEinsetzbar || trankTodEinsetzbar) {
-                            binding.layoutHexeNacht.visibility = View.VISIBLE
-                            if (!(trankLebenEinsetzbar && trankTodEinsetzbar)) {
-                                if (trankLebenEinsetzbar) //leben anzaeigen, sonst nur tod
-                                {
-                                    binding.rettenLayoutHexe.visibility = View.VISIBLE
-                                    binding.toetenLayoutHexe.visibility = View.GONE
-                                } else {
-                                    val params = LinearLayout.LayoutParams(
-                                        LinearLayout.LayoutParams.MATCH_PARENT,
-                                        LinearLayout.LayoutParams.WRAP_CONTENT
-                                    )
-                                    params.setMargins(16, 16, 16, 16)
-                                    binding.toetenLayoutHexe.layoutParams = params
-                                    binding.layoutRettenHexe.visibility = View.GONE
-                                    binding.toetenLayoutHexe.visibility = View.VISIBLE
-                                }
-                            }
-                        }
+                        nightListActivity.activateWitchDialog(trankLebenEinsetzbar,trankTodEinsetzbar)
                         forwardStage()
                     } else {
                         forwardStage()
@@ -375,7 +359,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
                     // totErweiterungWW = "";
                 } else {
                     nightListActivity.setDescription(
-                        "$s\n\nDer Jäger ist gestorben. Er darf eine weitere Person töten:"
+                        "\n\nDer Jäger ist gestorben. Er darf eine weitere Person töten:"
                     ,true)
                 }
             }
@@ -398,6 +382,22 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
             }
             startNextStage()
         }
+    }
+
+    private fun ritterDialogToeten() {
+        ritterAktiv = false
+        charakterPosition = 7
+        startNextStage()
+    }
+
+    fun jaegerDialog() {
+        charakterPositionJaegerBackup = charakterPosition
+        charakterPosition = 20
+        jaegerAktiv = true      // todo adapt to hunter
+        changeUIToNewCharacter(nightListViewModel.generateCharacters()[0]) // todo change to hunter
+        setStatusNextButton(false)
+        nightListAdapter?.notifyDataSetChanged()
+        binding.personen.visibility = View.VISIBLE
     }
 
     fun evaluateNight() {
@@ -781,7 +781,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
         }
         if (liebenderEinsID != -1) {
             if (verliebtGefundenAnzahl <= 3 && !liebespaarEntdeckt) {
-                siegbildschirmOeffnen("liebespaar")
+                nightListActivity.siegbildschirmOeffnen("liebespaar")
             }
         }
         var anzahlNichtWerwolf =
@@ -791,15 +791,15 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
         }
         if (anzahlNichtWerwolf < anzahlWeisserWerwolf + anzahlUrwolf + anzahlWerwolf) {
             if (anzahlUrwolf + anzahlWerwolf > 0) {
-                siegbildschirmOeffnen("werwoelfe")
+                nightListActivity.siegbildschirmOeffnen("werwoelfe")
             } else {
-                siegbildschirmOeffnen("ww")
+                nightListActivity.siegbildschirmOeffnen("ww")
             }
         }
         val anzahltest = anzahlWeisserWerwolf + anzahlUrwolf + anzahlWerwolf
         //keine Werwölfe mehr da
         if (anzahlWeisserWerwolf + anzahlUrwolf + anzahlWerwolf == 0) {
-            siegbildschirmOeffnen("buerger")
+            nightListActivity.siegbildschirmOeffnen("buerger")
         }
         data?.moveToFirst()
         var nichtverzaubertGefunden = false
@@ -812,7 +812,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
             }
         }
         if (!nichtverzaubertGefunden) {
-            siegbildschirmOeffnen("floetenspieler")
+            nightListActivity.siegbildschirmOeffnen("floetenspieler")
         }
     }
 
@@ -877,13 +877,8 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     private fun vorbildGestorbenDialog() {
-        val s = binding.description.text.toString()
-        binding.description.text =
-            """
-            ${s}Das Vorbild ist verstorben. Ab der nächsten Nacht wacht das Junge mit den Werwölfen gemeinsam auf.
-            
-            
-            """.trimIndent()
+        nightListActivity.setDescription("Das Vorbild ist verstorben. Ab der nächsten Nacht wacht das Junge mit den Werwölfen gemeinsam auf.",true)
+
         var jungesGefunden = false
         var jungesID = -1
         var jungesName: String? = ""
@@ -1161,10 +1156,6 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
             urwolfVeto = 1
         }
         return urwolfVeto == 0
-    }
-
-    fun setParentActivity(listNight: ListNight) {
-        this.listNight = listNight
     }
 
     init {

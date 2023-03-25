@@ -61,6 +61,32 @@ class ListNight : AppCompatActivity(), View.OnClickListener, NightListContract.V
         }
     }
 
+   override fun activateWitchDialog(trankLebenEinsetzbar: Boolean, trankTodEinsetzbar: Boolean){
+      changeUIToNewCharacter(nightListViewModel.generateCharacters()[0])      // todo change to witch
+       binding.personen.visibility = View.INVISIBLE
+
+       //todo, wenn nur eine Option übrig ist eien entsprechenden Rand einfügen
+       if (trankLebenEinsetzbar || trankTodEinsetzbar) {
+           binding.layoutHexeNacht.visibility = View.VISIBLE
+           if (!(trankLebenEinsetzbar && trankTodEinsetzbar)) {
+               if (trankLebenEinsetzbar) //leben anzaeigen, sonst nur tod
+               {
+                   binding.rettenLayoutHexe.visibility = View.VISIBLE
+                   binding.toetenLayoutHexe.visibility = View.GONE
+               } else {
+                   val params = LinearLayout.LayoutParams(
+                       LinearLayout.LayoutParams.MATCH_PARENT,
+                       LinearLayout.LayoutParams.WRAP_CONTENT
+                   )
+                   params.setMargins(16, 16, 16, 16)
+                   binding.toetenLayoutHexe.layoutParams = params
+                   binding.layoutRettenHexe.visibility = View.GONE
+                   binding.toetenLayoutHexe.visibility = View.VISIBLE
+               }
+           }
+       }
+    }
+
     override fun onBackPressed() {
         val builder: AlertDialog.Builder
         builder =
@@ -128,7 +154,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener, NightListContract.V
     }
 
 
-    private fun siegbildschirmOeffnen(sieger: String) {
+    override fun siegbildschirmOeffnen(sieger: String) {
         val intent = Intent(this, VictoryActivity::class.java)
         intent.putExtra("sieger", sieger)
         startActivity(intent)
@@ -144,21 +170,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener, NightListContract.V
         binding.personen.visibility = View.VISIBLE
     }*/
 
-    private fun ritterDialogToeten() {
-        ritterAktiv = false
-        charakterPosition = 7
-        startNextStage()
-    }
 
-    private fun jaegerDialog() {
-        charakterPositionJaegerBackup = charakterPosition
-        charakterPosition = 20
-        jaegerAktiv = true
-        changeUIToNewCharacter(nightListViewModel.generateCharacters()[0]) // todo change to hunter
-        setStatusNextButton(false)
-        nightListAdapter?.notifyDataSetChanged()
-        binding.personen.visibility = View.VISIBLE
-    }
 
 
     override fun onClick(v: View) {

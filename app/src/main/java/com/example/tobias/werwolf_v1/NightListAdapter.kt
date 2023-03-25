@@ -11,7 +11,7 @@ class NightListAdapter(private val data: Cursor) : BaseAdapter() {
     private var pers: TextView? = null
     private var icon: ImageView? = null
     override fun getCount(): Int {
-        return data!!.count
+        return data.count
     }
 
     override fun getItem(position: Int): Any? {

@@ -11,5 +11,8 @@ interface NightListContract {
     interface View {
         fun updateUIForCharacter(currentCharacter: CharacterClass, b: Boolean, listVisible: Boolean)
         fun setDescription(text: String,append: Boolean)
+        fun siegbildschirmOeffnen(character: String)
+        fun activateWitchDialog(trankLebenEinsetzbar: Boolean, trankTodEinsetzbar: Boolean)
+
     }
 }
