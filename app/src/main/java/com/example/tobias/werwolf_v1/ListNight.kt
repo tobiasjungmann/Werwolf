@@ -4,12 +4,14 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.database.Cursor
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tobias.werwolf_v1.database.models.CharacterClass
 import com.example.tobias.werwolf_v1.database.models.DatabaseHelper
 import com.example.tobias.werwolf_v1.databinding.ActivityNightlistBinding
@@ -45,14 +47,18 @@ class ListNight : AppCompatActivity(), View.OnClickListener, NightListContract.V
         binding.textViewUrwolfVeto.setOnClickListener(this)
 
 
-
-        nightListAdapter = NightListAdapter(DatabaseHelper(this).data)
+        val itemOnClick: (View, Int, Int) -> Unit = { _, position, _ ->
+            Log.d("test", "" + position)
+        }
+        nightListAdapter = NightListAdapter(itemOnClick)
+        // binding.personen. = nightListAdapter
         binding.personen.adapter = nightListAdapter
-        binding.personen.onItemClickListener = OnItemClickListener { parent, view, position, id ->
+        binding.personen.layoutManager = LinearLayoutManager(context)
+/*        binding.personen.onItemClickListener = OnItemClickListener { parent, view, position, id ->
             nightListViewmodel.handleClickAtPosition(position)
             setStatusNextButton(true)
             nightListAdapter.notifyDataSetChanged()
-        }
+        }*/
     }
 
     override fun setPlayerListVisibility(visibility: Int) {
@@ -143,6 +149,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener, NightListContract.V
             )
         )
     }
+
     fun setStatusNextButton(status: Boolean) {
         binding.weiterNacht.isClickable = status
         var help = R.color.blue_unclickable

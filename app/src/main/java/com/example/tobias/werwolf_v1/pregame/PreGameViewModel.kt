@@ -39,7 +39,8 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
                     true,
                     true,
                     NightStages.W_CHILD,
-                    R.string.night_desc_wolf_child
+                    R.string.night_desc_wolf_child,
+                    R.drawable.icon_wolf
                 ),
                 CharacterClass(
                     "Bürger",
@@ -48,7 +49,8 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
                     true,
                     false,
                     NightStages.W_CHILD,
-                    R.string.night_desc_wolf_child
+                    R.string.night_desc_wolf_child,
+                    R.drawable.icon_wolf
                 ),
                 CharacterClass(
                     "Amor",
@@ -57,7 +59,8 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
                     false,
                     false,
                     NightStages.W_CHILD,
-                    R.string.night_desc_wolf_child
+                    R.string.night_desc_wolf_child,
+                    R.drawable.icon_wolf
                 ),
                 CharacterClass(
                     "Hexe",
@@ -66,7 +69,8 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
                     false,
                     false,
                     NightStages.W_CHILD,
-                    R.string.night_desc_wolf_child
+                    R.string.night_desc_wolf_child,
+                    R.drawable.icon_wolf
                 ),
                 CharacterClass(
                     "Wächter",
@@ -75,7 +79,8 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
                     false,
                     false,
                     NightStages.W_CHILD,
-                    R.string.night_desc_wolf_child
+                    R.string.night_desc_wolf_child,
+                    R.drawable.icon_wolf
                 ),
                 CharacterClass(
                     "Mädchen",
@@ -84,7 +89,8 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
                     false,
                     false,
                     NightStages.W_CHILD,
-                    R.string.night_desc_wolf_child
+                    R.string.night_desc_wolf_child,
+                    R.drawable.icon_wolf
                 ),
                 CharacterClass(
                     "Seher",
@@ -93,7 +99,8 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
                     false,
                     false,
                     NightStages.W_CHILD,
-                    R.string.night_desc_wolf_child
+                    R.string.night_desc_wolf_child,
+                    R.drawable.icon_wolf
                 ),
                 CharacterClass(
                     "Dieb",
@@ -102,7 +109,8 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
                     false,
                     false,
                     NightStages.W_CHILD,
-                    R.string.night_desc_wolf_child
+                    R.string.night_desc_wolf_child,
+                    R.drawable.icon_wolf
                 ),
                 CharacterClass(
                     "Jäger",
@@ -111,7 +119,8 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
                     false,
                     false,
                     NightStages.W_CHILD,
-                    R.string.night_desc_wolf_child
+                    R.string.night_desc_wolf_child,
+                    R.drawable.icon_wolf
                 ),
                 CharacterClass(
                     "Ritter",
@@ -120,7 +129,8 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
                     false,
                     false,
                     NightStages.W_CHILD,
-                    R.string.night_desc_wolf_child
+                    R.string.night_desc_wolf_child,
+                    R.drawable.icon_wolf
                 ),
                 CharacterClass(
                     "Flötenspieler",
@@ -129,7 +139,8 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
                     false,
                     false,
                     NightStages.W_CHILD,
-                    R.string.night_desc_wolf_child
+                    R.string.night_desc_wolf_child,
+                    R.drawable.icon_wolf
                 ),
                 CharacterClass(
                     "Freunde",
@@ -138,7 +149,8 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
                     true,
                     false,
                     NightStages.W_CHILD,
-                    R.string.night_desc_wolf_child
+                    R.string.night_desc_wolf_child,
+                    R.drawable.icon_wolf
                 ),
                 CharacterClass(
                     "Weißer Werwolf",
@@ -147,7 +159,8 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
                     false,
                     true,
                     NightStages.W_CHILD,
-                    R.string.night_desc_wolf_child
+                    R.string.night_desc_wolf_child,
+                    R.drawable.icon_wolf
                 ),
                 CharacterClass(
                     "Junges",
@@ -156,7 +169,8 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
                     false,
                     true,
                     NightStages.W_CHILD,
-                    R.string.night_desc_wolf_child
+                    R.string.night_desc_wolf_child,
+                    R.drawable.icon_wolf
                 ),
                 CharacterClass(
                     "Urwolf",
@@ -165,7 +179,8 @@ class PreGameViewModel(application: Application) : AndroidViewModel(application)
                     false,
                     true,
                     NightStages.W_CHILD,
-                    R.string.night_desc_wolf_child
+                    R.string.night_desc_wolf_child,
+                    R.drawable.icon_wolf
                 )
             )
         }

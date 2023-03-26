@@ -12,7 +12,8 @@ class CharacterClass(
     val multipleAllowed: Boolean,
     val isWolf: Boolean,
     val stage: NightStages,
-    val descStringId: Int
+    val descStringId: Int,
+    val listIcon: Int
 ) {
     var amount: Int = 0
     @PrimaryKey(autoGenerate = true)
