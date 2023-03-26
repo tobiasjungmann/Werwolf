@@ -3,17 +3,12 @@ package com.example.tobias.werwolf_v1
 import android.app.Application
 import android.content.ContentValues
 import android.content.Context
-import android.database.Cursor
 import android.util.Log
 import android.view.View
 import android.widget.Button
-import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import com.example.tobias.werwolf_v1.database.models.CharacterClass
-import com.example.tobias.werwolf_v1.database.models.DatabaseHelper
 import com.example.tobias.werwolf_v1.database.models.Player
-import com.example.tobias.werwolf_v1.database.models.WerwolfRepository
 
 class NightListViewModel(application: Application) : AndroidViewModel(application),
     NightListContract.Presenter {
@@ -22,25 +17,25 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
     private lateinit var currentCharacter: CharacterClass
     private var currentStage: NightStages = NightStages.AMOR
 
-    private var mDatabaseHelper: DatabaseHelper? = null
-    private var data: Cursor? = null
+    //private var mDatabaseHelper: DatabaseHelper? = null
+    //private var data: Cursor? = null
 
 
-    private var anzahlAmor = 0
-    private var anzahlWerwolf = 0
-    private var anzahlHexe = 0
-    private var anzahlDieb = 0
-    private var anzahlSeher = 0
-    private var anzahlJunges = 0
-    private var anzahlJaeger = 0
-    private var anzahlBuerger = 0
-    private var anzahlWaechter = 0
-    private var anzahlWeisserWerwolf = 0
-    private var anzahlMaedchen = 0
-    private var anzahlFloetenspieler = 0
-    private var anzahlUrwolf = 0
-    private var anzahlRitter = 0
-    private var anzahlFreunde = 0
+    /* private var anzahlAmor = 0
+     private var anzahlWerwolf = 0
+     private var anzahlHexe = 0
+     private var anzahlDieb = 0
+     private var anzahlSeher = 0
+     private var anzahlJunges = 0
+     private var anzahlJaeger = 0
+     private var anzahlBuerger = 0
+     private var anzahlWaechter = 0
+     private var anzahlWeisserWerwolf = 0
+     private var anzahlMaedchen = 0
+     private var anzahlFloetenspieler = 0
+     private var anzahlUrwolf = 0
+     private var anzahlRitter = 0
+     private var anzahlFreunde = 0*/
     private var liebenderEinsID = -1
     private var liebenderZweiID = -1
     private var schlafplatzDiebID = -1
@@ -194,13 +189,11 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
         when (currentStage) {
             NightStages.AMOR -> if (testIfCharacterExits(NightStages.AMOR)) {
                 nightListActivity.updateUIForCharacter(currentCharacter, false, true)
-                anzahlAmor = 0
-                anzahlBuerger++
+                repository.convertClassToCitizen(NightStages.AMOR)
             }
             NightStages.FRIENDS -> if (testIfCharacterExits(NightStages.FRIENDS)) {
                 nightListActivity.updateUIForCharacter(currentCharacter, false, false)
-                anzahlBuerger = anzahlBuerger + anzahlFreunde
-                anzahlFreunde = 0
+                repository.convertClassToCitizen(NightStages.FRIENDS)
                 forwardStage()
             }
             NightStages.THIEF -> if (testIfCharacterExits(NightStages.THIEF)) {
@@ -211,8 +204,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
             }
             NightStages.W_CHILD -> if (testIfCharacterExits(NightStages.W_CHILD)) {
                 nightListActivity.updateUIForCharacter(currentCharacter, false, true)
-                anzahlBuerger = anzahlBuerger + anzahlJunges
-                anzahlJunges = 0
+                repository.convertClassToCitizen(NightStages.W_CHILD)
             }
             NightStages.SEHER -> if (testIfCharacterExits(NightStages.SEHER)) {
                 nightListActivity.updateUIForCharacter(currentCharacter, true, false)
@@ -228,7 +220,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
                 forwardStage()
             }
             NightStages.WOLF -> {
-                if (anzahlWerwolf + anzahlUrwolf + anzahlWeisserWerwolf > 0) {
+                if (repository.getNumberOfWolfes() > 0) {
                     nightListActivity.updateUIForCharacter(currentCharacter, false, true)
                 } else {
                     nightListActivity.setDescription(
@@ -237,7 +229,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
                     )
                 }
             }
-            NightStages.WHITE_WOLF -> if (anzahlWeisserWerwolf > 0 && !wwletzteRundeAktiv) {
+            NightStages.WHITE_WOLF -> if (currentCharacter.amount > 0 && !wwletzteRundeAktiv) {
                 nightListActivity.updateUIForCharacter(currentCharacter, false, true)
                 wwletzteRundeAktiv = true
             } else {
@@ -245,7 +237,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
                 forwardStage()
                 startNextStage()
             }
-            NightStages.URWOLF -> if (anzahlUrwolf > 0 && urwolfVeto != -1) {
+            NightStages.URWOLF -> if (currentCharacter.amount > 0 && urwolfVeto != -1) {
                 nightListActivity.updateUIForCharacter(currentCharacter, false, false)
                 nightListActivity.setUrwolfVisibility(View.VISIBLE)
                 forwardStage()
@@ -255,7 +247,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
             }
             NightStages.WITCH -> {
                 nightListActivity.setUrwolfVisibility(View.GONE)
-                if (anzahlHexe > 0) {
+                if (currentCharacter.amount > 0) {
                     if (trankLebenEinsetzbar || trankTodEinsetzbar) {
                         werwolfOpferIDBackupHexe = werwolfOpferID
                         nightListActivity.updateUIForCharacter(currentCharacter, true, false)
@@ -387,7 +379,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
         charakterPositionJaegerBackup = charakterPosition
         charakterPosition = 20
         jaegerAktiv = true      // todo adapt to hunter
-        nightListActivity.updateUIForCharacter(currentCharacter,false, true)
+        nightListActivity.updateUIForCharacter(currentCharacter, false, true)
     }
 
     fun evaluateNight() {
@@ -435,106 +427,42 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
-    private fun sicherToeten(ID: Int, nameOpfer: String?, charakterOpfer: String?) {
-        val jaegerGefunden = false
-        var charaktername = ""
-        var charakterID = -1
-        if ((ID == liebenderEinsID || ID == liebenderZweiID) && !liebespaarEntdeckt) //Das ganze auch für sich nicht liebende
+    fun killVictimPartOfLovers(victim: Player) {
+        if (hexeOpferID == liebenderEinsID || hexeOpferID == liebenderZweiID) {
+            hexeOpferID = -1
+        }
+
+        killPlayer(repository.getPlayerById(liebenderEinsID))
+        killPlayer(repository.getPlayerById(liebenderZweiID))
+
+        liebespaarEntdeckt = true
+        if (vorbildID == liebenderEinsID || vorbildID == liebenderZweiID) {
+            vorbildGestorbenDialog()
+        }
+    }
+
+    private fun sicherToeten(victim: Player) {
+        //  val jaegerGefunden = false
+        if ((victim.id == liebenderEinsID || victim.id == liebenderZweiID) && !liebespaarEntdeckt)
         {
-            if (hexeOpferID == liebenderEinsID || hexeOpferID == liebenderZweiID) {
-                hexeOpferID = -1
-            }
-            //todo: muss hier auch opfer 2 beachtet werden???
-            var nameGefunden = false
-            data!!.moveToFirst()
-            if (data!!.getInt(0) == liebenderZweiID) {
-                nameGefunden = true
-                tot = """
-                    $tot
-                    ${data!!.getString(1)}
-                    """.trimIndent()
-                charaktername = data!!.getString(2)
-                anzahlMindern(charaktername, data!!.getInt(0))
-            }
-            while (data!!.moveToNext() && !nameGefunden) {
-                if (data!!.getInt(0) == liebenderZweiID) {
-                    nameGefunden = true
-                    tot = """
-                        $tot
-                        ${data!!.getString(1)}
-                        """.trimIndent()
-                    charaktername = data!!.getString(2)
-                    anzahlMindern(charaktername, data!!.getInt(0))
-                }
-            }
-            if (nameGefunden) {
-                nameGefunden = false
-                data!!.moveToFirst()
-                if (data!!.getInt(0) == liebenderEinsID) {
-                    nameGefunden = true
-                    charaktername = data!!.getString(2)
-                    tot = """
-                        $tot
-                        ${data!!.getString(1)}
-                        """.trimIndent()
-                    anzahlMindern(charaktername, data!!.getInt(0))
-                }
-                while (data!!.moveToNext() && !nameGefunden) {
-                    if (data!!.getInt(0) == liebenderEinsID) {
-                        nameGefunden = true
-                        charaktername = data!!.getString(2)
-                        tot = """
-                            $tot
-                            ${data!!.getString(1)}
-                            """.trimIndent()
-                        anzahlMindern(charaktername, data!!.getInt(0))
-                    }
-                }
-                if (nameGefunden) {
-                    liebespaarEntdeckt = true
-                    if (vorbildID == liebenderEinsID || vorbildID == liebenderZweiID) {
-                        vorbildGestorbenDialog()
-                    }
-                    mDatabaseHelper!!.deleteName("" + liebenderEinsID)
-                }
-                mDatabaseHelper!!.deleteName("" + liebenderZweiID)
-            }
+            killVictimPartOfLovers(victim)
         } else  //keiner des Liebespaares getötet
         {
-            //Attribute des zu tötenden ermitteln
-            var nameGefunden = false
-            data!!.moveToFirst()
-            if (data!!.getInt(0) == ID) {
-                nameGefunden = true
-                charaktername = data!!.getString(2)
-                tot = """
-                    $tot
-                    ${data!!.getString(1)}
-                    """.trimIndent()
-                charakterID = data!!.getInt(0)
-            }
-            while (data!!.moveToNext() && !nameGefunden) {
-                if (data!!.getInt(0) == ID) {
-                    nameGefunden = true
-                    charaktername = data!!.getString(2)
-                    tot = """
-                        $tot
-                        ${data!!.getString(1)}
-                        """.trimIndent()
-                    charakterID = data!!.getInt(0)
-                }
-            }
-            if (nameGefunden) {
-                anzahlMindern(charaktername, charakterID)
-
-                //sollte das Opfer das Vorbild es Werwolfjungen sein; Dialog entsprechend anpassen
-                if (vorbildID == ID) {
-                    vorbildGestorbenDialog()
-                }
-                mDatabaseHelper!!.deleteName("" + ID)
+            killPlayer(victim)
+            if (vorbildID == victim.id) {
+                vorbildGestorbenDialog()
             }
         }
-        data = mDatabaseHelper!!.data
+    }
+
+    private fun killPlayer(victim: Player) {
+        anzahlMindern(victim)
+        addNameToDeadString(victim.name)
+        repository.deletePlayerById(victim.id)
+    }
+
+    private fun addNameToDeadString(name: String) {
+        tot = tot + "\n" + name
     }
 
     private fun anzahlMindern(player: Player) {
@@ -702,16 +630,16 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     private fun auswerten() {
-        data = mDatabaseHelper!!.data
-        data?.moveToFirst()
+        //data = mDatabaseHelper!!.data
+        //data?.moveToFirst()
 
         //Liebespar lebt; nur noch drei persoenn übrig
-        var verliebtGefundenAnzahl = 1
-        while (data?.moveToNext() == true) {
-            verliebtGefundenAnzahl++
-        }
+        /* var verliebtGefundenAnzahl = 1
+         while (data?.moveToNext() == true) {
+             verliebtGefundenAnzahl++
+         }*/
         if (liebenderEinsID != -1) {
-            if (verliebtGefundenAnzahl <= 3 && !liebespaarEntdeckt) {
+            if (repository.getRemainigPlayerCount() <= 3 && !liebespaarEntdeckt) {
                 nightListActivity.siegbildschirmOeffnen("liebespaar")
             }
         }
@@ -732,6 +660,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
         if (anzahlWeisserWerwolf + anzahlUrwolf + anzahlWerwolf == 0) {
             nightListActivity.siegbildschirmOeffnen("buerger")
         }
+
         data?.moveToFirst()
         var nichtverzaubertGefunden = false
         if (data?.getString(4)?.compareTo("ja") != 0) {
@@ -889,88 +818,34 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
 
     private fun nachtAuswerten() {
         var opferZweiID = -1
-        var werwolfopferGefunden = false
-        var werwolfOpferName: String? = ""
-        var werwolfOpferVerzaubert: String? = ""
-        var werwolfOpferCharakter = ""
+        // var werwolfopferGefunden = false
+        // var werwolfOpferName: String? = ""
+        // var werwolfOpferVerzaubert: String? = ""
+        // var werwolfOpferCharakter = ""
         if (werwolfOpferID != -1) //Werwolf existiert
         {
-            //Werte des Opfers ermitteln:
-            data!!.moveToFirst() //Daten des Werwolfopfers werden ermittelt
-            if (data!!.getInt(0) == werwolfOpferID) {
-                werwolfopferGefunden = true
-                werwolfOpferName = data!!.getString(1)
-                werwolfOpferCharakter = data!!.getString(2)
-                werwolfOpferVerzaubert = data!!.getString(4)
-            }
-            while (data!!.moveToNext() && !werwolfopferGefunden) {
-                if (data!!.getInt(0) == werwolfOpferID) {
-                    werwolfopferGefunden = true
-                    werwolfOpferName = data!!.getString(1)
-                    werwolfOpferCharakter = data!!.getString(2)
-                    werwolfOpferVerzaubert = data!!.getString(4)
-                }
-            }
+            val werwolfOpfer: Player = repository.getPlayerById(werwolfOpferID)
             if (urwolfVeto == 1) //Von Urwolf gerettet -> verwandelt sich in einen Werwolf
             {
                 werwolfDurchUrwolfID = werwolfOpferID
                 urwolfVeto = -1
-                anzahlWerwolf++
+                repository.addCharacterToWolfes(werwolfOpfer)
+
                 werwolfOpferID = -1
             } else {            //Auswertung aller Opfer
-                var waechterID = -1
-                var diebID = -1
-                var waechterGefunden = false
-                var diebGefunden = false
-
-
-                //Werte wächter bestimmen
-                if (anzahlWaechter > 0) {
-                    data!!.moveToFirst()
-                    if (data!!.getString(2).compareTo("waechter") == 0) {
-                        waechterGefunden = true
-                        waechterID = data!!.getInt(0)
-                    }
-                    while (data!!.moveToNext() && !waechterGefunden) {
-                        if (data!!.getString(2).compareTo("waechter") == 0) {
-                            waechterGefunden = true
-                            waechterID = data!!.getInt(0)
-                        }
-                    }
-                }
-
-                //werte Dieb bestimmen
-                if (anzahlDieb > 0) //todo auswetung das Diebes kann aussetzen, wenn der Wächter das eigentliche Werwolfopfer beschützt, sodass dieses überlebt.
-                {
-                    data!!.moveToFirst()
-                    if (data!!.getString(2).compareTo("dieb") == 0) {
-                        diebGefunden = true
-                        diebID = data!!.getInt(0)
-                    }
-                    while (data!!.moveToNext() && !diebGefunden) {
-                        if (data!!.getString(2).compareTo("dieb") == 0) {
-                            diebGefunden = true
-                            diebID = data!!.getInt(0)
-                        }
-                    }
-                }
+                val waechterID = repository.getPlayerByCharacter(NightStages.GUARDIAN)
+                val diebID = repository.getPlayerByCharacter(NightStages.GUARDIAN)
 
                 //wächter ist das Ofer
-                if (werwolfOpferCharakter.compareTo("waechter") == 0) {
-                    if (schlafplatzWaechterID != waechterID) //hier muss noch geprüft werden ob der dieb beim wächter schläft
+                if (werwolfOpfer.role == NightStages.GUARDIAN) {
+                    if (schlafplatzWaechterID != waechterID) // hier wird noch geprüft werden ob der dieb beim wächter schläft
                     {
                         if (waechterID != schlafplatzDiebID) {
                             werwolfOpferID = -1
-                            Log.d(
-                                ContentValues.TAG,
-                                "Werwolf tötet wächter, aber niemand daheim"
-                            )
+                            Log.d(ContentValues.TAG, "Werwolf tötet wächter, aber niemand daheim")
                         } else {
                             werwolfOpferID = diebID
-                            Log.d(
-                                ContentValues.TAG,
-                                "dieb bei wächter wächter aber nicht daheim"
-                            )
+                            Log.d(ContentValues.TAG, "dieb bei wächter wächter aber nicht daheim")
                         }
                     }
                 }
@@ -1051,21 +926,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
             }
         }
         if (hexeOpferID != -1) {
-            data!!.moveToFirst()
-            werwolfopferGefunden = false
-            if (data!!.getInt(0) == hexeOpferID) {
-                werwolfopferGefunden = true
-                werwolfOpferName = data!!.getString(1)
-                werwolfOpferCharakter = data!!.getString(2)
-            }
-            while (data!!.moveToNext() && !werwolfopferGefunden) {
-                if (data!!.getInt(0) == hexeOpferID) {
-                    werwolfopferGefunden = true
-                    werwolfOpferName = data!!.getString(1)
-                    werwolfOpferCharakter = data!!.getString(2)
-                }
-            }
-            sicherToeten(hexeOpferID, werwolfOpferName, werwolfOpferCharakter)
+            sicherToeten(repository.getPlayerById(hexeOpferID))
         }
     }
 
@@ -1094,7 +955,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     init {
-        urwolfVeto = if (anzahlUrwolf > 0) 0 else -1
+        urwolfVeto = if (repository.urwolfExists() > 0) 0 else -1
         repository = NightRepository(application)
         repository.generateCharacters()
     }

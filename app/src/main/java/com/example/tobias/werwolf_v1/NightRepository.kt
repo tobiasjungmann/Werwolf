@@ -164,6 +164,38 @@ class NightRepository(application: Application?) {
         // decrement the count of the character which role was part of teh parameter
     }
 
+    fun getRemainigPlayerCount(): Int{
+        // todo retunr number of current, living players
+    }
+
+    fun convertClassToCitizen(stage: NightStages) {
+        // set the count of the specific character to 0 and add the removed characters to the citizens
+    }
+
+    fun getNumberOfWolfes(): Int{
+        // add urwolf, wwolf and wolf together
+    }
+
+    fun urwolfExists(): Boolean{
+        //todo return whether an urwolf currently exists
+    }
+
+    fun addCharacterToWolfes(werwolfOpfer: Player) {
+        TODO("Not yet implemented - change id of player to werwolf -> adapt the other counts in classes")
+    }
+
+    fun getPlayerById(werwolfOpferID: Int): Player {
+        TODO("Not yet implemented - return the player for the given ID")
+    }
+
+    fun getPlayerByCharacter(character: NightStages): Int {
+        TODO("Not yet implemented - return the id of the player with the current class -> -1 it not existant")
+    }
+
+    fun deletePlayerById(id: Int) {
+        TODO("Not yet implemented - delete teh player with this id")
+    }
+
     init {
         val database = WerwolfDatabase.getInstance(application!!)
         werwolfDao = database!!.playerDao()
