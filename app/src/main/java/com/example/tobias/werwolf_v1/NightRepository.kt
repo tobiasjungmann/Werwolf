@@ -188,12 +188,28 @@ class NightRepository(application: Application?) {
         TODO("Not yet implemented - return the player for the given ID")
     }
 
-    fun getPlayerByCharacter(character: NightStages): Int {
+    fun getPlayerByCharacter(character: NightStages): Player {
         TODO("Not yet implemented - return the id of the player with the current class -> -1 it not existant")
     }
 
     fun deletePlayerById(id: Int) {
         TODO("Not yet implemented - delete teh player with this id")
+    }
+
+    fun convertChildToWolf() {
+        TODO("Not yet implemented - child was killed remove character, convert player stats")
+    }
+
+    fun moreCitizensThanWolfs(): Boolean {
+        TODO("Not yet implemented - Are there at least as many citizens as there are wolfs?")
+    }
+
+    fun everybodyCharmed(): Boolean{
+        TODO("return true if every remaining character has been chamred")
+    }
+
+    fun getAmountSpecialWolfes(): Int {
+        TODO("Not yet implemented - Add urwolf and weiserwolf")
     }
 
     init {

@@ -104,7 +104,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
             NightStages.FLUTE -> {
                 verzaubertAktuell = player.id
                 /* verzaubertCharakter = player.name
-                 verzaubertName = player.charmed todo maybe add again if necessary*/
+                 verzaubertName = player.charmed todo add charmed to the database once finished and teh next stage is selected*/
                 CharakterpositionErstInkementieren = true
 
             }
@@ -269,62 +269,6 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
             NightStages.ELECTION_DAY -> {
                 auswerten()
                 nightListActivity.updateUIForCharacter(currentCharacter, false, true)
-
-
-                //was macht der folgende Abschnitt????
-                if (verzaubertAktuell != -1) {
-                    mDatabaseHelper!!.deleteName("" + verzaubertAktuell)
-                    mDatabaseHelper!!.addVerzaubert(
-                        verzaubertName ?: "Invalid",
-                        verzaubertCharakter
-                    )
-                    data = mDatabaseHelper!!.data
-                    if (verzaubertAktuell == vorbildID) {
-                        data?.moveToFirst()
-                        var vorbildGefunden = false
-                        if (data?.getString(1)?.compareTo(verzaubertName) == 0) {
-                            vorbildGefunden = true
-                            vorbildID = data?.getInt(0) ?: -1
-                        }
-                        while (data?.moveToNext() == true && !vorbildGefunden) {
-                            if (data?.getString(1)?.compareTo(verzaubertName) == 0) {
-                                vorbildGefunden = true
-                                vorbildID = data?.getInt(0) ?: -1
-                            }
-                        }
-                    }
-                    if (liebenderEinsID == verzaubertAktuell) {
-                        data?.moveToFirst()
-                        var vorbildGefunden = false
-                        if (data?.getString(1)?.compareTo(verzaubertName) == 0) {
-                            vorbildGefunden = true
-                            liebenderEinsID = data?.getInt(0) ?: -1
-                        }
-                        while (data?.moveToNext() == true && !vorbildGefunden) {
-                            if (data?.getString(1)?.compareTo(verzaubertName) == 0) {
-                                vorbildGefunden = true
-                                liebenderEinsID = data?.getInt(0) ?: -1
-                            }
-                        }
-                    }
-                    if (liebenderZweiID == verzaubertAktuell) {
-                        data?.moveToFirst()
-                        var vorbildGefunden = false
-                        if (data?.getString(1)?.compareTo(verzaubertName) == 0) {
-                            vorbildGefunden = true
-                            liebenderZweiID = data?.getInt(0) ?: -1
-                        }
-                        while (data?.moveToNext() == true && !vorbildGefunden) {
-                            if (data?.getString(1)?.compareTo(verzaubertName) == 0) {
-                                vorbildGefunden = true
-                                liebenderZweiID = data?.getInt(0) ?: -1
-                            }
-                        }
-                    }
-                    verzaubertAktuell = -1
-                    verzaubertCharakter = ""
-                    verzaubertName = ""
-                }
             }
             NightStages.KILL_DAY -> {
                 buergeropferToeten()
@@ -394,7 +338,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
         //Opfer des Ritters töten
         if (ritterOpfer != -1) {
             tot = ""
-            sicherToeten(ritterOpfer, nameRitterOpfer, charakterRitterOpfer)
+            sicherToeten(repository.getPlayerById(ritterOpfer))
             nightListActivity.setDescription(tot, true)
             ritterOpfer = -1
             nameRitterOpfer = ""
@@ -442,12 +386,9 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     private fun sicherToeten(victim: Player) {
-        //  val jaegerGefunden = false
-        if ((victim.id == liebenderEinsID || victim.id == liebenderZweiID) && !liebespaarEntdeckt)
-        {
+        if ((victim.id == liebenderEinsID || victim.id == liebenderZweiID) && !liebespaarEntdeckt) {
             killVictimPartOfLovers(victim)
-        } else  //keiner des Liebespaares getötet
-        {
+        } else {
             killPlayer(victim)
             if (vorbildID == victim.id) {
                 vorbildGestorbenDialog()
@@ -466,9 +407,8 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     private fun anzahlMindern(player: Player) {
-// todo forward to player class - only special case for certain ones
         if (player.role == NightStages.HUNTER) {
-            Log.d(ContentValues.TAG, "jager inkrementiert")
+            Log.d(ContentValues.TAG, "jager dekrementiert")
             jaegerDialog()
         }
         repository.decrementCharacterAmount(player.role)
@@ -483,195 +423,56 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     private fun weisserWerwolfAuswerten() {
-        var opferZweiID = -1
         if (weisserWerwolfOpferID != -1) //Werwolf existiert
         {
-            //Werte des Opfers ermitteln:
-            data!!.moveToFirst() //Daten des Werwolfopfers werden ermittelt
-            var werwolfopferGefunden = false
-            var werwolfOpferName: String? = ""
-            var werwolfOpferVerzaubert: String? = ""
-            var werwolfOpferCharakter = ""
-            if (data!!.getInt(0) == werwolfOpferID) {
-                werwolfopferGefunden = true
-                werwolfOpferName = data!!.getString(1)
-                werwolfOpferCharakter = data!!.getString(2)
-                werwolfOpferVerzaubert = data!!.getString(4)
-            }
-            while (data!!.moveToNext() && !werwolfopferGefunden) {
-                if (data!!.getInt(0) == werwolfOpferID) {
-                    werwolfopferGefunden = true
-                    werwolfOpferName = data!!.getString(1)
-                    werwolfOpferCharakter = data!!.getString(2)
-                    werwolfOpferVerzaubert = data!!.getString(4)
-                }
-            }
-            var waechterID = -1
-            var diebID = -1
-            var waechterGefunden = false
-            var diebGefunden = false
+            val victim: Player = repository.getPlayerById(weisserWerwolfOpferID)
+            val thief: Player = repository.getPlayerByCharacter(NightStages.THIEF)
+            val guardian: Player = repository.getPlayerByCharacter(NightStages.GUARDIAN)
 
+            // todo auf den wwolf abstimmen - hat eine andere ID
+            victimIdHelper=weisserWerwolfOpferID
+            checkForGuardianPlacement(victim, guardian.id, thief.id)
+            val opferZweiID = checkForThiefPlacement(victim, guardian.id, thief.id)
+            weisserWerwolfOpferID=victimIdHelper
 
-            //Werte wächter bestimmen
-            if (anzahlWaechter > 0) {
-                data!!.moveToFirst()
-                if (data!!.getString(2).compareTo("waechter") == 0) {
-                    waechterGefunden = true
-                    waechterID = data!!.getInt(0)
-                }
-                while (data!!.moveToNext() && !waechterGefunden) {
-                    if (data!!.getString(2).compareTo("waechter") == 0) {
-                        waechterGefunden = true
-                        waechterID = data!!.getInt(0)
-                    }
-                }
-            }
-
-            //werte Dieb bestimmen
-            if (anzahlDieb > 0) {
-                data!!.moveToFirst()
-                if (data!!.getString(2).compareTo("dieb") == 0) {
-                    diebGefunden = true
-                    diebID = data!!.getInt(0)
-                }
-                while (data!!.moveToNext() && !diebGefunden) {
-                    if (data!!.getString(2).compareTo("dieb") == 0) {
-                        diebGefunden = true
-                        diebID = data!!.getInt(0)
-                    }
-                }
-            }
-
-            //wächter ist das Ofer
-            if (werwolfOpferCharakter.compareTo("waechter") == 0) {
-                if (schlafplatzWaechterID != waechterID) //hier muss noch geprüft werden ob der dieb beim wächter schläft
-                {
-                    if (waechterID != schlafplatzDiebID) {
-                        weisserWerwolfOpferID = -1
-                        Log.d(ContentValues.TAG, "Werwolf tötet wächter, aber niemand daheim")
-                    } else {
-                        werwolfOpferID = diebID
-                        Log.d(ContentValues.TAG, "dieb bei wächter wächter aber nicht daheim")
-                    }
-                }
-            }
-
-            //wächter rettet das Opfer
-            if (weisserWerwolfOpferID != -1) {
-                if (schlafplatzWaechterID == werwolfOpferID) {
-                    weisserWerwolfOpferID = -1
-                    Log.d(ContentValues.TAG, "Wächter hat das Opfer gerettet")
-                }
-            }
-
-
-            //Hat der Dieb was mit dem Opfer zu tun?
-            if (weisserWerwolfOpferID != -1 && anzahlDieb > 0) {
-                if (diebID != schlafplatzDiebID) //Dieb ist nicht daheim -> gilt als nicht normaler bürger
-                {
-                    if (schlafplatzDiebID == weisserWerwolfOpferID) {  //dieb ist beim Opfer -> muss auch sterben
-                        opferZweiID = diebID
-                    }
-                    if (anzahlWaechter > 0) {
-                        if (schlafplatzDiebID == waechterID) {
-                            weisserWerwolfOpferID = diebID
-                        }
-                    }
-                    if (diebID == weisserWerwolfOpferID) {
-                        weisserWerwolfOpferID = -1
-                    }
-                }
-            }
 
             //Attribute des Finalen Opfers bestimmen, dann töten
             if (weisserWerwolfOpferID != -1) {
-                data!!.moveToFirst() //Die werte müssen neu bestimmt werden, da der Dieb jetzt zum Opfergeworden sein kann.
-                werwolfopferGefunden = false
-                if (data!!.getInt(0) == weisserWerwolfOpferID) {
-                    werwolfopferGefunden = true
-                    werwolfOpferName = data!!.getString(1)
-                    werwolfOpferCharakter = data!!.getString(2)
-                }
-                while (data!!.moveToNext() && !werwolfopferGefunden) {
-                    if (data!!.getInt(0) == weisserWerwolfOpferID) {
-                        werwolfopferGefunden = true
-                        werwolfOpferName = data!!.getString(1)
-                        werwolfOpferCharakter = data!!.getString(2)
-                    }
-                }
                 if (weisserWerwolfOpferID == hexeOpferID) {
                     hexeOpferID = -1
                 }
-                sicherToeten(weisserWerwolfOpferID, werwolfOpferName, werwolfOpferCharakter)
+                sicherToeten(victim)
             }
 
             //Opfer 2 wird ermittelt und getötet
             if (opferZweiID != -1) {
-                data!!.moveToFirst()
-                werwolfopferGefunden = false
-                if (data!!.getInt(0) == opferZweiID) {
-                    werwolfopferGefunden = true
-                    werwolfOpferName = data!!.getString(1)
-                    werwolfOpferCharakter = data!!.getString(2)
-                }
-                while (data!!.moveToNext() && !werwolfopferGefunden) {
-                    if (data!!.getInt(0) == opferZweiID) {
-                        werwolfopferGefunden = true
-                        werwolfOpferName = data!!.getString(1)
-                        werwolfOpferCharakter = data!!.getString(2)
-                    }
-                }
                 if (opferZweiID == hexeOpferID) {
                     hexeOpferID = -1
                 }
-                sicherToeten(opferZweiID, werwolfOpferName, werwolfOpferCharakter)
+                sicherToeten(repository.getPlayerById(opferZweiID))
             }
         }
     }
 
     private fun auswerten() {
-        //data = mDatabaseHelper!!.data
-        //data?.moveToFirst()
-
-        //Liebespar lebt; nur noch drei persoenn übrig
-        /* var verliebtGefundenAnzahl = 1
-         while (data?.moveToNext() == true) {
-             verliebtGefundenAnzahl++
-         }*/
         if (liebenderEinsID != -1) {
             if (repository.getRemainigPlayerCount() <= 3 && !liebespaarEntdeckt) {
                 nightListActivity.siegbildschirmOeffnen("liebespaar")
             }
         }
-        var anzahlNichtWerwolf =
-            anzahlRitter + anzahlDieb + anzahlMaedchen + anzahlJaeger + anzahlWaechter + anzahlFreunde + anzahlHexe + anzahlSeher + anzahlBuerger + anzahlFloetenspieler + anzahlAmor + anzahlJunges
-        if (werwolfDurchUrwolfID != -1) {
-            anzahlNichtWerwolf--
-        }
-        if (anzahlNichtWerwolf < anzahlWeisserWerwolf + anzahlUrwolf + anzahlWerwolf) {
-            if (anzahlUrwolf + anzahlWerwolf > 0) {
+        if (repository.moreCitizensThanWolfs()) {
+            if (repository.getAmountSpecialWolfes() > 0) {
                 nightListActivity.siegbildschirmOeffnen("werwoelfe")
             } else {
                 nightListActivity.siegbildschirmOeffnen("ww")
             }
         }
-        val anzahltest = anzahlWeisserWerwolf + anzahlUrwolf + anzahlWerwolf
-        //keine Werwölfe mehr da
-        if (anzahlWeisserWerwolf + anzahlUrwolf + anzahlWerwolf == 0) {
+
+        if (repository.getNumberOfWolfes() == 0) {
             nightListActivity.siegbildschirmOeffnen("buerger")
         }
 
-        data?.moveToFirst()
-        var nichtverzaubertGefunden = false
-        if (data?.getString(4)?.compareTo("ja") != 0) {
-            nichtverzaubertGefunden = true
-        }
-        while (data?.moveToNext() == true && !nichtverzaubertGefunden) {
-            if (data?.getString(4)?.compareTo("ja") != 0) {
-                nichtverzaubertGefunden = true
-            }
-        }
-        if (!nichtverzaubertGefunden) {
+        if (repository.everybodyCharmed()) {
             nightListActivity.siegbildschirmOeffnen("floetenspieler")
         }
     }
@@ -679,48 +480,15 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
 
     private fun jaegerToeten() {
         nightListActivity.setPlayerListVisibility(View.GONE)
-
         jaegerAktiv = false
-        var jaegerOpferGefunden = false
-        var jaegerOpferName: String? = ""
-        var jaegerOpferCharakter: String? = ""
-        if (data!!.getInt(0) == jaegerOpfer) {
-            jaegerOpferGefunden = true
-            jaegerOpferName = data!!.getString(1)
-            jaegerOpferCharakter = data!!.getString(2)
-        }
-        while (data!!.moveToNext() && !jaegerOpferGefunden) {
-            if (data!!.getInt(0) == hexeOpferID) {
-                jaegerOpferGefunden = true
-                jaegerOpferName = data!!.getString(1)
-                jaegerOpferCharakter = data!!.getString(2)
-            }
-        }
-        sicherToeten(jaegerOpfer, jaegerOpferName, jaegerOpferCharakter)
+        sicherToeten(repository.getPlayerById(jaegerOpfer))
         charakterPosition = charakterPositionJaegerBackup
 
         startNextStage()
     }
 
     private fun buergeropferToeten() {
-        var charaktername: String? = ""
-        var persname: String? = ""
-        var persGefunden = false
-        data = mDatabaseHelper!!.data
-        data?.moveToFirst()
-        if (data?.getInt(0) == buergerOpfer) {
-            persGefunden = true
-            charaktername = data?.getString(2)
-            persname = data?.getString(1)
-        }
-        while (data?.moveToNext() == true && !persGefunden) {
-            if (data?.getInt(0) == buergerOpfer) {
-                persGefunden = true
-                charaktername = data?.getString(2)
-                persname = data?.getString(1)
-            }
-        }
-        sicherToeten(buergerOpfer, persname, charaktername)
+        sicherToeten(repository.getPlayerById(buergerOpfer))
         auswerten()
     }
 
@@ -742,64 +510,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
             "Das Vorbild ist verstorben. Ab der nächsten Nacht wacht das Junge mit den Werwölfen gemeinsam auf.",
             true
         )
-
-        var jungesGefunden = false
-        var jungesID = -1
-        var jungesName: String? = ""
-        var jungesVerzaubert: String? = ""
-        anzahlWerwolf++
-        anzahlJunges--
-
-        //junges als Eintrag finden und durch einen werwolf ersetzten
-        data!!.moveToFirst()
-        if (data!!.getString(2).compareTo("junges") == 0) {
-            jungesGefunden = true
-            jungesID = data!!.getInt(0)
-            jungesName = data!!.getString(1)
-            jungesVerzaubert = data!!.getString(4)
-            mDatabaseHelper!!.deleteName("" + jungesID)
-            mDatabaseHelper!!.addjungesExtra(jungesName, jungesVerzaubert)
-        }
-        while (data!!.moveToNext() && !jungesGefunden) {
-            if (data!!.getString(2).compareTo("junges") == 0) {
-                jungesGefunden = true
-                jungesID = data!!.getInt(0)
-                jungesName = data!!.getString(1)
-                jungesVerzaubert = data!!.getString(4)
-                mDatabaseHelper!!.deleteName("" + jungesID)
-                mDatabaseHelper!!.addjungesExtra(jungesName, jungesVerzaubert)
-            }
-        }
-
-        //Wenn jungesID gleich mit einer der liebenden ID, so muss diese die neue ID des Elementes erhalten Wird anhand des Namen ermittelt
-        if (liebenderEinsID == jungesID) {
-            data!!.moveToFirst()
-            var vorbildGefunden = false
-            if (data!!.getString(1).compareTo(jungesName!!) == 0) {
-                vorbildGefunden = true
-                liebenderEinsID = data!!.getInt(0)
-            }
-            while (data!!.moveToNext() && !vorbildGefunden) {
-                if (data!!.getString(1).compareTo(jungesName) == 0) {
-                    vorbildGefunden = true
-                    liebenderEinsID = data!!.getInt(0)
-                }
-            }
-        }
-        if (liebenderZweiID == jungesID) {
-            data!!.moveToFirst()
-            var vorbildGefunden = false
-            if (data!!.getString(1).compareTo(jungesName!!) == 0) {
-                vorbildGefunden = true
-                liebenderZweiID = data!!.getInt(0)
-            }
-            while (data!!.moveToNext() && !vorbildGefunden) {
-                if (data!!.getString(1).compareTo(jungesName) == 0) {
-                    vorbildGefunden = true
-                    liebenderZweiID = data!!.getInt(0)
-                }
-            }
-        }
+        repository.convertChildToWolf()
     }
 
     fun witchKill(): Boolean {
@@ -817,11 +528,6 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     private fun nachtAuswerten() {
-        var opferZweiID = -1
-        // var werwolfopferGefunden = false
-        // var werwolfOpferName: String? = ""
-        // var werwolfOpferVerzaubert: String? = ""
-        // var werwolfOpferCharakter = ""
         if (werwolfOpferID != -1) //Werwolf existiert
         {
             val werwolfOpfer: Player = repository.getPlayerById(werwolfOpferID)
@@ -837,92 +543,26 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
                 val diebID = repository.getPlayerByCharacter(NightStages.GUARDIAN)
 
                 //wächter ist das Ofer
-                if (werwolfOpfer.role == NightStages.GUARDIAN) {
-                    if (schlafplatzWaechterID != waechterID) // hier wird noch geprüft werden ob der dieb beim wächter schläft
-                    {
-                        if (waechterID != schlafplatzDiebID) {
-                            werwolfOpferID = -1
-                            Log.d(ContentValues.TAG, "Werwolf tötet wächter, aber niemand daheim")
-                        } else {
-                            werwolfOpferID = diebID
-                            Log.d(ContentValues.TAG, "dieb bei wächter wächter aber nicht daheim")
-                        }
-                    }
-                }
-
-                //wächter rettet das Opfer
-                if (werwolfOpferID != -1) {
-                    if (schlafplatzWaechterID == werwolfOpferID) {
-                        werwolfOpferID = waechterID
-                        werwolfOpferID = -1
-                        Log.d(ContentValues.TAG, "Wächter hat das Opfer gerettet")
-                    }
-                }
-
-
-                //Hat der Dieb was mit dem Opfer zu tun?
-                if (werwolfOpferID != -1 && anzahlDieb > 0) {
-                    if (diebID != schlafplatzDiebID) //Dieb ist nicht daheim -> gilt als nicht normaler bürger
-                    {
-                        if (schlafplatzDiebID == werwolfOpferID) {  //dieb ist beim Opfer -> muss auch sterben
-                            opferZweiID = diebID
-                        }
-                        if (anzahlWaechter > 0) {
-                            if (schlafplatzDiebID == waechterID) {
-                                werwolfOpferID = diebID
-                            }
-                        }
-                        if (diebID == werwolfOpferID) {
-                            werwolfOpferID = -1
-                        }
-                    }
-                }
+                victimIdHelper=werwolfOpferID
+                checkForGuardianPlacement(werwolfOpfer, waechterID.id, diebID.id)
+                val opferZweiID = checkForThiefPlacement(werwolfOpfer, waechterID.id, diebID.id)
+                werwolfOpferID=victimIdHelper
 
                 //Attribute des Finalen Opfers bestimmen, dann töten
                 if (werwolfOpferID != -1) {
-                    data!!.moveToFirst() //Die werte müssen neu bestimmt werden, da der Dieb jetzt zum Opfergeworden sein kann.
-                    werwolfopferGefunden = false
-                    if (data!!.getInt(0) == werwolfOpferID) {
-                        werwolfopferGefunden = true
-                        werwolfOpferName = data!!.getString(1)
-                        werwolfOpferCharakter = data!!.getString(2)
-                    }
-                    while (data!!.moveToNext() && !werwolfopferGefunden) {
-                        if (data!!.getInt(0) == werwolfOpferID) {
-                            werwolfopferGefunden = true
-                            werwolfOpferName = data!!.getString(1)
-                            werwolfOpferCharakter = data!!.getString(2)
-                        }
-                    }
                     if (werwolfOpferID == hexeOpferID) {
                         hexeOpferID = -1
                     }
-                    sicherToeten(werwolfOpferID, werwolfOpferName, werwolfOpferCharakter)
+                    sicherToeten(werwolfOpfer)
                 }
 
                 //Opfer 2 wird ermittelt und getötet
                 if (opferZweiID != -1) {
-                    data!!.moveToFirst()
-                    werwolfopferGefunden = false
-                    if (data!!.getInt(0) == opferZweiID) {
-                        werwolfopferGefunden = true
-                        werwolfOpferName = data!!.getString(1)
-                        werwolfOpferCharakter = data!!.getString(2)
-                    }
-                    while (data!!.moveToNext() && !werwolfopferGefunden) {
-                        if (data!!.getInt(0) == opferZweiID) {
-                            werwolfopferGefunden = true
-                            werwolfOpferName = data!!.getString(1)
-                            werwolfOpferCharakter = data!!.getString(2)
-                        }
-                    }
                     if (opferZweiID == hexeOpferID) {
                         hexeOpferID = -1
                     }
-                    sicherToeten(opferZweiID, werwolfOpferName, werwolfOpferCharakter)
+                    sicherToeten(repository.getPlayerById(opferZweiID))
                 }
-
-                //Schlafplätze spielen dabei keien Rolle mehr sollte es ein hexen opfer geben wird es hier getötet
             }
         }
         if (hexeOpferID != -1) {
@@ -930,6 +570,48 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
         }
     }
 
+    private var victimIdHelper=-1
+    private fun checkForGuardianPlacement(werwolfOpfer: Player, waechterID: Int, diebID: Int) {
+        if (werwolfOpfer.role == NightStages.GUARDIAN) {
+            if (schlafplatzWaechterID != waechterID) // hier wird noch geprüft werden ob der dieb beim wächter schläft
+            {
+                if (waechterID != schlafplatzDiebID) {
+                    victimIdHelper = -1
+                    Log.d(ContentValues.TAG, "Werwolf tötet wächter, aber niemand daheim")
+                } else {
+                    victimIdHelper = diebID
+                    Log.d(ContentValues.TAG, "dieb bei wächter wächter aber nicht daheim")
+                }
+            }
+        }
+
+        //wächter rettet das Opfer
+        if (victimIdHelper != -1) {
+            if (schlafplatzWaechterID == victimIdHelper) {
+                victimIdHelper = waechterID
+                Log.d(ContentValues.TAG, "Wächter hat das Opfer gerettet")
+            }
+        }
+    }
+
+    private fun checkForThiefPlacement(werwolfOpfer: Player, waechterID: Int, diebID: Int): Int {
+        //Hat der Dieb was mit dem Opfer zu tun?
+        if (victimIdHelper != -1 && schlafplatzDiebID != -1) {
+            if (diebID != schlafplatzDiebID) //Dieb ist nicht daheim -> gilt als nicht normaler bürger
+            {
+                if (schlafplatzDiebID == waechterID && waechterID != schlafplatzWaechterID) {
+                    victimIdHelper = diebID
+                } else if (schlafplatzDiebID == victimIdHelper) {  //dieb ist beim Opfer -> muss auch sterben
+                    return diebID
+                }
+
+                if (diebID == victimIdHelper) {
+                    victimIdHelper = -1
+                }
+            }
+        }
+        return -1
+    }
 
     fun toggleDescriptionLength(context: Context): String {
         showLongTexts = !showLongTexts
@@ -955,9 +637,9 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
     }
 
     init {
-        urwolfVeto = if (repository.urwolfExists() > 0) 0 else -1
         repository = NightRepository(application)
         repository.generateCharacters()
+        urwolfVeto = if (repository.urwolfExists()) 0 else -1
     }
 
     override fun attachView(view: NightListContract.View) {
