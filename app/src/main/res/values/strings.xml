@@ -71,7 +71,7 @@
     <string name="manual_text_without_cards">Wie in II.Karten beschrieben muss die Anzahl der verschiedenen Charaktere sowie die Namen der mitspielenden Personen eingegeben werden.\n\nDie App lost jeder Person dann eine Rolle zu. Nacheinander wird je ein Namen, sowie dessen Karte ausgegeben. Der Spielleiter weckt die entsprechende Person und zeigt die Karte. Jeder Mitspieler muss sie sich merken. Sie kann nicht erneut gezeigt werden.</string>
 
     <string name="night_desc_werwolf">Jetzt wachen die Werwölfe auf und suchen sich ihr Opfer für diese Nacht aus. Haben sie sich entschieden schlafen sie auch schon wieder ein.</string>
-    <string name="night_desc_citizen">empty</string>
+    <string name="night_desc_citizen">Abstimmphase, wen wählt das Dorf als Schuldigen aus? </string>
     <string name="night_desc_armor">Als erstes erwacht der Amor und zeigt auf zwei Personen, die sich augenblicklich unsterblich ineinander verlieben. - Amor schläft wieder ein. Ich tippe die beiden verliebten jetzt an un sie schauen sich tief in die Augen. - Auch sie schlafen jetzt wieder ein.</string>
     <string name="night_desc_witch">Als nächstes wacht die Hexe auf. Sie kann das Opfer -auf Opfer zeigen- retten, nichtstun, oder  eine weitere Person mit in den Tod reißen. -Dabei die drei Handzeichen für die Hexe sichtbar vormachen.</string>
     <string name="night_desc_guardian">Der Wächter wählt eine Person, die er diese Nacht beschützen möchte. - Der Wächter schläft wieder ein.</string>

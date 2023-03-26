@@ -13,9 +13,11 @@ import androidx.lifecycle.AndroidViewModel
 import com.example.tobias.werwolf_v1.database.models.CharacterClass
 import com.example.tobias.werwolf_v1.database.models.DatabaseHelper
 import com.example.tobias.werwolf_v1.database.models.Player
+import com.example.tobias.werwolf_v1.database.models.WerwolfRepository
 
 class NightListViewModel(application: Application) : AndroidViewModel(application),
     NightListContract.Presenter {
+    private var repository: NightRepository
     private lateinit var nightListActivity: NightListContract.View
     private lateinit var currentCharacter: CharacterClass
     private var currentStage: NightStages = NightStages.AMOR
@@ -49,7 +51,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
     private var hexeOpferID = -1
     private var urwolfVeto = 0
     private var buergerOpfer = -1
-    private var tot: String? = null
+    private var tot: String = ""
     private var liebespaarEntdeckt = false
     private var ritterletzteRundeGetoetet = false
     private var CharakterpositionErstInkementieren = false
@@ -106,8 +108,8 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
             }
             NightStages.FLUTE -> {
                 verzaubertAktuell = player.id
-               /* verzaubertCharakter = player.name
-                verzaubertName = player.charmed todo maybe add again if necessary*/
+                /* verzaubertCharakter = player.name
+                 verzaubertName = player.charmed todo maybe add again if necessary*/
                 CharakterpositionErstInkementieren = true
 
             }
@@ -136,8 +138,8 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
             }
             NightStages.KNIGHT -> {
                 ritterOpfer = player.id
-             /*   nameRitterOpfer = name
-                charakterRitterOpfer = charakter*/
+                /*   nameRitterOpfer = name
+                   charakterRitterOpfer = charakter*/
             }
             else -> {}
         }
@@ -160,7 +162,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
                 }
             } else {
                 if (id != liebenderEinsID) {
-                    liebenderZweiID =id
+                    liebenderZweiID = id
                     listeAuswahlGenuegend++
                 }
             }
@@ -185,7 +187,6 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
         }
         return true
     }
-
 
 
     private fun startNextStage() {
@@ -237,10 +238,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
                 }
             }
             NightStages.WHITE_WOLF -> if (anzahlWeisserWerwolf > 0 && !wwletzteRundeAktiv) {
-                changeUIToNewCharacter(nightListViewModel.generateCharacters()[0]) // todo change to whiteWolf
-                setStatusNextButton(false)
-                nightListAdapter.notifyDataSetChanged()
-                binding.personen.visibility = View.VISIBLE
+                nightListActivity.updateUIForCharacter(currentCharacter, false, true)
                 wwletzteRundeAktiv = true
             } else {
                 wwletzteRundeAktiv = false
@@ -248,16 +246,15 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
                 startNextStage()
             }
             NightStages.URWOLF -> if (anzahlUrwolf > 0 && urwolfVeto != -1) {
-                binding.personen.visibility = View.GONE
-                binding.layoutUrwolf.visibility = View.VISIBLE
-                hangeUIToNewCharacter(nightListViewModel.generateCharacters()[0])      // todo change to urwolf
+                nightListActivity.updateUIForCharacter(currentCharacter, false, false)
+                nightListActivity.setUrwolfVisibility(View.VISIBLE)
                 forwardStage()
             } else {
                 forwardStage()
                 startNextStage()
             }
             NightStages.WITCH -> {
-                binding.layoutUrwolf.visibility = View.GONE
+                nightListActivity.setUrwolfVisibility(View.GONE)
                 if (anzahlHexe > 0) {
                     if (trankLebenEinsetzbar || trankTodEinsetzbar) {
                         werwolfOpferIDBackupHexe = werwolfOpferID
@@ -279,11 +276,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
             NightStages.EVALUATE_NIGHT -> evaluateNight()
             NightStages.ELECTION_DAY -> {
                 auswerten()
-                nightListActivity.setDescription("Abstimmphase, wen wählt das Dorf als Schuldigen aus? ")
-                //todo: Möglichkeit keinen zu töten, weiter immer klickbar, aber dann dialog der nachfrägt
-                setStatusNextButton(false)
-                nightListAdapter.notifyDataSetChanged()
-                binding.personen.visibility = View.VISIBLE
+                nightListActivity.updateUIForCharacter(currentCharacter, false, true)
 
 
                 //was macht der folgende Abschnitt????
@@ -344,7 +337,8 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
             NightStages.KILL_DAY -> {
                 buergeropferToeten()
                 if (!jaegerAktiv) {
-                    binding.personen.visibility = View.GONE
+                    nightListActivity.setPlayerListVisibility(View.GONE)
+
                     nightListActivity.setDescription(
                         "Das ganze Dorf schläft ein.\n\nHinweis: Die Reihenfolge der Personen in der Liste hat sich geändert.",
                         false
@@ -393,10 +387,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
         charakterPositionJaegerBackup = charakterPosition
         charakterPosition = 20
         jaegerAktiv = true      // todo adapt to hunter
-        changeUIToNewCharacter(nightListViewModel.generateCharacters()[0]) // todo change to hunter
-        setStatusNextButton(false)
-        nightListAdapter?.notifyDataSetChanged()
-        binding.personen.visibility = View.VISIBLE
+        nightListActivity.updateUIForCharacter(currentCharacter,false, true)
     }
 
     fun evaluateNight() {
@@ -412,17 +403,13 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
         if (ritterOpfer != -1) {
             tot = ""
             sicherToeten(ritterOpfer, nameRitterOpfer, charakterRitterOpfer)
-            nightListActivity.setDescription(
-                """
-                        $tot
-                        """.trimIndent(), true
-            )
+            nightListActivity.setDescription(tot, true)
             ritterOpfer = -1
             nameRitterOpfer = ""
             charakterRitterOpfer = ""
         }
         auswerten()
-        if (tot!!.compareTo("") == 0) {
+        if (tot.compareTo("") == 0) {
             nightListActivity.setDescription("Das ganze Dorf erwacht, alle haben überlebt", false)
         } else {
             nightListActivity.setDescription("Das ganze Dorf erwacht außer: $tot", false)
@@ -431,16 +418,8 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
 
         //wenn Jäger gestorben, entsprechende charakterposition
         if (!jaegerAktiv) {
-            binding.layoutHexeNacht.visibility = View.GONE
-            setStatusNextButton(true)
-            binding.personen.visibility = View.INVISIBLE
-            binding.textSpielstand.setText(R.string.village)
-            binding.layoutSpielstand.background?.setTint(
-                ContextCompat.getColor(
-                    this,
-                    R.color.green
-                )
-            )
+            nightListActivity.deactivateHunter()
+
             forwardStage()
         } else {
             nightListActivity.setDescription(
@@ -450,7 +429,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
         }
         if (ritterAktiv) {
             nightListActivity.setDescription(
-                "\n\nDer Ritter ist verstorben. In der nächsten Nacht stirbt der Nächste Werwolf zur Rechten des Ritters.",
+                "\n\nDer Ritter ist verstorben. In der nächsten Nacht stirbt der nächste Werwolf zur Rechten des Ritters.",
                 true
             )
         }
@@ -558,65 +537,16 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
         data = mDatabaseHelper!!.data
     }
 
-    private fun anzahlMindern(charaktername: String, charakterID: Int) {
-
-        // todo vermutlich nur weitergeben -> an den current chracter/repository ->
-        currentCharacter.if (charakterID == werwolfDurchUrwolfID) {
-            anzahlWerwolf--
+    private fun anzahlMindern(player: Player) {
+// todo forward to player class - only special case for certain ones
+        if (player.role == NightStages.HUNTER) {
+            Log.d(ContentValues.TAG, "jager inkrementiert")
+            jaegerDialog()
         }
-        when (charaktername) {
-            "werwolf" -> if (anzahlWerwolf > 0) {
-                anzahlWerwolf--
-                //Toast.makeText(Nacht_Liste.this, "mindern anzahlWerwolf:" + anzahlWerwolf, Toast.LENGTH_SHORT).show();
-            }
-            "buerger" -> if (anzahlBuerger > 0) {
-                anzahlBuerger--
-                //Toast.makeText(Nacht_Liste.this, "mindern anzahlBuerger:" + anzahlBuerger, Toast.LENGTH_SHORT).show();
-            }
-            "seher" -> if (anzahlSeher > 0) {
-                anzahlSeher--
-            }
-            "hexe" -> if (anzahlHexe > 0) {
-                anzahlHexe--
-                //Toast.makeText(Nacht_Liste.this, "mindern anzahlHexe:" + anzahlHexe, Toast.LENGTH_SHORT).show();
-            }
-            "floetenspieler" -> if (anzahlFloetenspieler > 0) {
-                anzahlFloetenspieler--
-            }
-            "freunde" -> if (anzahlFreunde > 0) {
-                anzahlFreunde--
-            }
-            "amor" -> if (anzahlAmor > 0) {
-                anzahlAmor--
-            }
-            "urwolf" -> if (anzahlUrwolf > 0) {
-                anzahlUrwolf--
-            }
-            "weisserwerwolf" -> if (anzahlWeisserWerwolf > 0) {
-                anzahlWeisserWerwolf--
-            }
-            "waechter" -> if (anzahlWaechter > 0) {
-                anzahlWaechter--
-            }
-            "junges" -> if (anzahlJunges > 0) {
-                anzahlJunges--
-            }
-            "jaeger" -> if (anzahlJaeger > 0) {
-                Log.d(ContentValues.TAG, "jager inkrementiert")
-                jaegerDialog()
-                anzahlJaeger--
-            }
-            "maedchen" -> if (anzahlMaedchen > 0) {
-                anzahlMaedchen--
-            }
-            "dieb" -> if (anzahlDieb > 0) {
-                anzahlDieb--
-            }
-            "ritter" -> if (anzahlRitter > 0) {
-                anzahlRitter--
-                ritterDialog()
-                ritterletzteRundeGetoetet = true
-            }
+        repository.decrementCharacterAmount(player.role)
+        if (player.role == NightStages.KNIGHT) {
+            ritterDialog()
+            ritterletzteRundeGetoetet = true
         }
     }
 
@@ -1165,6 +1095,7 @@ class NightListViewModel(application: Application) : AndroidViewModel(applicatio
 
     init {
         urwolfVeto = if (anzahlUrwolf > 0) 0 else -1
+        repository = NightRepository(application)
         repository.generateCharacters()
     }
 

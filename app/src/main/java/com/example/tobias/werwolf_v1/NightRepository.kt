@@ -1,8 +1,16 @@
 package com.example.tobias.werwolf_v1
 
+import android.app.Application
+import androidx.lifecycle.LiveData
 import com.example.tobias.werwolf_v1.database.models.CharacterClass
+import com.example.tobias.werwolf_v1.database.models.Player
+import com.example.tobias.werwolf_v1.database.models.WerwolfDao
+import com.example.tobias.werwolf_v1.database.models.WerwolfDatabase
 
-class NightRepository {
+class NightRepository(application: Application?) {
+
+    private val werwolfDao: WerwolfDao
+    val allPlayers: LiveData<List<Player>>
 
     fun generateCharacters(): ArrayList<CharacterClass> {       // todo load from db
         return arrayListOf(
@@ -142,5 +150,23 @@ class NightRepository {
                 R.string.night_desc_wolf_child
             )
         )
+    }
+
+    fun getPlayerAtPosition(position: Int): Player {
+        TODO("Not yet implemented")
+    }
+
+    fun getCharacterByStage(stage: NightStages): CharacterClass {
+        TODO("Not yet implemented")
+    }
+
+    fun decrementCharacterAmount(role: NightStages) {
+        // decrement the count of the character which role was part of teh parameter
+    }
+
+    init {
+        val database = WerwolfDatabase.getInstance(application!!)
+        werwolfDao = database!!.playerDao()
+        allPlayers = werwolfDao.allPlayers
     }
 }

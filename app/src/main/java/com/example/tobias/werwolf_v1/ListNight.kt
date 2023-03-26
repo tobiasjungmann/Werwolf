@@ -54,32 +54,38 @@ class ListNight : AppCompatActivity(), View.OnClickListener, NightListContract.V
             nightListAdapter.notifyDataSetChanged()
         }
     }
-    override fun setPlayerListVisibility(visibility: Int){
+
+    override fun setPlayerListVisibility(visibility: Int) {
         binding.personen.visibility = visibility
     }
-   override fun activateWitchDialog(trankLebenEinsetzbar: Boolean, trankTodEinsetzbar: Boolean){
+
+    override fun setUrwolfVisibility(visibility: Int) {
+        binding.layoutUrwolf.visibility = visibility
+    }
+
+    override fun activateWitchDialog(trankLebenEinsetzbar: Boolean, trankTodEinsetzbar: Boolean) {
 
 
-       //todo, wenn nur eine Option übrig ist eien entsprechenden Rand einfügen
-       if (trankLebenEinsetzbar || trankTodEinsetzbar) {
-           binding.layoutHexeNacht.visibility = View.VISIBLE
-           if (!(trankLebenEinsetzbar && trankTodEinsetzbar)) {
-               if (trankLebenEinsetzbar) //leben anzaeigen, sonst nur tod
-               {
-                   binding.layoutRettenHexe.visibility = View.VISIBLE
-                   binding.toetenLayoutHexe.visibility = View.GONE
-               } else {
-                   val params = LinearLayout.LayoutParams(
-                       LinearLayout.LayoutParams.MATCH_PARENT,
-                       LinearLayout.LayoutParams.WRAP_CONTENT
-                   )
-                   params.setMargins(16, 16, 16, 16)
-                   binding.toetenLayoutHexe.layoutParams = params
-                   binding.layoutRettenHexe.visibility = View.GONE
-                   binding.toetenLayoutHexe.visibility = View.VISIBLE
-               }
-           }
-       }
+        //todo, wenn nur eine Option übrig ist eien entsprechenden Rand einfügen
+        if (trankLebenEinsetzbar || trankTodEinsetzbar) {
+            binding.layoutHexeNacht.visibility = View.VISIBLE
+            if (!(trankLebenEinsetzbar && trankTodEinsetzbar)) {
+                if (trankLebenEinsetzbar) //leben anzaeigen, sonst nur tod
+                {
+                    binding.layoutRettenHexe.visibility = View.VISIBLE
+                    binding.toetenLayoutHexe.visibility = View.GONE
+                } else {
+                    val params = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                    )
+                    params.setMargins(16, 16, 16, 16)
+                    binding.toetenLayoutHexe.layoutParams = params
+                    binding.layoutRettenHexe.visibility = View.GONE
+                    binding.toetenLayoutHexe.visibility = View.VISIBLE
+                }
+            }
+        }
     }
 
     override fun onBackPressed() {
@@ -101,8 +107,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener, NightListContract.V
     }
 
 
-   override fun updateUIForCharacter(currentCharacter: CharacterClass, b: Boolean, listVisible: Boolean) {
-        setStatusNextButton(b)
+    override fun updateUIForCharacter(
+        currentCharacter: CharacterClass,
+        nextActivated: Boolean,
+        listVisible: Boolean
+    ) {
+        setStatusNextButton(nextActivated)
         changeUIToNewCharacter(currentCharacter)
         if (listVisible) {
             nightListAdapter.notifyDataSetChanged()
@@ -112,15 +122,27 @@ class ListNight : AppCompatActivity(), View.OnClickListener, NightListContract.V
         }
     }
 
-    override fun setDescription(text: String, append: Boolean){
-        if (append){
+    override fun setDescription(text: String, append: Boolean) {
+        if (append) {
             val s = binding.description.text.toString()
-            binding.description.text=s+text
-        }else{
-            binding.description.text=text
+            binding.description.text = s + text
+        } else {
+            binding.description.text = text
         }
     }
 
+    override fun deactivateHunter() {
+        binding.layoutHexeNacht.visibility = android.view.View.GONE
+        setStatusNextButton(true)
+        binding.personen.visibility = android.view.View.INVISIBLE
+        binding.textSpielstand.setText(R.string.village)
+        binding.layoutSpielstand.background?.setTint(
+            ContextCompat.getColor(
+                this,
+                R.color.green
+            )
+        )
+    }
     fun setStatusNextButton(status: Boolean) {
         binding.weiterNacht.isClickable = status
         var help = R.color.blue_unclickable
@@ -164,8 +186,6 @@ class ListNight : AppCompatActivity(), View.OnClickListener, NightListContract.V
         nightListAdapter.notifyDataSetChanged()
         binding.personen.visibility = View.VISIBLE
     }*/
-
-
 
 
     override fun onClick(v: View) {
