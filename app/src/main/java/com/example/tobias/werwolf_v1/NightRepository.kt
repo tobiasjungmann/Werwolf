@@ -12,6 +12,7 @@ class NightRepository {
                 R.color.werwolf,
                 true,
                 true,
+                NightStages.WOLF,
                 R.string.night_desc_werwolf
             ),
             CharacterClass(
@@ -20,6 +21,7 @@ class NightRepository {
                 R.color.citizen,
                 true,
                 false,
+                NightStages.EVALUATE_NIGHT,
                 R.string.night_desc_citizen
             ),
             CharacterClass(
@@ -28,6 +30,7 @@ class NightRepository {
                 R.color.amor,
                 false,
                 false,
+                NightStages.AMOR,
                 R.string.night_desc_armor
             ),
             CharacterClass(
@@ -36,6 +39,7 @@ class NightRepository {
                 R.color.witch,
                 false,
                 false,
+                NightStages.WITCH,
                 R.string.night_desc_witch
             ),
             CharacterClass(
@@ -44,6 +48,7 @@ class NightRepository {
                 R.color.guradian,
                 false,
                 false,
+                NightStages.GUARDIAN,
                 R.string.night_desc_guardian
             ),
             CharacterClass(
@@ -52,6 +57,7 @@ class NightRepository {
                 R.color.girl,
                 false,
                 false,
+                NightStages.GIRL,
                 R.string.night_desc_girl
             ),
             CharacterClass(
@@ -60,6 +66,7 @@ class NightRepository {
                 R.color.seher,
                 false,
                 false,
+                NightStages.SEHER,
                 R.string.night_desc_seher
             ),
             CharacterClass(
@@ -68,6 +75,7 @@ class NightRepository {
                 R.color.thief,
                 false,
                 false,
+                NightStages.THIEF,
                 R.string.night_desc_thief
             ),
             CharacterClass(
@@ -76,6 +84,7 @@ class NightRepository {
                 R.color.hunter,
                 false,
                 false,
+                NightStages.HUNTER,
                 R.string.night_desc_hunter
             ),
             CharacterClass(
@@ -84,6 +93,7 @@ class NightRepository {
                 R.color.knight,
                 false,
                 false,
+                NightStages.KNIGHT,
                 R.string.night_desc_knight
             ),
             CharacterClass(
@@ -92,6 +102,7 @@ class NightRepository {
                 R.color.flute,
                 false,
                 false,
+                NightStages.FLUTE,
                 R.string.night_desc_flute
             ),
             CharacterClass(
@@ -100,6 +111,7 @@ class NightRepository {
                 R.color.friends,
                 true,
                 false,
+                NightStages.FRIENDS,
                 R.string.night_desc_friends
             ),
             CharacterClass(
@@ -108,6 +120,7 @@ class NightRepository {
                 R.color.wwolf,
                 false,
                 true,
+                NightStages.WHITE_WOLF,
                 R.string.night_desc_wolf_child
             ),
             CharacterClass(
@@ -116,6 +129,7 @@ class NightRepository {
                 R.color.wchild,
                 false,
                 true,
+                NightStages.W_CHILD,
                 R.string.night_desc_wolf_child
             ),
             CharacterClass(
@@ -124,6 +138,7 @@ class NightRepository {
                 R.color.urwolf,
                 false,
                 true,
+                NightStages.URWOLF,
                 R.string.night_desc_wolf_child
             )
         )

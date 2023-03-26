@@ -13,6 +13,7 @@ interface NightListContract {
         fun setDescription(text: String,append: Boolean)
         fun siegbildschirmOeffnen(character: String)
         fun activateWitchDialog(trankLebenEinsetzbar: Boolean, trankTodEinsetzbar: Boolean)
+        fun setPlayerListVisibility(visibility: Int)
 
     }
 }

@@ -16,13 +16,11 @@ import com.example.tobias.werwolf_v1.databinding.ActivityNightlistBinding
 
 class ListNight : AppCompatActivity(), View.OnClickListener, NightListContract.View {
 
-    private var nightListAdapter: NightListAdapter? = null
+    private lateinit var nightListAdapter: NightListAdapter
     private lateinit var binding: ActivityNightlistBinding
     private lateinit var nightListViewModel: NightListViewModel
 
-    //todo fixme remove
-    private var mDatabaseHelper: DatabaseHelper? = null
-    private var data: Cursor? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityNightlistBinding.inflate(layoutInflater)
@@ -47,12 +45,8 @@ class ListNight : AppCompatActivity(), View.OnClickListener, NightListContract.V
         binding.textViewUrwolfVeto.setOnClickListener(this)
 
 
-        //Liste Initialisieren
-        mDatabaseHelper = DatabaseHelper(this)
-        data = mDatabaseHelper!!.data
 
-
-        nightListAdapter = NightListAdapter(data!!)
+        nightListAdapter = NightListAdapter(DatabaseHelper(this).data)
         binding.personen.adapter = nightListAdapter
         binding.personen.onItemClickListener = OnItemClickListener { parent, view, position, id ->
             nightListViewmodel.handleClickAtPosition(position)
@@ -60,10 +54,11 @@ class ListNight : AppCompatActivity(), View.OnClickListener, NightListContract.V
             nightListAdapter.notifyDataSetChanged()
         }
     }
-
+    override fun setPlayerListVisibility(visibility: Int){
+        binding.personen.visibility = visibility
+    }
    override fun activateWitchDialog(trankLebenEinsetzbar: Boolean, trankTodEinsetzbar: Boolean){
-      changeUIToNewCharacter(nightListViewModel.generateCharacters()[0])      // todo change to witch
-       binding.personen.visibility = View.INVISIBLE
+
 
        //todo, wenn nur eine Option übrig ist eien entsprechenden Rand einfügen
        if (trankLebenEinsetzbar || trankTodEinsetzbar) {
@@ -71,7 +66,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener, NightListContract.V
            if (!(trankLebenEinsetzbar && trankTodEinsetzbar)) {
                if (trankLebenEinsetzbar) //leben anzaeigen, sonst nur tod
                {
-                   binding.rettenLayoutHexe.visibility = View.VISIBLE
+                   binding.layoutRettenHexe.visibility = View.VISIBLE
                    binding.toetenLayoutHexe.visibility = View.GONE
                } else {
                    val params = LinearLayout.LayoutParams(
@@ -110,7 +105,7 @@ class ListNight : AppCompatActivity(), View.OnClickListener, NightListContract.V
         setStatusNextButton(b)
         changeUIToNewCharacter(currentCharacter)
         if (listVisible) {
-            nightListAdapter?.notifyDataSetChanged()
+            nightListAdapter.notifyDataSetChanged()
             binding.personen.visibility = View.VISIBLE
         } else {
             binding.personen.visibility = View.GONE
@@ -154,9 +149,9 @@ class ListNight : AppCompatActivity(), View.OnClickListener, NightListContract.V
     }
 
 
-    override fun siegbildschirmOeffnen(sieger: String) {
+    override fun siegbildschirmOeffnen(character: String) {
         val intent = Intent(this, VictoryActivity::class.java)
-        intent.putExtra("sieger", sieger)
+        intent.putExtra("sieger", character)
         startActivity(intent)
     }
 
@@ -187,12 +182,12 @@ class ListNight : AppCompatActivity(), View.OnClickListener, NightListContract.V
 
                     setStatusNextButton(true)
                 }
-                nightListAdapter?.notifyDataSetChanged()
+                nightListAdapter.notifyDataSetChanged()
             }
             R.id.opferRettenHexe, R.id.textViewOpferRetten -> {
                 binding.opferRettenHexe.isChecked = nightListViewModel.witchSaveVictim()
             }
-            R.id.weiterNacht -> nightListViewModel.nexButtonClicked()
+            R.id.weiterNacht -> nightListViewModel.nextButtonClicked()
             R.id.textViewUrwolfVeto, R.id.checkboxUrwolfVeto -> binding.checkboxUrwolfVeto.isChecked =
                 nightListViewModel.urwolfClicked()
             R.id.description ->
