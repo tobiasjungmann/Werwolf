@@ -29,7 +29,6 @@
             android:textStyle="bold" />
     </LinearLayout>
 
-
     <LinearLayout
         android:id="@+id/llo"
         android:layout_width="match_parent"
@@ -80,7 +79,7 @@
         android:layout_marginBottom="8dp"
         android:text="TextView"
         android:textColor="@color/white"
-        android:textSize="20dp" />
+        android:textSize="20sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -92,8 +91,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/listePers"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="1" />
+            android:layout_height="match_parent"/>
     </RelativeLayout>
 
 </RelativeLayout>

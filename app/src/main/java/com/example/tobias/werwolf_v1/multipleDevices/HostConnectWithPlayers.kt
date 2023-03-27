@@ -363,7 +363,7 @@ class HostConnectWithPlayers : AppCompatActivity() {
             //charakter.setImageResource(R.drawable.amor_v3);
             var convertView = convertView
             convertView = layoutInflater.inflate(R.layout.mylistitemwhitetext, null)
-            pers = convertView.findViewById<View>(R.id.textPer) as TextView
+            pers = convertView.findViewById<View>(R.id.textViewLabel) as TextView
             pers!!.text = ipAdressen[position] + "   " + ipToName[ipAdressen[position]]
             return convertView
         }
